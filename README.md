@@ -16,3 +16,6 @@
   libraries are subject to change.
 
 - Release a stable version of our API periodically.
+
+- Work with RnRS, SRFI, and other library authors to share interfaces
+  and implementations whenever goals are aligned.
