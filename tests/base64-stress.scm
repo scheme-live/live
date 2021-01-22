@@ -1,6 +1,6 @@
 (import (scheme base) (live encoding filter base64) (live test))
 
-(test-begin "live/encoding/filter/base64")
+(test-begin "live/encoding/filter/base64-stress")
 
 ;; to avoid measuring time in test (doesn't really matter)
 (define large-string (make-string 10000001 #\a))
