@@ -1,0 +1,17 @@
+(define (gzip-read binary-port accumulator)
+  (define (KiB n) (* 1024 n))
+  (define (auto-detect-gzip window-bits) (+ 32 window-bits))
+  (call-with-port
+   (open-inflating-port binary-port :window-bits (auto-detect-gzip 15))
+   (lambda (inflating-port)
+     (let ((buffer (make-bytevector (KiB 512))))
+       (let loop ()
+         (let ((n-read (read-bytevector! buffer inflating-port)))
+           (cond ((eof-object? n-read)
+                  (accumulator (eof-object)))
+                 ((= n-read (bytevector-length buffer))
+                  (accumulator buffer)
+                  (loop))
+                 (else
+                  (accumulator (bytevector-copy buffer 0 n-read))
+                  (loop)))))))))
