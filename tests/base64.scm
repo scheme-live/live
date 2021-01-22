@@ -1,8 +1,9 @@
-(import test)
-(import base64
-        (chicken string))
+(import (scheme base) (live encoding filter base64) (live test))
+
+(test-begin "live/encoding/filter/base64")
 
 (define lorem-ipsum "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
+
 (define lorem-ipsum-base64
   '("TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2ljaW5nIGVsaXQs"
     "IHNlZCBkbyBlaXVzbW9kIHRlbXBvciBpbmNpZGlkdW50IHV0IGxhYm9yZSBldCBkb2xvcmUgbWFn"
@@ -160,4 +161,4 @@
 ;; (test-error "encode string of length 16,000,000 signals an error"
 ;;             (base64-encode (make-string 16000000)))
 
-(test-exit)
+(test-end)

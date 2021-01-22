@@ -1,6 +1,7 @@
 (define-library (live string)
   ;; Re-exported from SRFI 13:
   (export
+   string-concatenate-reverse
    string-every
    string-null?
    string-prefix?

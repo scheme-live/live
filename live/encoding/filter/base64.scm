@@ -35,14 +35,8 @@
 ;;  The optimized variants are almost on par with pure C.
 ;;  Encoding and decoding can now operate on ports.
 
-(declare (fixnum))
-
-(module base64
-  (base64-encode base64-decode base64-line-breaks)
-
-  (import scheme chicken.base chicken.bitwise chicken.fixnum
-          (only chicken.io read-string!)
-          (only srfi-13 string-concatenate-reverse))
+(cond-expand (chicken (declare (fixnum)))
+             (else))
 
 ;; If base64-line-breaks is true, a CRLF is inserted every
 ;; 76 output chars (57 input chars) and at the end of the last
@@ -79,7 +73,7 @@
          (string-set! out (+ o 2) (b64->char (arithmetic-shift n -6)))
          (+ o 4)))))
 
-  (##sys#check-string str 'base64-encode)
+  (typecheck-string base64-encode str)
   (let ((l (string-length str)))
     (let* ((nobreak? (not (base64-line-breaks)))
            (outlen (* 4 (fx/ (+ l 2) 3)))
@@ -116,7 +110,7 @@
           (string-set! out (+ o 1) #\newline))
         out))))
 
-(define (base64-encode in #!optional out)
+(define (base64-encode in out)
   (define (port-to-port in out)
     (let* ((buflen (* 57 60))
            (buf (make-string buflen)))
@@ -196,7 +190,7 @@
                     (if (= -1 (bits-at (- l 2))) -2 -1)
                     0))))))
 
-  (##sys#check-string str 'base64-decode)
+  (typecheck-string base64-decode str)
   (let ((l (string-length str)))
     (if (= l 0)
         str
@@ -225,7 +219,7 @@
               out
               (substring out 0 o))))))
 
-(define (base64-decode in #!optional out)
+(define (base64-decode in out)
   (define (port-to-port in out)
     (let* ((buflen 4096)
            (buf (make-string buflen))
@@ -331,7 +325,7 @@
           out
           (substring out 0 o))))
 
-  (##sys#check-string str 'base64-decode)
+  (typecheck-string base64-decode str)
   (let* ((len (string-length str))
          (state (vector-ref st 0))
          (outlen (guess-out-length len state))
@@ -369,5 +363,3 @@
       ;; causing > 2x slowdown.  decode-tail arguments must then
       ;; be pulled from the state vector.
       (do-tail out o st))))
-
-)
