@@ -1,6 +1,6 @@
 (define-library (live encoding filter gzip)
   (export gzip-read)
-  (import (scheme base) (scheme file))
+  (import (scheme base))
   (cond-expand
     (gauche
      (import (gauche base) (rfc zlib))
