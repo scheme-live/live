@@ -76,9 +76,9 @@
   (typecheck-string base64-encode str)
   (let ((l (string-length str)))
     (let* ((nobreak? (not (base64-line-breaks)))
-           (outlen (* 4 (fx/ (+ l 2) 3)))
-           (full-lines (fx/ l 57))
-           (partial-line (not (= 0 (fxmod l 57))))
+           (outlen (* 4 (fxquotient (+ l 2) 3)))
+           (full-lines (fxquotient l 57))
+           (partial-line (not (= 0 (fxremainder l 57))))
            (outlen (if nobreak?
                        outlen
                        (+ outlen (fx* 2 (+ full-lines
@@ -112,6 +112,8 @@
 
 (define base64-encode
   (case-lambda
+    ((in)
+     (base64-encode in #f))
     ((in out)
      (define (port-to-port in out)
        (let* ((buflen (* 57 60))
@@ -120,9 +122,9 @@
            (let ((n (read-string! buflen buf in)))
              (cond ((= n 0) out)
                    (else
-                    (display (base64-encode/string->string
-                              (if (< n buflen) (substring buf 0 n) buf))
-                             out)
+                    (write-string (base64-encode/string->string
+                                   (if (< n buflen) (substring buf 0 n) buf))
+                                  out)
                     (lp)))))))
      (define (port-to-string in)
        ;; easier on GC than (let ((out (open-output-string)))
@@ -184,8 +186,8 @@
   ;; encountered, and checks the last two chars for validity
   ;; in strings of length 4n.
   (define (guess-out-length l)           ; assumes L > 0
-    (let ((floored (fx* 4 (fx/ l 4))))
-      (+ (fx* 3 (fx/ l 4))
+    (let ((floored (fx* 4 (fxquotient l 4))))
+      (+ (fx* 3 (fxquotient l 4))
          (cond ((not (= l floored)) 3)
                (else
                 (if (= -1 (bits-at (- l 1)))
@@ -223,6 +225,8 @@
 
 (define base64-decode
   (case-lambda
+    ((in)
+     (base64-decode in #f))
     ((in out)
      (define (port-to-port in out)
        (let* ((buflen 4096)
@@ -231,13 +235,13 @@
          (let lp ()
            (let ((n (read-string! buflen buf in)))
              (cond ((< n buflen)   ; works for ""
-                    (display (base64-decode-partial (substring buf 0 n)
-                                                    st #f)
-                             out)
+                    (write-string (base64-decode-partial (substring buf 0 n)
+                                                         st #f)
+                                  out)
                     out)
                    (else
-                    (display (base64-decode-partial buf st #t)
-                             out)
+                    (write-string (base64-decode-partial buf st #t)
+                                  out)
                     (lp)))))))
      (define (port-to-string in)
        (let* ((buflen 4096)
@@ -295,9 +299,9 @@
   ;; But add state (# of chars pending) to input length.
   (define (guess-out-length len state)
     (let ((c (+ state len)))
-      (if (= 0 (bitwise-and c 3))   ; (fxmod c 4)
-          (fx* 3 (fx/ c 4))
-          (fx* 3 (+ 1 (fx/ c 4))))))
+      (if (= 0 (bitwise-and c 3))   ; (fxremainder c 4)
+          (fx* 3 (fxquotient c 4))
+          (fx* 3 (+ 1 (fxquotient c 4))))))
 
   ;; When no MORE? data, write out the remaining chars.
   (define (decode-tail out o state c1 c2 c3)

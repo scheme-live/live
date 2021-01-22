@@ -3,6 +3,7 @@
   (export
    string-concatenate-reverse
    string-every
+   string-join
    string-null?
    string-prefix?
    string-suffix?)
