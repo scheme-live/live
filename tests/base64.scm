@@ -144,6 +144,6 @@
        (base64-decode "3q2+78r+sAs="))
  (test-equal "decode lorem ipsum with linebreaks"
        lorem-ipsum
-       (base64-decode (string-intersperse lorem-ipsum-base64 "\r\n"))))
+       (base64-decode (string-join lorem-ipsum-base64 "\r\n"))))
 
 (test-end)
