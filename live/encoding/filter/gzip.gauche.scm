@@ -9,9 +9,8 @@
          (let ((n-read (read-bytevector! buffer inflating-port)))
            (cond ((eof-object? n-read)
                   (accumulator (eof-object)))
-                 ((= n-read (bytevector-length buffer))
-                  (accumulator buffer)
-                  (loop))
                  (else
-                  (accumulator (bytevector-copy buffer 0 n-read))
+                  (accumulator (if (< n-read (bytevector-length buffer))
+                                   (bytevector-copy buffer 0 n-read)
+                                   buffer))
                   (loop)))))))))
