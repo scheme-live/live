@@ -15,6 +15,9 @@
     "dWkgb2ZmaWNpYSBkZXNlcnVudCBtb2xsaXQgYW5pbSBpZCBlc3QgbGFib3J1bS4="
     ""))   ; trailing empty for string-join
 
+(define (string-of-bytes . bytes)
+  (apply string (map integer->char bytes)))
+
 (test-group
  "encoding"
  (test-equal "encode string of length 0"
@@ -43,7 +46,7 @@
        (base64-encode "abcdefghijklmnopqr"))
  (test-equal "encode binary string"
        "3q2+78r+sAs="
-       (base64-encode "\xde\xad\xbe\xef\xca\xfe\xb0\x0b"))
+       (base64-encode (string-of-bytes #xde #xad #xbe #xef #xca #xfe #xb0 #x0b)))
  (test-equal "lorem ipsum"
        (apply string-append lorem-ipsum-base64)
        (base64-encode lorem-ipsum))
@@ -140,7 +143,7 @@
        "abcdefghijklmnop"
        (base64-decode "YWJjZG(VmZ#2hp@amtsb%&W5v**cA======"))
  (test-equal "decode binary string"
-       "\xde\xad\xbe\xef\xca\xfe\xb0\x0b"
+       (string-of-bytes #xde #xad #xbe #xef #xca #xfe #xb0 #x0b)
        (base64-decode "3q2+78r+sAs="))
  (test-equal "decode lorem ipsum with linebreaks"
        lorem-ipsum
