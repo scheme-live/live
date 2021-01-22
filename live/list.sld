@@ -1,7 +1,17 @@
 (define-library (live list)
-  ;; Re-exported from SRFI 13:
-  (export drop-while
-          fold)
-  ;; Defined in this library:
-  (export)
-  (import (scheme base) (srfi 1)))
+  (export
+   ;; Re-exported from SRFI 1:
+   drop-while
+   fold
+   ;; Defined in this library:
+   map/odd)
+  (import (scheme base) (srfi 1))
+  (begin
+
+    (define (map/odd f xs)
+      (let loop ((acc '()) (xs xs) (odd? #f))
+        (if (null? xs) (reverse acc)
+            (loop (cons (f (car xs) odd?)
+                        acc)
+                  (cdr xs)
+                  (not odd?)))))))
