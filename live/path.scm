@@ -18,3 +18,23 @@
 
 (define (path-append . parts)
   (path-concatenate parts))
+
+(define (path-filename path)
+  (let loop ((i (string-length path)))
+    (cond ((zero? i) path)
+          ((char=? #\/ (string-ref path (- i 1)))
+           (substring path i (string-length path)))
+          (else (loop (- i 1))))))
+
+(define (path-suffix path)
+  (let ((path (path-filename path)))
+    (let ((n (string-length path)))
+      (let left ((a 0))
+        (and (< a n)
+             (if (char=? #\. (string-ref path a))
+                 (left (+ a 1))
+                 (let right ((b n))
+                   (and (< a b)
+                        (if (char=? #\. (string-ref path (- b 1)))
+                            (substring path b n)
+                            (right (- b 1)))))))))))

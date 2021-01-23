@@ -24,4 +24,10 @@
   (test-equal "/foo/bar" (path-append "" "/foo/" "" "" "" "bar"))
   (test-equal "/foo/bar" (path-append "" "/foo" "" "" "" "bar")))
 
+(test-group "path-suffix"
+  (test-equal "b" (path-suffix "foo/...a.b"))
+  (test-equal "" (path-suffix "foo/...a."))
+  (test-equal #f (path-suffix "foo/...a"))
+  (test-equal "c" (path-suffix "foo/...a.b.c")))
+
 (test-end)
