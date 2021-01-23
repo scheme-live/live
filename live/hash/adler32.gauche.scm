@@ -1,13 +1,3 @@
-;; TODO: Export this from some other library.
-(define (accumulate-bytevectors-from-port accumulator buf-size in)
-  (let ((buf (make-bytevector buf-size 0)))
-    (let loop ()
-      (let ((n (read-bytevector! buf in)))
-        (if (eof-object? n) (accumulator (eof-object))
-            (begin (accumulator (if (= n buf-size) buf
-                                    (bytevector-copy buf 0 n)))
-                   (loop)))))))
-
 (define (adler32-accumulator)
   (let ((sum 1))
     (lambda (bytevector)
