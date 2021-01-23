@@ -4,13 +4,5 @@
   (call-with-port
    (open-inflating-port binary-port :window-bits (auto-detect-gzip 15))
    (lambda (inflating-port)
-     (let ((buffer (make-bytevector (KiB 512))))
-       (let loop ()
-         (let ((n-read (read-bytevector! buffer inflating-port)))
-           (cond ((eof-object? n-read)
-                  (accumulator (eof-object)))
-                 (else
-                  (accumulator (if (< n-read (bytevector-length buffer))
-                                   (bytevector-copy buffer 0 n-read)
-                                   buffer))
-                  (loop)))))))))
+     (accumulate-bytevectors-from-port
+      accumulator (KiB 512) inflating-port))))
