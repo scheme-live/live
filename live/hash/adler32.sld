@@ -1,5 +1,6 @@
 (define-library (live hash adler32)
-  (export adler32-bytevector
+  (export adler32-accumulator
+          adler32-bytevector
           adler32-port)
   (import (scheme base) (live typecheck))
   (cond-expand
