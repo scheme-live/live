@@ -10,16 +10,7 @@
     (acc (eof-object))))
 
 (define (digest-port digest in)
-  (let ((acc (digest-accumulator digest))
-        (buf (make-bytevector 4096)))
-    (let loop ()
-      (let ((n (read-bytevector! buf in)))
-        (if (eof-object? n)
-            (acc (eof-object))
-            (begin (acc (if (< n (bytevector-length buf))
-                            (bytevector-copy buf 0 n)
-                            buf))
-                   (loop)))))))
+  (accumulate-bytevectors-from-port (digest-accumulator digest) 4096 in))
 
 ;;
 
