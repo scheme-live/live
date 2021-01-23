@@ -9,7 +9,7 @@
    sha-512-accumulator
    sha-512-bytevector
    sha-512-port)
-  (import (scheme base) (live typecheck))
+  (import (scheme base) (live port))
   (cond-expand
     (gauche
      (import (only (gauche base) make) (util digest) (rfc sha))
