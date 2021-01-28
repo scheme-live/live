@@ -1,7 +1,9 @@
 (define-library (live list)
   (export
    ;; Re-exported from SRFI 1:
+   any
    drop-while
+   every
    fold
    ;; Defined in this library:
    map/odd)
