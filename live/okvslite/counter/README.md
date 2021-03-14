@@ -10,8 +10,8 @@
 
 ## Introduction
 
-Simple extension that allows to represent a counter with addition and
-`counter-add!` and `counter-ref` the two procedures.
+Simple extension that allows to represent a counter with two
+procedures `counter-add!` and `counter-ref`.
 
 ## Reference
 

@@ -10,16 +10,6 @@
 
 ## Introduction
 
-### Background
-
-### Rational
-
-### Goals
-
-### Non-goals
-
-### Related
-
 ## Reference
 
 ### `(lexicographic-pack obj accumulator) any? procedure?` generic
