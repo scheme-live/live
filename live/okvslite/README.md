@@ -67,18 +67,21 @@ keyword search, boolean-keyword search until concept search.
 
 #### Extensions
 
-- basic: Counter, bag, set, mappingmulti
-- bstore: Binary object store
-- ustore: uid allocator
-- eavstore: Entity-Attribute-Value
+- [counter](counter/#readme)
+- [bag](bag/#readme)
+- [set](set/#readme)
+- [mapping-multi](mapping-multi/#readme)
+- [bstore](bstore/#readme): Binary object store
+- [ustore](ustore/#readme): uid allocator
+- [eavstore](eavstore/#readme): Entity-Attribute-Value
 - rstore: Record store
-- nstore2: Generic tuple store 2
-- vnstore2: Versioned generic tuple store 2
-- gstore: Property graph
+- [nstore2](nstore2/#readme): Generic tuple store 2
+- [vnstore2](vnstore2/#readme): Versioned generic tuple store
+- [gstore](gstore/#readme): Property graph
 - kstore: Ranked set / leaderboard / priority queue
 - fstore: Approximate bytes lookup
 - xzstore: XZ-ordered curve
-- scstore: Semantic text search
+- [scstore](scstore/#readme): Semantic text search
 
 #### Others
 
