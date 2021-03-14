@@ -28,6 +28,6 @@
 
 ### `(vnstore-var? obj)`
 
-### `(vnstore-name var)`
+### `(vnstore-var-name var)`
 
 ### `(vnstore-query vnstore db patterns)`

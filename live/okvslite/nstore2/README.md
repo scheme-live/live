@@ -16,11 +16,13 @@
 
 ### `(nstore? obj)`
 
-### `(nstore-add! nstore db items)`
+### `(nstore-set! nstore db items value)`
 
 ### `(nstore-delete! nstore db items)`
 
 ### `(nstore-ask? nstore db items)`
+
+### `(nstore-ref nstore db items)`
 
 ### `(make-nstore-var name)`
 
