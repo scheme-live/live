@@ -16,6 +16,6 @@
 
 ### `(mapping-multi-delete! mapping-multi db key value)`
 
-### `(mapping-multi->alist mapping-multi db)`
-
 ### `(mapping-multi-generator mapping-multi db key)`
+
+### `(mapping-multi->alist mapping-multi db)`

@@ -37,9 +37,7 @@ relic of the past.
 Along the road they built several projects, in particular the [SRFI
 167]() and [SRFI 168](). The current work build and hopefully improve
 upon that. Together with the extensions, it will replace the need for
-most of SQL database features and extend them to support text search
-that start at the beginning of *semantic continium* such as
-keyword search, boolean-keyword search until concept search.
+most of SQL database features and extend them to support text search.
 
 ### Rational
 
@@ -74,10 +72,8 @@ keyword search, boolean-keyword search until concept search.
 - [bstore](bstore/#readme): Binary object store
 - [ustore](ustore/#readme): uid allocator
 - [eavstore](eavstore/#readme): Entity-Attribute-Value
-- rstore: Record store
 - [nstore2](nstore2/#readme): Generic tuple store 2
 - [vnstore2](vnstore2/#readme): Versioned generic tuple store
-- [gstore](gstore/#readme): Property graph
 - kstore: Ranked set / leaderboard / priority queue
 - fstore: Approximate bytes lookup
 - xzstore: XZ-ordered curve
@@ -154,7 +150,7 @@ Removes the bytevector `KEY`, and its associated value.
 
 ### `(okvslite-close! db) okvslite?` generic
 
-Generic procedure that closes database.
+Close database.
 
 ### `(okvslite-in-transaction! db proc [failure [success]]) okvslite? procedure? procedure? procedure? → (values (every any?))` generic
 
@@ -168,9 +164,8 @@ arguments. Otherwise, executes `SUCCESS` with the returned values of
 Return the timestamp of the given `TRANSACTION` as bytevector of 16
 bytes using big-endian. This is not necessarly monotonically
 increasing timestamp (there might be gaps) and does not necessarly
-relate world clock.
-
-Note: [ULID](https://github.com/ulid/spec) is a good starting point.
+relate to world clock, but it increments across database open and
+close.
 
 ### `(okvslite-call-with-cursor db proc) okvslite? procedure? → (values (every any?))` generic
 
@@ -190,7 +185,7 @@ The strategy `less-than-or-equal` will first seek for the biggest key
 that is less than `KEY`, if there is one, it returns the symbol `less`.
 Otherwise, if there is a key that is equal to `KEY` it will return the
 symbol `equal`. If there is no valid position for the given `KEY`, it
-will fallback to the symbol `not-found`.
+fallback to the symbol `not-found`.
 
 The strategy `equal` will seek a key that is equal to `KEY`. If there
 is one it will return the symbol `equal`. Otherwise, it returns the
@@ -200,7 +195,7 @@ The strategy `greater-than-equal` will first seek the smallest key that
 is greater than `KEY`, if there is one, it returns the symbol
 `greater`.  Otherwise, if there is a key that is equal to `KEY` it
 will return the symbol `equal`. If there is no valid position for the
-given `KEY`, it returns the symbol `not-found`.
+given `KEY`, it fallback the symbol `not-found`.
 
 ### `(okvslite-cursor-next? cursor) okvslite-cursor? → boolean?` generic
 

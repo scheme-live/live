@@ -20,6 +20,6 @@
 
 ### `(eavstore-ref eavstore db entity) → alist?`
 
-### `(eavstore-lookup-generator eavstore db attribute [value])`
-
 ### `(eavstore-generator eavstore db [entity [attribute]])`
+
+### `(eavstore-lookup-generator eavstore db attribute [value])`

@@ -18,7 +18,7 @@ In particular, it is not meant to be a general purpose search
 framework or a distributed index.
 
 Semantic store is fine-tuned for finding text documents that match the
-query intent or the verbatim query of the user, and help explore and
+verbatim query of the user or their intent. It can help explore and
 navigate a more or less large quantity of textual data. Documents may
 be linked, annotated with discovery date, and keywords. The latter may
 be used to create facets.
