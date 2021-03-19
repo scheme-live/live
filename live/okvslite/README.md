@@ -35,16 +35,17 @@ perfect database to build the web application that would make Google a
 relic of the past.
 
 Along the road they built several projects, in particular the [SRFI
-167]() and [SRFI 168](). The current work build and hopefully improve
-upon that. Together with the extensions, it will replace the need for
-most of SQL database features and extend them to support text search.
+167](), [SRFI 168](), nomunofu, and babelia. The current work build
+and hopefully improve upon that. Together with the extensions, it will
+replace the need for most of SQL database features and extend them to
+support text search.
 
 ### Rational
 
 > For the projects I build I want to avoid changing syntax every now
 > and then. "Now and then" in backend development can be minutes to
 > seconds when you deal with an SQL database, or JSON wrapped in wanna
-> be *human human-machine* interface. Even more so with full-stack
+> be *human* human-machine interface. Even more so with full-stack web
 > development.  Ordered Key-Value Store offer that opportunity to
 > write everything in your favorite programming language. Remain a
 > question: What about performance?
@@ -110,7 +111,7 @@ Packing and unpacking:
 
 > *alpha* see above
 
-### `(make-okvslite . args) (every any?) → okvslite?` generic
+### `(make-okvslite [options]) okvslite-options? → okvslite?` generic
 
 - keyword: constructor
 
@@ -135,10 +136,8 @@ Return the size of key-value pairs of the specified subspace in bytes.
 >
 > To be able to implement a query optimizer, some statistic are
 > required, those might be implemented on top okvslite, like mongodb
-> does on its own without help from wiredtiger. It seems like it would
-> be better to implement that at the storage layer.
->
-> That procedure would be useful to implement query optimizers.
+> does on its own without help from wiredtiger. It will be better to
+> implement that at the storage layer.
 
 ### `(okvslite-set! db key value) okvslite? bytevector? bytevector?` generic
 
@@ -155,9 +154,10 @@ Close database.
 ### `(okvslite-in-transaction! db proc [failure [success]]) okvslite? procedure? procedure? procedure? → (values (every any?))` generic
 
 Begin a transaction against `DB`, execute `PROC`. In case of error,
-rollback the transaction and execute `FAILURE` with no
-arguments. Otherwise, executes `SUCCESS` with the returned values of
-`PROC`.
+rollback the transaction and execute `FAILURE` with no arguments. The
+default value of `FAILURE` raise an error. Otherwise, executes
+`SUCCESS` with the returned values of `PROC`.  The default value of
+`SUCCESS` is `values`.
 
 ### `(okvslite-transaction-timestamp transaction) okvslite-transaction? → bytevector?` generic
 
