@@ -12,8 +12,8 @@
 - No facility to implement
   [HightContentionAllocator](https://activesphere.com/blog/2018/08/05/high-contention-allocator),
   see also FDB's [Directory layer](https://git.io/JqCFP)
-- Add page read and write middlewares to support compression and
-  cryptography.
+- Add page (frame?) read and write middlewares to support compression
+  and cryptography.
 - Transaction begin, rollback, before and after commit hooks
 - No builtin support for hooks / watches / triggers (may be
   unnecessary if transaction hooks exists).
@@ -95,21 +95,12 @@ Packing and unpacking:
 
 ## Reference
 
-### `okvslite-key-max-size` parameter
+### `okvslite-options`
 
-> *alpha* in theory sqlite-lsm-ext and wiredtiger do not have a direct
-> key or value limit. In the case of wiredtiger, there is a
-> transaction max size. In both cases it is necessarly bound by
-> available memory. In practice with sqlite-lsm-ext the database will
-> crash some time when the key is too big. It might be a bug with
-> sqlite lsm extension. FDB has a limit on both. All that leads me to
-> think that it might be better to document a max size for
-> both. Possibly make it the default value, and allow the user to
-> override it in `make-okvslite`.
-
-### `okvslite-value-max-size` parameter
-
-> *alpha* see above
+- `okvslite-key-max-size` may be read-only.
+- `okvslite-value-max-size` may be read-only.
+- `okvslite-write-concurrency` may be read-only
+- `okvslite-read-only?`
 
 ### `(make-okvslite [options]) okvslite-options? → okvslite?` generic
 
