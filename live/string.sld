@@ -21,4 +21,4 @@
                 (import  (srfi 130)))
                ((library (srfi 13))
                 (import  (srfi 13))))
-  (include "string.scm"))
+  (include "string/live.scm"))
