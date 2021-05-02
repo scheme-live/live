@@ -1,10 +1,3 @@
-;; Chibi Scheme version of any
-
-(define (any pred ls)
-  (if (null? (cdr ls))
-    (pred (car ls))
-    ((lambda (x) (if x x (any pred (cdr ls)))) (pred (car ls)))))
-
 ;; list->bytevector
 (define (list->bytevector list)
   (let ((vec (make-bytevector (length list) 0)))
@@ -75,6 +68,10 @@
 
 
 ;; make-coroutine-generator
+;;
+;; Because Kawa doesn't support call/cc,
+;; there is an alternate implementation for Kawa (see generator.sld).
+(cond-expand (kawa) (else
 (define (make-coroutine-generator proc)
   (define return #f)
   (define resume #f)
@@ -84,7 +81,7 @@
                           (resume (if #f #f))  ; void? or yield again?
                           (begin (proc yield)
                                  (set! resume (lambda (v) (return (eof-object))))
-                                 (return (eof-object))))))))
+                                 (return (eof-object))))))))))
 
 
 ;; list->generator
@@ -486,9 +483,11 @@
 ;; generator-find
 (define (generator-find pred g)
   (let loop ((v (g)))
-    (cond ((eof-object? v) #f)
-          ((pred v) v)
-          (else (loop (g))))))
+   ; A literal interpretation might say it only terminates on #eof if (pred #eof) but I think this makes more sense...
+   (if (or (pred v) (eof-object? v))
+     v
+     (loop (g)))))
+
 
 ;; generator-count
 (define (generator-count pred g)
@@ -496,22 +495,24 @@
 
 
 ;; generator-any
-(define (generator-any pred gen)
-  (let loop ((item (gen)))
-    (cond ((eof-object? item) #f)
-          ((pred item))
-          (else (loop (gen))))))
+(define (generator-any pred g)
+  (let loop ((v (g)))
+   (if (eof-object? v)
+     #f
+     (if (pred v)
+       #t
+       (loop (g))))))
 
 
 ;; generator-every
-(define (generator-every pred gen)
-  (let loop ((item (gen)) (last #t))
-    (if (eof-object? item)
-      last
-      (let ((r (pred item)))
-        (if r
-          (loop (gen) r)
-          #f)))))
+(define (generator-every pred g)
+  (let loop ((v (g)))
+   (if (eof-object? v)
+     #t
+     (if (pred v)
+       (loop (g))
+       #f ; the spec would have me return #f, but I think it must simply be wrong...
+       ))))
 
 
 ;; generator-unfold
@@ -577,4 +578,3 @@
 
 ;; product-accumulator
 (define (product-accumulator) (make-accumulator * 1 (lambda (x) x)))
-
