@@ -1,7 +1,6 @@
 ;; The 'nil' configuration applies to all modes.
 ((scheme-mode
   (indent-tabs-mode . nil)
-  (tab-width . 2)
   (lisp-local-indent
    ;; okvs
    switch 1
