@@ -418,7 +418,7 @@
 ;;> \item{
 ;;>   \scheme{(decl name attrs seed)} -
 ;;>     fhere on declaration data}
-;;>     
+;;>
 ;;> \item{
 ;;>   \scheme{(process list seed)} -
 ;;>     fhere on process-instruction data}
@@ -428,7 +428,7 @@
 ;;>     convert an entity with a given name, or number via &#NNNN;
 ;;>     to a string}
 ;;> ]
-;;>     
+;;>
 ;;> In addition, entity-mappings may be overriden with the
 ;;> \var{entities}: keyword.
 ;;>
