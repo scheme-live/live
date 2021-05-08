@@ -9,12 +9,4 @@
    ;; Defined in this library:
    map/odd)
   (import (scheme base) (srfi 1))
-  (begin
-
-    (define (map/odd f xs)
-      (let loop ((acc '()) (xs xs) (odd? #f))
-        (if (null? xs) (reverse acc)
-            (loop (cons (f (car xs) odd?)
-                        acc)
-                  (cdr xs)
-                  (not odd?)))))))
+  (include "list/live.scm"))

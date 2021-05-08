@@ -1,0 +1,7 @@
+(define (map/odd f xs)
+  (let loop ((acc '()) (xs xs) (odd? #f))
+    (if (null? xs) (reverse acc)
+        (loop (cons (f (car xs) odd?)
+                    acc)
+              (cdr xs)
+              (not odd?)))))
