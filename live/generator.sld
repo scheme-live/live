@@ -23,24 +23,25 @@
   (import (scheme base))
 
   (cond-expand
-    (kawa
-      (import (scheme case-lambda)
-              (schemepunk syntax)
-              (only (live list) any)
-              (only (kawa base) define-simple-class runnable try-catch this invoke-special)
-              (class java.lang Runnable Thread InterruptedException)
-              (class java.util.concurrent SynchronousQueue)
-              (class gnu.mapping Procedure Procedure0))
-      ; Kawa doesn't support call/cc, but we can still implement
-      ; make-coroutine-generator with threads!
-      (include "generator/schemepunk.kawa.scm")
-      (include "polyfills/srfi-158-impl.scm")
-      (include "generator/scheme.scm"))
-    ((and (not chicken) (library (srfi 158)))
-      (import (srfi 158)))
-    ((and gerbil (library (std srfi 158)))
-      (import (std srfi 158)))
-    (else
-      (import (scheme case-lambda)
-              (only (live list) any))
-      (include "polyfills/srfi-158-impl.scm"))))
+   (kawa
+    (import (scheme case-lambda)
+            (schemepunk syntax)
+            (only (live list) any)
+            (only (kawa base) define-simple-class runnable try-catch this invoke-special)
+            (class java.lang Runnable Thread InterruptedException)
+            (class java.util.concurrent SynchronousQueue)
+            (class gnu.mapping Procedure Procedure0))
+    ;; Kawa doesn't support call/cc, but we can still implement
+    ;; make-coroutine-generator with threads!
+    (include "generator/schemepunk.kawa.scm")
+    (include "polyfills/srfi-158-impl.scm"))
+   ((and (not chicken) (library (srfi 158)))
+    (import (srfi 158)))
+   ((and gerbil (library (std srfi 158)))
+    (import (std srfi 158)))
+   (else
+    (import (scheme case-lambda)
+            (only (live list) any))
+    (include "polyfills/srfi-158-impl.scm")))
+
+  (include "generator/schemepunk.scm"))
