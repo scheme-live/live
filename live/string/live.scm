@@ -18,3 +18,10 @@
                   (lambda (in)
                     (parameterize ((current-input-port in))
                       (proc)))))
+
+(define (with-output-to-string proc)
+  (call-with-port (open-output-string)
+                  (lambda (out)
+                    (parameterize ((current-output-port out))
+                      (proc))
+                    (get-output-string out))))
