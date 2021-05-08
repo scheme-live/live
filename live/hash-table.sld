@@ -1,5 +1,6 @@
 (define-library (live hash-table)
   (export
+   ;; SRFI:
    alist->hash-table
    hash-table
    hash-table-clear!
@@ -29,13 +30,17 @@
    hash-table=?
    hash-table?
    make-hash-table
+
+   ;; Live:
+   hash-table-alternating-for-each
    )
   (import (scheme base))
   (cond-expand
-    ((library (srfi 125))
-     (import  (srfi 125)))
-    ((library (srfi 69))
-     (import  (srfi 69)))))
+   ((library (srfi 125))
+    (import  (srfi 125)))
+   ((library (srfi 69))
+    (import  (srfi 69))))
+  (include "hash-table/live.scm"))
 
 ;; The following procedures are marked as deprecated in SRFI 125,
 ;; hence are not exported from this library.
