@@ -5,8 +5,14 @@
    drop-while
    every
    fold
+   last
+   last-pair
    unfold
    ;; Defined in this library:
-   map/odd)
+   circular-list?
+   dotted-list?
+   length-tail
+   map/odd
+   proper-list?)
   (import (scheme base) (srfi 1))
   (include "list/live.scm"))
