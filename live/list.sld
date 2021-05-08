@@ -5,6 +5,7 @@
    drop-while
    every
    fold
+   unfold
    ;; Defined in this library:
    map/odd)
   (import (scheme base) (srfi 1))
