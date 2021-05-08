@@ -5,4 +5,4 @@
           path-filename
           path-suffix)
   (import (scheme base) (live list) (live string))
-  (include "path.scm"))
+  (include "path/live.scm"))
