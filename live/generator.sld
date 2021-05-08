@@ -34,7 +34,7 @@
     ;; Kawa doesn't support call/cc, but we can still implement
     ;; make-coroutine-generator with threads!
     (include "generator/schemepunk.kawa.scm")
-    (include "polyfills/srfi-158-impl.scm"))
+    (include "generator/srfi-158.scm"))
    ((and (not chicken) (library (srfi 158)))
     (import (srfi 158)))
    ((and gerbil (library (std srfi 158)))
@@ -42,6 +42,6 @@
    (else
     (import (scheme case-lambda)
             (only (live list) any))
-    (include "polyfills/srfi-158-impl.scm")))
+    (include "generator/srfi-158.scm")))
 
   (include "generator/schemepunk.scm"))
