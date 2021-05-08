@@ -14,7 +14,8 @@
    string-blank?
    string-char-prefix?
    string-char-suffix?
-   string-last-index)
+   string-last-index
+   with-input-from-string)
   (import (scheme base)
           (scheme char))
   (cond-expand ((library (srfi 130))

@@ -12,3 +12,9 @@
 
 (define (string-blank? str)
   (string-every char-whitespace? str))
+
+(define (with-input-from-string str proc)
+  (call-with-port (open-input-string str)
+                  (lambda (in)
+                    (parameterize ((current-input-port in))
+                      (proc)))))
