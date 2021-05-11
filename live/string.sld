@@ -8,7 +8,10 @@
    string-join
    string-null?
    string-prefix?
-   string-suffix?)
+   string-suffix?
+   string-trim
+   string-trim-both
+   string-trim-right)
   ;; Defined in this library:
   (export
    string-blank?
