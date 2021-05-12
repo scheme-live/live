@@ -1,4 +1,4 @@
-(define-library (minimal-sqlite)
+(define-library (live database sqlite)
   (export sql-open
           sql-close
           sql-do
@@ -8,4 +8,4 @@
   (cond-expand (gambit
                 (import (gambit))
                 (pkg-config "sqlite3")
-                (include "minimal-sqlite-gambit.scm"))))
+                (include "sqlite/live.gambit.scm"))))
