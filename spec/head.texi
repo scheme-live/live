@@ -1,0 +1,493 @@
+\input texinfo
+@set VERSION head
+@set UPDATED 2021-01-23
+@set TITLE_WITHOUT_VERSION Scheme Live
+@set TITLE_SLUG scheme-live-@value{VERSION}
+@set TITLE @value{TITLE_WITHOUT_VERSION} (@value{VERSION})
+@settitle @value{TITLE}
+
+@defcodeindex op
+@syncodeindex op cp
+@c %**end of header
+
+@copying
+This is the specification and user's manual for the @value{VERSION}
+edition of @value{TITLE_WITHOUT_VERSION}.
+
+Copyright @copyright{} 2021 ...
+
+@quotation
+We intend this report to belong to the entire Scheme community, and so
+we grant permission to copy it in whole or in part without fee. In
+particular, we encourage implementers of Scheme to use this report as
+a starting point for manuals and other documentation, modifying it as
+necessary.
+@end quotation
+@end copying
+
+@dircategory Basics
+@direntry
+* @value{TITLE}: (@value{TITLE_SLUG}).  Scheme library collection
+@end direntry
+
+@titlepage
+@title Scheme Live @value{VERSION}
+@subtitle Specification, updated @value{UPDATED}
+@author Scheme Live Crew
+@page
+@vskip 0pt plus 1filll
+@insertcopying
+@end titlepage
+
+@contents
+
+
+@ifnottex
+@node Top
+@top Scheme Live @value{VERSION}
+
+This is the specification of @value{TITLE}.
+@end ifnottex
+
+@menu
+* Overview::
+* Data structures::
+* Binary data::
+* Text data::
+* Ports::
+* Concept index::
+@end menu
+
+@node Overview
+@chapter Overview
+
+@cindex overview
+
+@node Data structures
+@chapter Data structures
+
+@menu
+* Pairs::
+* Lists::
+* Association lists::
+* Property lists::
+* Hash tables::
+@end menu
+
+
+@node Pairs
+@section Pairs
+
+@node Lists
+@section Lists
+
+@subsection Proper, cyclic, and dotted lists
+
+@defun proper-list? obj
+@end defun
+
+@defun safe-for-each f list
+@end defun
+
+@defun safe-map f list
+@end defun
+
+@defun safe-fold f list
+@end defun
+
+@subsection Length
+
+@defun length list
+@end defun
+
+@defun length=? list
+@end defun
+
+@defun length=1? list
+@end defun
+
+@defun length>=? n list
+@end defun
+
+@defun bounded-length list
+@end defun
+
+@subsection Iteration
+
+@defun for-each f list @dots{}
+From @emph{RnRS and SRFI 1}.
+@end defun
+
+@defun index-for-each f list @dots{}
+Like @code{map}, but the first argument to @var{f} is an extra integer
+value giving the zero-based index.
+@end defun
+
+@subsection Mapping
+
+@defun map f list @dots{}
+From @emph{RnRS}.
+@end defun
+
+@defun append-map f list @dots{}
+From @emph{SRFI 1}.
+@end defun
+
+@defun filter-map f list @dots{}
+From @emph{SRFI 1}.
+@end defun
+
+@defun index-map f list @dots{}
+Like @code{map}, but the first argument to @var{f} is an extra integer
+value giving the zero-based index.
+@end defun
+
+@defun odd-map f list @dots{}
+Like @code{map}, but the first argument to @var{f} is an extra boolean
+value indicating whether the zero-based index is an odd number.
+
+This is useful for map functions that need to treat odd and even
+elements differently.
+@end defun
+
+@subsection Folding
+
+@defun fold combine nil list1 @dots{}
+From @emph{SRFI 1} and @emph{R6RS}.
+@end defun
+
+@defun fold-right combine nil list1 @dots{}
+From @emph{SRFI 1}.
+@end defun
+
+
+@node Association lists
+@section Association lists
+
+
+@node Property lists
+@section Property lists
+
+
+@node Hash tables
+@section Hash tables
+
+@defun alist->hash-table
+[SRFI 125]
+Return a fresh alist.
+@end defun
+
+@defun hash-table
+@end defun
+
+@defun hash-table-clear!
+@end defun
+
+@defun hash-table-contains?
+@end defun
+
+@defun hash-table-count
+@end defun
+
+@defun hash-table-delete!
+@end defun
+
+@defun hash-table-empty?
+@end defun
+
+@defun hash-table-entries
+@end defun
+
+@defun hash-table-find
+@end defun
+
+@defun hash-table-fold
+@end defun
+
+@defun hash-table-for-each
+@end defun
+
+@defun hash-table-intern!
+@end defun
+
+@defun hash-table-keys
+@end defun
+
+@defun hash-table-map
+@end defun
+
+@defun hash-table-map!
+@end defun
+
+@defun hash-table-map->list
+@end defun
+
+@defun hash-table-mutable?
+@end defun
+
+@defun hash-table-pop!
+@end defun
+
+@defun hash-table-prune!
+@end defun
+
+@defun hash-table-ref
+@end defun
+
+@defun hash-table-set!
+@end defun
+
+@defun hash-table-size
+@end defun
+
+@defun hash-table-unfold
+@end defun
+
+@defun hash-table-update!
+@end defun
+
+@defun hash-table-update!/default
+@end defun
+
+@defun hash-table-values
+@end defun
+
+@defun hash-table=?
+@end defun
+
+@defun hash-table?
+@end defun
+
+@defun make-hash-table
+@end defun
+
+@defun hash-table-alternating-for-each
+@end defun
+
+
+@node Binary data
+@chapter Binary data
+
+@menu
+* Binary ports::
+* Checksums::
+* ASCII wrapping::
+* Compression::
+@end menu
+
+
+@node Binary ports
+@section Binary ports
+
+@defun read-u8
+@end defun
+
+@defun read-u16be
+@defunx read-u16le
+Read 16-bit unsigned integer in big-endian or little-endian, respectively.
+@end defun
+
+@defun read-u32be
+@defunx read-u32le
+@end defun
+
+
+@node Checksums
+@section Checksums
+
+@menu
+* Adler32::
+* Fletcher checksum::
+* SHA::
+@end menu
+
+
+@node Adler32
+@subsection Adler32
+
+@defun adler32-accumulator
+@end defun
+
+@defun adler32-bytevector bytevector
+@end defun
+
+@defun adler32-port in
+@end defun
+
+
+@node Fletcher checksum
+@subsection Fletcher checksum
+
+The @url{https://en.wikipedia.org/wiki/Fletcher's_checksum,Fletcher
+checksum} is one of the best-known checksums. It permits a simple and
+fast implementation.
+
+@defun fletcher16 generator
+@defunx fletcher16-accumulator
+Read 8-bit bytes and compute the 16-bit Fletcher checksum.
+@end defun
+
+@defun fletcher32-accumulator
+Read 16-bit words and compute the 32-bit Fletcher checksum.
+@end defun
+
+@defun fletcher64-accumulator
+Read 32-bit words and compute the 64-bit Fletcher checksum.
+@end defun
+
+
+@node SHA
+@subsection SHA
+
+Write bytevectors into an accumulator whose final state is the SHA sum:
+
+@defun sha-1-accumulator
+@end defun
+
+@defun sha-256-accumulator
+@end defun
+
+@defun sha-512-accumulator
+@end defun
+
+Get the SHA sum of one bytevector:
+
+@defun sha-1-bytevector bytevector
+@end defun
+
+@defun sha-256-bytevector bytevector
+@end defun
+
+@defun sha-512-bytevector bytevector
+@end defun
+
+Read all remaining bytes from a binary input port and get the SHA sum:
+
+@defun sha-1-port in
+@end defun
+
+@defun sha-256-port in
+@end defun
+
+@defun sha-512-port in
+@end defun
+
+
+@node ASCII wrapping
+@section ASCII wrapping
+
+@defun base64-uri
+@end defun
+
+@defun make-base64-variant char62 char63 padding line-length
+@var{padding} is always|optional|never
+@end defun
+
+@defun base64-read variant generator accumulator
+@end defun
+
+@defun base64-write variant generator accumulator
+@end defun
+
+
+@node Compression
+@section Compression
+
+@subsection GZip
+
+@defun gzip-compress generator accumulator
+@var{generator} returns bytevectors; @var{accumulator} takes bytevectors.
+@end defun
+
+@defun gzip-decompress generator accumulator
+@var{generator} returns bytevectors; @var{accumulator} takes bytevectors.
+@end defun
+
+@subsection LZ4
+
+@defun lz4-compress generator accumulator
+@var{generator} returns bytevectors; @var{accumulator} takes bytevectors.
+@end defun
+
+@defun lz4-decompress generator accumulator
+@var{generator} returns bytevectors; @var{accumulator} takes bytevectors.
+@end defun
+
+
+@node Text data
+@chapter Text data
+
+
+@node Ini files
+@section Ini files
+
+
+@node JSON
+@section JSON
+
+@defun json-token-generator
+@end defun
+
+@defun json-fold
+@end defun
+
+@defun json-read
+@end defun
+
+@defun json-lines-read [port-or-generator] → generator
+@end defun
+
+@defun json-sequence-read [port-or-generator]
+@end defun
+
+@defun json-write obj [port-or-accumulator] → unspecified
+@end defun
+
+
+@node YAML
+@section YAML
+
+
+@node XML and HTML
+@section XML and HTML
+
+@defun html->sxml
+@end defun
+
+@defun write-html
+@end defun
+
+@defun write-xml
+@end defun
+
+
+@node Atom feed
+@section Atom feed
+
+The Atom Syndication Format is an XML language used for web feeds.
+
+@defun atom->sxml
+@end defun
+
+
+@node MIME
+@section MIME
+
+
+@node RFC822
+@section RFC822
+
+
+@node Ports
+@chapter Ports
+
+@node Sockets
+@section Sockets
+
+
+@node Concept index
+@unnumbered Concept index
+
+@printindex cp
+
+@bye
