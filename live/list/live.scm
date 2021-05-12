@@ -43,3 +43,9 @@
                     acc)
               (cdr xs)
               (not odd?)))))
+
+(define (cons-right x xs)
+  (append xs (list x)))
+
+(define (last-index xs)
+  (if (null? xs) #f (fx- (length xs) 1)))
