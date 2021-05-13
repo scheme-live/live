@@ -24,12 +24,12 @@
           (else
            (loop a (+ b 1) fields)))))
 
-;;
-
 (define (string-append-map proc str)
   (let loop ((i 0) (acc ""))
     (if (= i (string-length str)) acc
         (loop (+ i 1) (string-append acc (proc (string-ref str i)))))))
+
+;;
 
 (define (nginx-url-encode str)
   (string-append-map (lambda (char)
