@@ -3,6 +3,7 @@
   (indent-tabs-mode . nil)
   (lisp-local-indent
    c-lambda 2
+   let*-pointers 1
    test-group 1
    ;; okvs:
    call-with-input-file 1

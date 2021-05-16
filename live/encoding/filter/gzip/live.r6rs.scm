@@ -1,19 +1,7 @@
 #!r6rs
-;;; gzip.sls --- Bindings for ZLib
 
-;; Copyright (C) 2009, 2012, 2015 Andreas Rottmann <a.rottmann@gmx.at>
-
-;; Author: Andreas Rottmann <a.rottmann@gmx.at>
-
-;; This program is free software, you can redistribute it and/or
-;; modify it under the terms of the new-style BSD license.
-
-;; You should have received a copy of the BSD license along with this
-;; program. If not, see <http://www.debian.org/misc/bsd.license>.
-
-;;; Commentary:
-
-;;; Code:
+;; Copyright 2009, 2012, 2015 Andreas Rottmann <a.rottmann@gmx.at>
+;; SPDX-License-Identifier: BSD-3-Clause
 
 (library (spells gzip)
   (export zlib-error?
@@ -162,7 +150,3 @@
                                    (gzfile-close gzfile lose))))
 
 )
-
-;; Local Variables:
-;; scheme-indent-styles: ((let*-pointers 1))
-;; End:
