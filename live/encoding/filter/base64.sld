@@ -23,4 +23,4 @@
                           (let ((n (string-length str)))
                             (string-copy! buf 0 str 0 n)
                             n)))))))
-  (include "base64.scm"))
+  (include "base64/live.scm"))
