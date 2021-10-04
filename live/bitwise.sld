@@ -15,7 +15,7 @@
   ;; Defined in this library:
   (export)
   (import (scheme base))
-  (cond-expand (chicken
-                (import (chicken bitwise)))
-               ((library (srfi 151))
-                (import  (srfi 151)))))
+  (cond-expand ((or chicken (library (srfi 151)))
+                (import (srfi 151)))))
+
+;; TODO: (chicken bitwise)
