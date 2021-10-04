@@ -1,3 +1,14 @@
+# Texinfo:
+
 *.html
 *.log
 *.tsv
+
+# Chicken Scheme:
+
+*.build.sh
+*.import.scm
+*.install.sh
+*.link
+*.o
+*.so
