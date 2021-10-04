@@ -1,6 +1,6 @@
 #!/bin/sh
 set -eu
-cd "$(dirname "$0")"
+cd "$(dirname "$0")"/../doc
 generate() {
     dst="$1"
     src="$2"
@@ -13,4 +13,4 @@ generate() {
 }
 generate head head
 generate 2021 live2021
-gsi index.scm >index.conf
+gsi-script ../scripts/generate-doc-index.scm >index.conf

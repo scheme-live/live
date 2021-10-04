@@ -1,3 +1,5 @@
+#!
+
 ;;! Copyright 2021 Lassi Kortela
 ;;! SPDX-License-Identifier: MIT
 
@@ -6,6 +8,8 @@
 (cond-expand
   (chicken
    (import (only (chicken pretty-print) pretty-print))))
+
+(define live-root (string-append (script-directory) "../"))
 
 (define title "Scheme Live")
 (define author "Scheme Live Crew")
@@ -39,7 +43,7 @@
 
 (define (write-chicken-5-egg-file)
   (disp "Writing live.egg")
-  (with-output-to-file (string-append (script-directory) "live.egg")
+  (with-output-to-file (string-append live-root "live.egg")
     (lambda ()
       (disp ";;! Emacs: -*- Scheme -*-")
       (disp ";;! Generator: " (command-name))
