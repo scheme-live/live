@@ -20,7 +20,10 @@
   '(151))
 
 (define libraries
-  '((live bitwise)))
+  '((live bitwise)
+    (live number)
+    (live string)
+    (live time iso)))
 
 (define (string-join lst delimiter)
   (if (null? lst) ""
