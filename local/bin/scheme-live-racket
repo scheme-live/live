@@ -1,0 +1,48 @@
+#!/bin/bash
+
+set -e
+
+HELP_MAIN="usage: scheme-live racket <sub-commands> [options]"
+
+scheme-live-racket-install () {
+    PREFIX=$1
+
+    if [ "x$PREFIX" == "x" ]; then
+        PREFIX=$SCHEME_LIVE_PREFIX
+    fi
+
+    mkdir -p $PREFIX/tmp
+    cd $PREFIX/tmp
+    wget "https://download.racket-lang.org/installers/8.3/racket-8.3-x86_64-linux-cs.sh"
+    sh racket-8.3-x86_64-linux-cs.sh --unix-style --dest $PREFIX --create-dir
+    echo a | raco pkg install r7rs
+
+    # oops! Isn't the purpose of tmp to be temporary?! This is done
+    # like that because the install function may be run as root, hence
+    # $PREFIX/tmp may be owned by root, but we do not want to chmod it
+    # to everybody, so we just delete it.
+    rm -rf $PREFIX/tmp
+}
+
+scheme-live-racket-run () {
+    SOURCE=$(mktemp --tmpdir=$SCHEME_LIVE_PREFIX/tmp/ $(basename $1).XXXXXX.scm)
+    echo "#lang r7rs" >> $SOURCE
+    tail -n +2 $1 >> $SOURCE
+    shift
+    PLTCOLLECTS=$SCHEME_LIVE_PREFIX/lib/: racket $SOURCE $@
+}
+
+scheme-live-racket-repl () {
+    racket
+}
+
+scheme-live-racket-version () {
+    # TODO: Use Version flag @ https://srfi.schemers.org/srfi-176/
+    racket --version
+}
+
+scheme-live-racket-check () {
+    SCHEME_LIVE_CURRENT=racket scheme-live current check
+}
+
+source $SCHEME_LIVE_PREFIX/shell-subcommand.sh

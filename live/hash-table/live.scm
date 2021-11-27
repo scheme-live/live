@@ -1,8 +1,0 @@
-(define (hash-table-alternating-for-each f table)
-  (let-values (((keys vals) (hashtable-entries table)))
-    (let loop ((i (vector-length keys)))
-      (when (> i 0)
-        (let ((i (- i 1)))
-          (f (vector-ref keys i))
-          (f (vector-ref vals i))
-          (loop i))))))

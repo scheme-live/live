@@ -1,0 +1,59 @@
+#!/bin/bash
+
+set -e
+
+HELP_MAIN="usage: scheme-live chibi <sub-commands> [options]"
+
+scheme-live-chibi-uninstall () {
+    PREFIX=$1
+
+    if [ "x$PREFIX" == "x" ]; then
+        PREFIX=$SCHEME_LIVE_PREFIX
+    fi
+
+    rm $PREFIX/bin/chibi-*
+    rm $PREFIX/bin/snow-*
+    rm $PREFIX/share/man/man1/chibi-*
+    rm -r $PREFIX/share/chibi
+}
+
+scheme-live-chibi-install () {
+    PREFIX=$1
+
+    if [ "x$PREFIX" == "x" ]; then
+        PREFIX=$SCHEME_LIVE_PREFIX
+    fi
+
+    if test -f "$PREFIX/bin/chibi-scheme"; then
+        echo "chibi is already installed at $PREFIX"
+        exit 1
+    fi
+
+    WORK=$PREFIX/tmp/chibi-scheme-$(date --iso=seconds)
+    echo "Work directory is: $WORK"
+    mkdir -p $WORK
+    wget "https://github.com/ashinn/chibi-scheme/archive/refs/tags/0.10.tar.gz" --output-document="$WORK/scheme.tar.gz"
+    tar -xvf "$WORK/scheme.tar.gz" --directory="$WORK"
+    cd $WORK/chibi-scheme*/
+    make
+    make PREFIX=$PREFIX install
+}
+
+scheme-live-chibi-run () {
+    chibi-scheme -I $SCHEME_LIVE_PREFIX/share/ $@
+}
+
+scheme-live-chibi-repl () {
+    rlwrap chibi-scheme -I $SCHEME_LIVE_PREFIX/share/
+}
+
+scheme-live-chibi-version () {
+    # TODO: Use Version flag @ https://srfi.schemers.org/srfi-176/
+    chibi-scheme -V
+}
+
+scheme-live-chibi-check () {
+    SCHEME_LIVE_CURRENT=chibi scheme-live current check
+}
+
+source $SCHEME_LIVE_PREFIX/shell-subcommand.sh

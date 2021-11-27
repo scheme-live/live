@@ -1,0 +1,51 @@
+#!/bin/bash
+
+set -e
+
+HELP_MAIN="usage: scheme-live gerbil <sub-commands> [options]"
+
+scheme-live-gerbil-uninstall () {
+    PREFIX=$1
+
+    if [ "x$PREFIX" == "x" ]; then
+        PREFIX=$SCHEME_LIVE_PREFIX
+    fi
+
+    echo "Not implemented"
+    exit 1
+}
+
+scheme-live-gerbil-install () {
+    PREFIX=$1
+
+    if [ "x$PREFIX" == "x" ]; then
+        PREFIX=$SCHEME_LIVE_PREFIX
+    fi
+
+    WORK=$PREFIX/tmp/gerbil-scheme-$(date --iso=seconds)
+    mkdir -p $WORK
+    cd $WORK/
+    git clone https://github.com/vyzo/gerbil.git
+    cd gerbil
+    ./src/build.sh
+
+}
+
+scheme-live-gerbil-run () {
+    gxi --lang r7rs $SCHEME_LIVE_PREFIX/share/ $@
+}
+
+scheme-live-gerbil-repl () {
+    rlwrap gxi --lang r7rs $SCHEME_LIVE_PREFIX/share
+}
+
+scheme-live-gerbil-version () {
+    # TODO: Use Version flag @ https://srfi.schemers.org/srfi-176/
+    gxi -v
+}
+
+scheme-live-gerbil-check () {
+    SCHEME_LIVE_CURRENT=gerbil scheme-live current check
+}
+
+source $SCHEME_LIVE_PREFIX/shell-subcommand.sh

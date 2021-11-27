@@ -1,0 +1,54 @@
+#!/bin/bash
+
+set -e
+
+HELP_MAIN="usage: scheme-live gauche <sub-commands> [options]"
+
+scheme-live-gauche-uninstall () {
+    PREFIX=$1
+
+    if [ "x$PREFIX" == "x" ]; then
+        PREFIX=$SCHEME_LIVE_PREFIX
+    fi
+
+    echo "Not implemented"
+    exit 1
+}
+
+scheme-live-gauche-install () {
+    PREFIX=$1
+
+    if [ "x$PREFIX" == "x" ]; then
+        PREFIX=$SCHEME_LIVE_PREFIX
+    fi
+
+    # if test -f "$PREFIX/bin/chibi-scheme"; then
+    #     echo "chibi is already installed at $PREFIX"
+    #     exit 1
+    # fi
+
+    # TODO: XXX: Installed via deb package
+
+    echo "Not implemented"
+    exit 1
+}
+
+scheme-live-gauche-run () {
+    # TODO: XXX: Remove the pwd, because security
+    gosh -r7 -I $SCHEME_LIVE_PREFIX/share/ -I $(pwd) $@
+}
+
+scheme-live-gauche-repl () {
+    rlwrap gosh -r7 -I$SCHEME_LIVE_PREFIX/share
+}
+
+scheme-live-gauche-version () {
+    # TODO: Use Version flag @ https://srfi.schemers.org/srfi-176/
+    gosh -V
+}
+
+scheme-live-gauche-check () {
+    SCHEME_LIVE_CURRENT=gauche scheme-live current check
+}
+
+source $SCHEME_LIVE_PREFIX/shell-subcommand.sh

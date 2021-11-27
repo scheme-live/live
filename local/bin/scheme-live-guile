@@ -1,0 +1,55 @@
+#!/bin/bash
+
+set -e
+
+HELP_MAIN="usage: scheme-live guile <sub-commands> [options]"
+
+scheme-live-guile-uninstall () {
+    PREFIX=$1
+
+    if [ "x$PREFIX" == "x" ]; then
+        PREFIX=$SCHEME_LIVE_PREFIX
+    fi
+
+    echo "Not implemented"
+    exit 1
+}
+
+scheme-live-guile-install () {
+    PREFIX=$1
+
+    if [ "x$PREFIX" == "x" ]; then
+        PREFIX=$SCHEME_LIVE_PREFIX
+    fi
+
+    # if test -f "$PREFIX/bin/chibi-scheme"; then
+    #     echo "chibi is already installed at $PREFIX"
+    #     exit 1
+    # fi
+
+    echo "Not implemented"
+    exit 1
+}
+
+scheme-live-guile-run () {
+    # Drop first line because the #! is not closed with !#
+    SOURCE=$(mktemp --tmpdir=$SCHEME_LIVE_PREFIX/tmp/ $(basename $1).XXXXXX.scm)
+    tail -n +2 $1 > $SOURCE
+    shift
+    guile --r7rs -x .guile.sld -L $SCHEME_LIVE_PREFIX/lib/ $SOURCE $@
+}
+
+scheme-live-guile-repl () {
+    rlwrap guile --r7rs -L $SCHEME_LIVE_PREFIX/share
+}
+
+scheme-live-guile-version () {
+    # TODO: Use Version flag @ https://srfi.schemers.org/srfi-176/
+    guile --version
+}
+
+scheme-live-guile-check () {
+    SCHEME_LIVE_CURRENT=guile scheme-live current check
+}
+
+source $SCHEME_LIVE_PREFIX/shell-subcommand.sh
