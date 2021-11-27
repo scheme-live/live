@@ -19,7 +19,8 @@
   (import (scheme base))
   (cond-expand
     (chicken
-     (import (chicken condition) (openssl) (uri-generic))))
+     (import (chicken condition)
+             (uri-generic))))
   (cond-expand
     (chicken
 
