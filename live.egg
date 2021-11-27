@@ -7,7 +7,7 @@
  (category misc)
  (license "MIT")
  (author "Scheme Live Crew")
- (dependencies srfi-143 srfi-151)
+ (dependencies r7rs srfi-143 srfi-151)
  (test-dependencies)
  (distribution-files
    "live.egg"
