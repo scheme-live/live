@@ -1,0 +1,6 @@
+#!/bin/sh
+
+set -xe
+
+echo "Running checks..."
+echo "Arguments are:" $@
