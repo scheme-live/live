@@ -1,3 +1,8 @@
+# Mind the fact that some files are forced into the directory local
+# You need to git add --force local/... on a case by case basis.
+
+local/
+
 # Texinfo:
 
 *.html

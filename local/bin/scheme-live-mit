@@ -1,0 +1,39 @@
+#!/bin/bash
+
+set -e
+
+HELP_MAIN="usage: scheme-live mit <sub-commands> [options]"
+
+
+scheme-live-mit-install () {
+
+    # TODO https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-user/Unix-Installation.html
+
+    apt install mit-scheme
+}
+
+scheme-live-mit-run () {
+    SOURCE=$(mktemp --tmpdir=$SCHEME_LIVE_PREFIX/tmp/ $(basename $1).XXXXXX.scm)
+    # echo "(import (only (chezscheme) import))" >> $SOURCE
+    tail -n +2 $1 >> $SOURCE
+    shift
+
+    set -xe
+
+    mit-scheme --batch-mode --prepend-library . --load $SOURCE --eval "(exit 0)" -- $@
+}
+
+scheme-live-mit-repl () {
+    mit-scheme --library $SCHEME_LIVE_PREFIX/share/ $@
+}
+
+scheme-live-mit-version () {
+    # TODO: Use Version flag @ https://srfi.schemers.org/srfi-176/
+    mit-scheme --version
+}
+
+scheme-live-mit-check () {
+    SCHEME_LIVE_CURRENT=mit scheme-live current check
+}
+
+source $SCHEME_LIVE_PREFIX/shell-subcommand.sh

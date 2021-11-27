@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+set -x
+
+STDOUT=$(hello-schemer-star)
+
+if  [ "$STDOUT" != "Hello schemer $USER!" ]; then
+    exit 1
+fi

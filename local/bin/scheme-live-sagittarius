@@ -1,0 +1,41 @@
+#!/bin/bash
+
+set -e
+
+HELP_MAIN="usage: scheme-live sagittarius <sub-commands> [options]"
+
+
+scheme-live-sagittarius-install () {
+    PREFIX=$1
+
+    if [ "x$PREFIX" == "x" ]; then
+        PREFIX=$SCHEME_LIVE_PREFIX
+    fi
+
+    # if test -f "$PREFIX/bin/chibi-scheme"; then
+    #     echo "chibi is already installed at $PREFIX"
+    #     exit 1
+    # fi
+
+    echo "Not implemented"
+    exit 1
+}
+
+scheme-live-sagittarius-run () {
+    exit 2
+}
+
+scheme-live-sagittarius-repl () {
+    rlwrap sagittarius --standard=7 --loadpath=$SCHEME_LIVE_PREFIX/lib/
+}
+
+scheme-live-sagittarius-version () {
+    # TODO: Use Version flag @ https://srfi.schemers.org/srfi-176/
+    sagittarius --version
+}
+
+scheme-live-sagittarius-check () {
+    SCHEME_LIVE_CURRENT=sagittarius scheme-live current check
+}
+
+source $SCHEME_LIVE_PREFIX/shell-subcommand.sh

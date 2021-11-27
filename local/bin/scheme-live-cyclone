@@ -1,0 +1,72 @@
+#!/bin/bash
+
+set -e
+
+HELP_MAIN="usage: scheme-live cyclone <sub-commands> [options]"
+
+scheme-live-cyclone-uninstall () {
+    PREFIX=$1
+
+    if [ "x$PREFIX" == "x" ]; then
+        PREFIX=$SCHEME_LIVE_PREFIX
+    fi
+
+    echo "Not implemented"
+    exit 1
+}
+
+scheme-live-cyclone-install () {
+    set -xe
+
+    PREFIX=$1
+
+    if [ "x$PREFIX" == "x" ]; then
+        PREFIX=$SCHEME_LIVE_PREFIX
+    fi
+
+    if test -f "$PREFIX/bin/cyclone"; then
+        echo "Already installed!..."
+        exit 0
+    fi
+
+    mkdir -p $PREFIX/tmp
+
+    cd $PREFIX/tmp
+
+    wget https://github.com/justinethier/cyclone-bootstrap/archive/refs/tags/v0.33.0.tar.gz -O cyclone.tar.gz
+    tar xvf cyclone.tar.gz
+    cd cyclone-bootstrap-*/
+
+    make PREFIX=$PREFIX -j $(echo $(nproc) - 1 | bc)
+    make PREFIX=$PREFIX install
+
+    # oops! Isn't the purpose of tmp to be temporary?! This is done
+    # like that because the install function may be run as root, hence
+    # $PREFIX/tmp may be owned by root, but we do not want to chmod it
+    # to everybody, so we just delete it.
+    rm -rf $PREFIX/tmp
+
+}
+
+scheme-live-cyclone-run () {
+    SOURCE=$(mktemp --tmpdir=$SCHEME_LIVE_PREFIX/tmp/ $(basename $1).XXXXXX.scm)
+    tail -n +2 $1 > $SOURCE
+    cyclone -I$SCHEME_LIVE_PREFIX/share/ $SOURCE
+    shift
+    exec $SCHEME_LIVE_PREFIX/tmp/$(basename $SOURCE .scm) $@
+}
+
+scheme-live-cyclone-repl () {
+    rlwrap cyclone -I$SCHEME_LIVE_PREFIX/share
+}
+
+scheme-live-cyclone-version () {
+    # TODO: Use Version flag @ https://srfi.schemers.org/srfi-176/
+    cyclone -v
+}
+
+scheme-live-cyclone-check () {
+    SCHEME_LIVE_CURRENT=cyclone scheme-live current check
+}
+
+source $SCHEME_LIVE_PREFIX/shell-subcommand.sh

@@ -1,0 +1,52 @@
+#!/bin/bash
+
+set -e
+
+scheme-live-current-run () {
+
+    if [ "x$SCHEME_LIVE_CURRENT" == "x" ]; then
+        echo "Oops! Not current Scheme. Retry with something like:
+
+  SCHEME_LIVE_CURRENT=fantastic $@
+
+Or:
+
+  export SCHEME_LIVE_CURRENT=fantastic
+
+Then call the program.
+"
+        exit 1
+    fi
+
+    exec scheme-live-$SCHEME_LIVE_CURRENT run $@
+}
+
+scheme-live-current-check () {
+    DIRECTORY="$SCHEME_LIVE_PREFIX/tmp/check-$SCHEME_LIVE_CURRENT"
+    mkdir -p $DIRECTORY
+    REPORT=$(mktemp --tmpdir=$DIRECTORY $(date '+%Y-%m-%d-%H%M%S')-XXXXXX.txt)
+
+    echo "* Report stored @ $REPORT"
+
+    echo "* There is $(find ./live/ -type f -executable -name "check*" | wc -l) checks to do with \`$SCHEME_LIVE_CURRENT\`" | tee --append $REPORT
+
+    echo "* scheme-live version" | tee --append $REPORT
+
+    scheme-live version | tee --append $REPORT
+
+    echo "* scheme-live $SCHEME_LIVE_CURRENT version" | tee --append $REPORT
+
+    scheme-live $SCHEME_LIVE_CURRENT version | tee --append $REPORT
+
+    find ./live/ -type f -executable -name "check*" -exec bash -c "echo \* {} && {} || echo \*\* failed" \; | tee --append $REPORT
+
+    if grep "^** failed" $REPORT > /dev/null; then
+        echo "* Report: $(grep "^\*\* failed" $REPORT | wc -l) failed tests"
+        exit 1
+    else
+        echo "* Win :)"
+        exit 0
+    fi
+}
+
+source $SCHEME_LIVE_PREFIX/shell-subcommand.sh
