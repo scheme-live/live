@@ -1,0 +1,25 @@
+name: Continuation Integration
+
+on:
+    push:
+    pull_request:
+
+jobs:
+    build:
+        runs-on: ubuntu-20.04
+        strategy:
+          matrix:
+            include:
+              - IMAGE: schemers/chicken
+                IMPLEMENTATION: chicken
+              - IMAGE: schemers/chezscheme
+                IMPLEMENTATION: chezscheme
+        steps:
+            - uses: actions/checkout@v2
+            - name: Install dependencies on host
+              run: sudo make ubuntu-lts-prepare
+            - name: Run checks with docker
+              env:
+                IMPLEMENTATION: ${{ matrix.IMPLEMENTATION }}
+                IMAGE: ${{ matrix.IMAGE }}
+              run: make check-with-docker
