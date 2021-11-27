@@ -1,4 +1,4 @@
-(define-library (live string)
+(define-library (live string unstable)
   ;; Re-exported from SRFI 13:
   (export
    string-concatenate-reverse
@@ -28,5 +28,5 @@
    ((library (srfi 13))
     (import  (srfi 13)))
    (else
-    (include "string/srfi-13.scm")))
-  (include "string/live.scm"))
+    (include "srfi-13.scm")))
+  (include "live.scm"))

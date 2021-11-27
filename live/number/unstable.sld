@@ -1,4 +1,4 @@
-(define-library (live number)
+(define-library (live number unstable)
   (export natural?)
   (import (scheme base))
   (begin

@@ -1,4 +1,4 @@
-(define-library (live bitwise)
+(define-library (live bitwise unstable)
   ;; Re-exported from SRFI 151:
   (export
    any-bit-set?

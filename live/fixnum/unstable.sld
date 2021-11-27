@@ -1,4 +1,4 @@
-(define-library (live fixnum)
+(define-library (live fixnum unstable)
   ;; Re-exported from SRFI 143:
   (export
    fixnum?
@@ -45,11 +45,16 @@
   ;; Defined in this library:
   (export)
   (import (scheme base))
-  (cond-expand (chicken
-                (import (rename (chicken fixnum)
-                                (fx/ fxquotient)
-                                ;; TODO: Is fxmod compatible with
-                                ;; fxremainder for negative numbers?
-                                (fxmod fxremainder))))
-               ((library (srfi 143))
-                (import  (srfi 143)))))
+  (cond-expand
+
+    #;
+    (chicken
+    (import (rename (chicken fixnum)
+    (fx/ fxquotient)
+    ;; TODO: Is fxmod compatible with
+    ;; fxremainder for negative numbers?
+    (fxmod fxremainder))))
+
+    ((or chicken
+         (library (srfi 143)))
+     (import  (srfi 143)))))
