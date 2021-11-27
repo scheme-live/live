@@ -32,7 +32,7 @@
                 ,(if (number? ver)
                      (string->symbol
                       (string-append "v" (number->string ver)))
-                     ,ver)))
+                     ver)))
        (library-versions lib)))
 
 (define (library-names/r7rs lib)
