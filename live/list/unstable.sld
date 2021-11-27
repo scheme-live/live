@@ -1,4 +1,4 @@
-(define-library (live list)
+(define-library (live list unstable)
   (export
    ;; Re-exported from SRFI 1:
    any
