@@ -62,6 +62,12 @@
    (make-library '(list)
                  '(unstable))
 
+   (make-library '(net gemini)
+                 '(unstable))
+
+   (make-library '(net gemini client)
+                 '(unstable))
+
    (make-library '(number)
                  '(unstable))
 
