@@ -97,6 +97,7 @@
          (license ,spdx-license-expression)
          (author ,author)
          (dependencies
+          r7rs
           ,@(map (lambda (srfi)
                    (string->symbol
                     (string-append "srfi-" (number->string srfi))))
