@@ -22,6 +22,15 @@
   '(143
     151))
 
+(define chicken-eggs
+  (append '(r7rs
+            openssl
+            uri-generic)
+          (map (lambda (srfi)
+                 (string->symbol
+                  (string-append "srfi-" (number->string srfi))))
+               srfis)))
+
 (define make-library cons)
 (define library-name-parts car)
 (define library-versions cdr)
@@ -96,12 +105,7 @@
          (category misc)
          (license ,spdx-license-expression)
          (author ,author)
-         (dependencies
-          r7rs
-          ,@(map (lambda (srfi)
-                   (string->symbol
-                    (string-append "srfi-" (number->string srfi))))
-                 srfis))
+         (dependencies ,@chicken-eggs)
          (test-dependencies)
          (distribution-files
           "live.egg"
