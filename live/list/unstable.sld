@@ -17,5 +17,13 @@
    length-tail
    map/odd
    proper-list?)
-  (import (scheme base) (srfi 1) (live fixnum))
-  (include "list/live.scm"))
+  (import (scheme base)
+
+          ;; TODO
+          (except (srfi 1)
+                  circular-list?
+                  dotted-list?
+                  proper-list?)
+
+          (live fixnum unstable))
+  (include "live.scm"))

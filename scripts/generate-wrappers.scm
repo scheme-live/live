@@ -16,14 +16,51 @@
 (define tagline "fast-moving library collection with stable releases")
 (define spdx-license-expression "MIT")
 
+;; TODO: These SRFI numbers should be found by groveling the imports
+;; in the .sld files.
 (define srfis
-  '(151))
+  '(143
+    151))
+
+(define make-library cons)
+(define library-name-parts car)
+(define library-versions cdr)
+
+(define (library-names/r6rs lib)
+  (map (lambda (ver)
+         `(live ,@(library-name-parts lib)
+                ,(if (number? ver)
+                     (string->symbol
+                      (string-append "v" (number->string ver)))
+                     ,ver)))
+       (library-versions lib)))
+
+(define (library-names/r7rs lib)
+  (map (lambda (ver)
+         `(live ,@(library-name-parts lib)
+                ,ver))
+       (library-versions lib)))
 
 (define libraries
-  '((live bitwise)
-    (live number)
-    (live string)
-    (live time iso)))
+  (list
+
+   (make-library '(bitwise)
+                 '(unstable))
+
+   (make-library '(fixnum)
+                 '(unstable))
+
+   (make-library '(list)
+                 '(unstable))
+
+   (make-library '(number)
+                 '(unstable))
+
+   (make-library '(string)
+                 '(unstable))
+
+   (make-library '(time iso)
+                 '(unstable))))
 
 (define (string-join lst delimiter)
   (if (null? lst) ""
@@ -68,18 +105,21 @@
          (distribution-files
           "live.egg"
           "live.release-info"
-          ,@(map library-name->sld libraries))
+          ,@(map library-name->sld (append-map library-names/r7rs libraries)))
          (components
-          ,@(map (lambda (lib)
-                   `(extension
-                     ,(library-name->chicken lib)
-                     (source ,(library-name->sld lib))
-                     (source-dependencies
-                      ,@(map library-name->sld (mine 'include lib)))
-                     (component-dependencies
-                      ,@(map library-name->chicken (mine 'import lib)))
-                     (csc-options "-R" "r7rs" "-X" "r7rs")))
-                 libraries)))))))
+          ,@(append-map
+             (lambda (lib)
+               (map (lambda (libname)
+                      `(extension
+                        ,(library-name->chicken libname)
+                        (source ,(library-name->sld libname))
+                        (source-dependencies
+                         ,@(map library-name->sld (mine 'include lib)))
+                        (component-dependencies
+                         ,@(map library-name->chicken (mine 'import lib)))
+                        (csc-options "-R" "r7rs" "-X" "r7rs")))
+                    (library-names/r7rs lib)))
+             libraries)))))))
 
 (define (main)
   (write-chicken-5-egg-file))

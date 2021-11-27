@@ -7,13 +7,51 @@
  (category misc)
  (license "MIT")
  (author "Scheme Live Crew")
- (dependencies srfi-151)
+ (dependencies srfi-143 srfi-151)
  (test-dependencies)
- (distribution-files "live.egg" "live.release-info" "live/bitwise.sld")
+ (distribution-files
+   "live.egg"
+   "live.release-info"
+   "live/bitwise/unstable.sld"
+   "live/fixnum/unstable.sld"
+   "live/list/unstable.sld"
+   "live/number/unstable.sld"
+   "live/string/unstable.sld"
+   "live/time/iso/unstable.sld")
  (components
    (extension
-     live.bitwise
-     (source "live/bitwise.sld")
+     live.bitwise.unstable
+     (source "live/bitwise/unstable.sld")
+     (source-dependencies)
+     (component-dependencies)
+     (csc-options "-R" "r7rs" "-X" "r7rs"))
+   (extension
+     live.fixnum.unstable
+     (source "live/fixnum/unstable.sld")
+     (source-dependencies)
+     (component-dependencies)
+     (csc-options "-R" "r7rs" "-X" "r7rs"))
+   (extension
+     live.list.unstable
+     (source "live/list/unstable.sld")
+     (source-dependencies)
+     (component-dependencies)
+     (csc-options "-R" "r7rs" "-X" "r7rs"))
+   (extension
+     live.number.unstable
+     (source "live/number/unstable.sld")
+     (source-dependencies)
+     (component-dependencies)
+     (csc-options "-R" "r7rs" "-X" "r7rs"))
+   (extension
+     live.string.unstable
+     (source "live/string/unstable.sld")
+     (source-dependencies)
+     (component-dependencies)
+     (csc-options "-R" "r7rs" "-X" "r7rs"))
+   (extension
+     live.time.iso.unstable
+     (source "live/time/iso/unstable.sld")
      (source-dependencies)
      (component-dependencies)
      (csc-options "-R" "r7rs" "-X" "r7rs"))))

@@ -3,11 +3,11 @@
 
 ;; https://en.wikipedia.org/wiki/ISO_8601
 
-(define-library (live time iso)
-  (export parse-iso-time)
+(define-library (live time iso unstable)
+  (export parse-iso-duration)
   (import (scheme base)
           (scheme write)
-          (live number))
+          (live number unstable))
   (begin
 
     (define null-list? null?)
@@ -71,9 +71,4 @@
                    ((#\Y) (loop parts (acons 'year number result)))
                    ((#\M) (loop parts (acons 'month number result)))
                    ((#\D) (loop parts (acons 'day number result)))
-                   (else (error "Unknown letter" letter))))))))
-
-    (define (parse-iso-time str)
-      (let ((parts (split-numbers-letters str)))
-        (and (equal? #\P (first parts))
-             (parse-iso-duration (rest parts)))))))
+                   (else (error "Unknown letter" letter))))))))))
