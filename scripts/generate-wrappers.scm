@@ -79,12 +79,11 @@
                  '(unstable))))
 
 (define (list<? elem<? list1 list2)
-  (let loop ((list1 list1) (list2 list2))
-    (cond ((null? list1) (not (null? list2)))
-          ((null? list2) #f)
-          ((elem<? (car list1) (car list2)) #t)
-          ((elem<? (car list2) (car list1)) #f)
-          (else (loop (cdr list1) (cdr list2))))))
+  (cond ((null? list1) (not (null? list2)))
+        ((null? list2) #f)
+        ((elem<? (car list1) (car list2)) #t)
+        ((elem<? (car list2) (car list1)) #f)
+        (else (list<? elem<? (cdr list1) (cdr list2)))))
 
 (define (tree-fold merge state tree)
   (let ((state (merge tree state)))
@@ -106,12 +105,12 @@
   (string->symbol (string-join (map lnp->string parts) ".")))
 
 (define (library-name-part<? part1 part2)
-  (define (normalize part)
+  (define (stringify part)
     (if (number? part)
         (number->string part)
         (symbol->string part)))
-  (string<? (normalize part1)
-            (normalize part2)))
+  (string<? (stringify part1)
+            (stringify part2)))
 
 (define (library-name<? name1 name2)
   (list<? library-name-part<? name1 name2))
