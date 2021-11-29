@@ -3,7 +3,8 @@
 ;;! Copyright 2021 Lassi Kortela
 ;;! SPDX-License-Identifier: MIT
 
-(import (scheme base) (scheme write) (srfi 1) (srfi 193))
+(import (scheme base) (scheme write)
+        (srfi 1) (srfi 132) (srfi 193))
 
 (cond-expand
   (chicken
@@ -82,14 +83,37 @@
       (fold (lambda (item result) (string-append result delimiter item))
             (car lst) (cdr lst))))
 
+(define (tree-fold merge state tree)
+  (let ((state (merge tree state)))
+    (if (not (list? tree)) state
+        (fold (lambda (elem state) (tree-fold merge state elem))
+              state tree))))
+
 (define (lnp->string part)
   ((if (number? part) number->string symbol->string) part))
+
+(define (library-name->directory parts)
+  (fold (lambda (part whole) (string-append whole part "/"))
+        "" (map lnp->string (drop-right parts 1))))
 
 (define (library-name->sld parts)
   (string-append (string-join (map lnp->string parts) "/") ".sld"))
 
 (define (library-name->chicken parts)
   (string->symbol (string-join (map lnp->string parts) ".")))
+
+(define (grovel-includes)
+  (let ((includes
+         (tree-fold (lambda (x includes)
+                      (if (and (list? x)
+                               (not (null? x))
+                               (eq? 'include (car x))
+                               (every string? (cdr x)))
+                          (append includes (cdr x))
+                          includes))
+                    '()
+                    (read))))
+    (list-delete-neighbor-dups string=? (list-sort string<? includes))))
 
 (define (mine x y)
   '())
@@ -116,7 +140,17 @@
          (distribution-files
           "live.egg"
           "live.release-info"
-          ,@(map library-name->sld (append-map library-names/r7rs libraries)))
+          ,@(append-map
+             (lambda (lib-name)
+               (let ((lib-dir (library-name->directory lib-name))
+                     (sld-file (library-name->sld lib-name)))
+                 (cons sld-file
+                       (map (lambda (included-file)
+                              (string-append lib-dir included-file))
+                            (with-input-from-file
+                                (string-append live-root sld-file)
+                              grovel-includes)))))
+             (append-map library-names/r7rs libraries)))
          (components
           ,@(append-map
              (lambda (lib)
