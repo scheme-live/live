@@ -6,21 +6,10 @@ HELP_MAIN="usage: scheme-live mit <sub-commands> [options]"
 
 
 scheme-live-mit-install () {
-    PREFIX=$1
-
-    if [ "x$PREFIX" == "x" ]; then
-        PREFIX=$SCHEME_LIVE_PREFIX
-    fi
 
     # TODO https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-user/Unix-Installation.html
 
-    # if test -f "$PREFIX/bin/chibi-scheme"; then
-    #     echo "chibi is already installed at $PREFIX"
-    #     exit 1
-    # fi
-
-    echo "Not implemented"
-    exit 1
+    apt install mit-scheme
 }
 
 scheme-live-mit-run () {
