@@ -24,11 +24,11 @@ RUN rm -rf /var/lib/apt/lists/* && rm -rf /var/cache/apt/* -rf
 # RUN cd /live && ./venv scheme-live cyclone install /usr/local
 # RUN cd /live && ./venv scheme-live cyclone check
 
-# RUN cd /live && ./venv scheme-live gambit install /usr/local
-# RUN cd /live && ./venv scheme-live gambit check
+RUN cd /live && ./venv scheme-live gambit install /usr/local
+RUN cd /live && ./venv scheme-live gambit check
 
-# RUN cd /live && ./venv scheme-live gerbil install /usr/local
-# RUN cd /live && ./venv scheme-live gerbil check
+RUN cd /live && ./venv scheme-live gerbil install /usr/local
+RUN cd /live && ./venv scheme-live gerbil check
 
 # RUN cd /live && ./venv scheme-live racket install /usr/local
 # RUN cd /live && ./venv scheme-live racket check

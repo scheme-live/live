@@ -40,11 +40,11 @@ scheme-live-chibi-install () {
 }
 
 scheme-live-chibi-run () {
-    chibi-scheme -I $SCHEME_LIVE_PREFIX/share/ $@
+    chibi-scheme -I $SCHEME_LIVE_PREFIX/lib/ $1
 }
 
 scheme-live-chibi-repl () {
-    rlwrap chibi-scheme -I $SCHEME_LIVE_PREFIX/share/
+    rlwrap chibi-scheme -I $SCHEME_LIVE_PREFIX/lib/
 }
 
 scheme-live-chibi-version () {
