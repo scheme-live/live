@@ -49,3 +49,10 @@
 
 (define (last-index xs)
   (if (null? xs) #f (fx- (length xs) 1)))
+
+(define (list<? elem<? list1 list2)
+  (cond ((null? list1) (not (null? list2)))
+        ((null? list2) #f)
+        ((elem<? (car list1) (car list2)) #t)
+        ((elem<? (car list2) (car list1)) #f)
+        (else (list<? elem<? (cdr list1) (cdr list2)))))
