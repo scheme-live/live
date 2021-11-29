@@ -39,14 +39,13 @@ scheme-live-chicken-install () {
     make PREFIX=$PREFIX
     make PREFIX=$PREFIX install
     cd -
-    # chicken-install -s
     # https://wiki.call-cc.org/eggref/5/csm
     chicken-install csm
     chicken-install r7rs
 }
 
 scheme-live-chicken-run () {
-    set -x
+    set -ex
     csm -r7rs -ignore local &> /dev/null
     csi -quiet -batch -no-warnings -R r7rs -include-path $SCHEME_LIVE_PREFIX $1
 }

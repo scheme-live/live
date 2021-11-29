@@ -22,26 +22,31 @@ scheme-live-gerbil-install () {
         PREFIX=$SCHEME_LIVE_PREFIX
     fi
 
-    WORK=$PREFIX/tmp/gerbil-scheme-$(date --iso=seconds)
-    mkdir -p $WORK
+    WORK=$PREFIX/opt/
+    rm -rf $WORK/gerbil
+    mkdir -p $WORK/gerbil
     cd $WORK/
     git clone https://github.com/vyzo/gerbil.git
-    cd gerbil
-    ./src/build.sh
-
+    cd gerbil/src
+    ./build.sh
+    cd ../bin/
+    GERBIL_BIN=$(pwd)
+    cd $PREFIX/bin
+    ln -sfv $GERBIL_BIN/* .
+    echo $WORK/opt/gerbil > $SCHEME_LIVE_PREFIX/GERBIL_HOME
 }
 
 scheme-live-gerbil-run () {
-    gxi --lang r7rs $SCHEME_LIVE_PREFIX/share/ $@
+    GERBIL_LOADPATH="$SCHEME_LIVE_PREFIX/lib/" GERBIL_HOME="$(cat $SCHEME_LIVE_PREFIX/GERBIL_HOME || \"\")" gxi --lang r7rs $1
 }
 
 scheme-live-gerbil-repl () {
-    rlwrap gxi --lang r7rs $SCHEME_LIVE_PREFIX/share
+    GERBIL_LOADPATH="$SCHEME_LIVE_PREFIX/lib/" GERBIL_HOME="$(cat $SCHEME_LIVE_PREFIX/GERBIL_HOME || \"\")" rlwrap gxi --lang r7rs $SCHEME_LIVE_PREFIX/lib/
 }
 
 scheme-live-gerbil-version () {
     # TODO: Use Version flag @ https://srfi.schemers.org/srfi-176/
-    gxi -v
+    GERBIL_HOME=$(cat $SCHEME_LIVE_PREFIX/GERBIL_HOME || "") gxi -v
 }
 
 scheme-live-gerbil-check () {

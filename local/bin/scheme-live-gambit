@@ -52,13 +52,12 @@ scheme-live-gambit-install () {
 }
 
 scheme-live-gambit-run () {
-    # TODO: XXX: Remove the pwd, because it does always work, and
-    # because it is a security risk.
-    gsi -:r7rs $SCHEME_LIVE_PREFIX/share/ $(pwd) $@
+    set -xe
+    gsi -:r7rs $SCHEME_LIVE_PREFIX/lib/ $1
 }
 
 scheme-live-gambit-repl () {
-    rlwrap gsi -:r7rs $SCHEME_LIVE_PREFIX/share
+    rlwrap gsi -:r7rs $SCHEME_LIVE_PREFIX/lib/
 }
 
 scheme-live-gambit-version () {

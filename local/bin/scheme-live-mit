@@ -31,7 +31,7 @@ scheme-live-mit-run () {
 
     set -xe
 
-    mit-scheme --batch-mode --prepend-library $SCHEME_LIVE_PREFIX/lib/ --load $SOURCE --eval "(exit 0)" -- $@
+    mit-scheme --batch-mode --prepend-library . --load $SOURCE --eval "(exit 0)" -- $@
 }
 
 scheme-live-mit-repl () {

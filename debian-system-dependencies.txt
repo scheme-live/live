@@ -15,6 +15,7 @@ libssl-dev
 libssl-dev
 libtommath-dev
 make
+mit-scheme
 rlwrap
 shtool
 texi2html
