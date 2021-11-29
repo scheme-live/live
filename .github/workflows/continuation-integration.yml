@@ -19,7 +19,7 @@ jobs:
             # - IMPLEMENTATION: gerbil
             - IMPLEMENTATION: guile
             - IMPLEMENTATION: loko
-            - IMPLEMENTATION: mit
+            # - IMPLEMENTATION: mit
             - IMPLEMENTATION: racket
             # TODO!
             # - IMPLEMENTATION: sagittarius
