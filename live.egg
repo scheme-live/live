@@ -15,10 +15,15 @@
    "live/bitwise/unstable.sld"
    "live/fixnum/unstable.sld"
    "live/list/unstable.sld"
+   "live/list/live.scm"
    "live/net/gemini/unstable.sld"
+   "live/net/gemini/live.scm"
    "live/net/gemini/client/unstable.sld"
+   "live/net/gemini/client/live.scm"
    "live/number/unstable.sld"
    "live/string/unstable.sld"
+   "live/string/live.scm"
+   "live/string/srfi-13.scm"
    "live/time/iso/unstable.sld")
  (components
    (extension
