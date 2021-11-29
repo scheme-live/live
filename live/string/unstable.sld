@@ -18,6 +18,7 @@
    string-char-prefix?
    string-char-suffix?
    string-last-index
+   string-split
    with-input-from-string
    with-output-to-string)
   (import (scheme base)
