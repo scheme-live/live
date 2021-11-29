@@ -10,7 +10,7 @@ scheme-live-chez-install () {
 }
 
 scheme-live-chez-run () {
-    SOURCE=$(mktemp --tmpdir=$SCHEME_LIVE_PREFIX/tmp/ $(basename $1).XXXXXX.scm)
+    SOURCE=$(mktemp --tmpdir=/tmp/ $(basename $1).XXXXXX.scm)
     echo "(import (only (chezscheme) import))" >> $SOURCE
     tail -n +2 $1 >> $SOURCE
     shift
