@@ -78,6 +78,13 @@
    (make-library '(time iso)
                  '(unstable))))
 
+(define (list<? elem<? list1 list2)
+  (cond ((null? list1) (not (null? list2)))
+        ((null? list2) #f)
+        ((elem<? (car list1) (car list2)) #t)
+        ((elem<? (car list2) (car list1)) #f)
+        (else (list<? elem<? (cdr list1) (cdr list2)))))
+
 (define (tree-fold merge state tree)
   (let ((state (merge tree state)))
     (if (not (list? tree)) state
@@ -97,12 +104,24 @@
 (define (library-name->chicken parts)
   (string->symbol (string-join (map lnp->string parts) ".")))
 
+(define (library-name-part<? part1 part2)
+  (define (stringify part)
+    (if (number? part)
+        (number->string part)
+        (symbol->string part)))
+  (string<? (stringify part1)
+            (stringify part2)))
+
+(define (library-name<? name1 name2)
+  (list<? library-name-part<? name1 name2))
+
+(define (list-with-head? symbol obj)
+  (and (list? obj) (not (null? obj)) (eq? symbol (car obj))))
+
 (define (grovel-includes)
   (let ((includes
          (tree-fold (lambda (x includes)
-                      (if (and (list? x)
-                               (not (null? x))
-                               (eq? 'include (car x))
+                      (if (and (list-with-head? 'include x)
                                (every string? (cdr x)))
                           (append includes (cdr x))
                           includes))
@@ -110,8 +129,28 @@
                     (read))))
     (list-delete-neighbor-dups string=? (list-sort string<? includes))))
 
-(define (mine x y)
-  '())
+(define (import-set-library-name set)
+  (case (car set)
+    ((except only prefix rename)
+     (import-set-library-name (list-ref set 1)))
+    (else
+     set)))
+
+(define (grovel-imports)
+  (let ((imports
+         (tree-fold (lambda (x includes)
+                      (if (list-with-head? 'import x)
+                          (append includes
+                                  (map import-set-library-name (cdr x)))
+                          includes))
+                    '()
+                    (read))))
+    (list-delete-neighbor-dups equal? (list-sort library-name<? imports))))
+
+(define (library-imports lib-name)
+  (let ((sld-file (library-name->sld lib-name)))
+    (with-input-from-file (string-append live-root sld-file)
+      grovel-imports)))
 
 (define (disp . xs) (for-each display xs) (newline))
 
@@ -161,7 +200,10 @@
                         (source-dependencies
                          ,@(library-includes-except-srfi lib-name))
                         (component-dependencies
-                         ,@(map library-name->chicken (mine 'import lib)))
+                         ,@(map library-name->chicken
+                                (filter (lambda (name)
+                                          (list-with-head? 'live name))
+                                        (library-imports lib-name))))
                         (csc-options "-R" "r7rs" "-X" "r7rs")))
                     (library-names/r7rs lib)))
              libraries)))))))
