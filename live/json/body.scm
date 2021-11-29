@@ -164,7 +164,6 @@
                   (raise (make-json-error (format #f "Invalid number: ~s" string))))))
           (loop (generator) (cons char out)))))
 
-
   (define char (maybe-ignore-whitespace generator))
 
   ;; gist
@@ -304,8 +303,7 @@
      (else (raise (make-json-error "Invalid json value.")))))
 
   (define (raise-invalid-event event)
-    (raise event))
-  ;;(raise (make-json-error "json-accumulator: invalid event.")))
+    (raise (make-json-error "json-accumulator: invalid event.")))
 
   (define (object-start k)
     (lambda (accumulator event)
