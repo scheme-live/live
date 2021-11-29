@@ -41,7 +41,7 @@
      live.list.unstable
      (source "live/list/unstable.sld")
      (source-dependencies "live/list/live.scm")
-     (component-dependencies)
+     (component-dependencies live.fixnum.unstable)
      (csc-options "-R" "r7rs" "-X" "r7rs"))
    (extension
      live.net.gemini.unstable
@@ -53,7 +53,7 @@
      live.net.gemini.client.unstable
      (source "live/net/gemini/client/unstable.sld")
      (source-dependencies "live/net/gemini/client/live.scm")
-     (component-dependencies)
+     (component-dependencies live.net.gemini.unstable)
      (csc-options "-R" "r7rs" "-X" "r7rs"))
    (extension
      live.number.unstable
@@ -71,5 +71,5 @@
      live.time.iso.unstable
      (source "live/time/iso/unstable.sld")
      (source-dependencies)
-     (component-dependencies)
+     (component-dependencies live.number.unstable)
      (csc-options "-R" "r7rs" "-X" "r7rs"))))
