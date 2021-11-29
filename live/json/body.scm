@@ -108,6 +108,8 @@
               (#\t (loop (generator) (cons #\tab
                                            (append chars-unescaped
                                                    out))))
+              ;; TODO: remove this code that try to parse escaped
+              ;; unicodes.
               (#\u (let loop-unicode ((code1 (read-unicode-escape generator))
                                       (chars chars-unescaped))
                      (let ((next-char (generator)))
@@ -412,9 +414,6 @@
       (set! k (k accumulator event)))))
 
 (define (%json-write obj accumulator)
-
-  (define (void)
-    (if #f #f))
 
   (define (raise-unless-valid? obj)
     (cond
