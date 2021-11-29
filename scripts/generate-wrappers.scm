@@ -20,7 +20,9 @@
 ;; TODO: These SRFI numbers should be found by groveling the imports
 ;; in the .sld files.
 (define srfis
-  '(143
+  '(13
+    14
+    143
     151))
 
 (define chicken-eggs
