@@ -13,9 +13,10 @@ jobs:
             - IMPLEMENTATION: chibi
             - IMPLEMENTATION: chicken
             - IMPLEMENTATION: cyclone
-            - IMPLEMENTATION: gambit
+            # TODO: cache compiled gambit
+            # - IMPLEMENTATION: gambit
             - IMPLEMENTATION: gauche
-            # requires gambit.
+            # TODO: requires gambit.
             # - IMPLEMENTATION: gerbil
             - IMPLEMENTATION: guile
             - IMPLEMENTATION: loko
@@ -32,9 +33,11 @@ jobs:
         - name: check
           run: ./venv scheme-live ${{ matrix.IMPLEMENTATION }} check
 
-    docker:
-      runs-on: ubuntu-20.04
-      steps:
-        - uses: actions/checkout@v2
-        - name: build
-          run: docker build .
+    # Take too much time.
+    #
+    # docker:
+    #   runs-on: ubuntu-20.04
+    #   steps:
+    #     - uses: actions/checkout@v2
+    #     - name: build
+    #       run: docker build .

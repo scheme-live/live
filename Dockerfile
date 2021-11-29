@@ -21,11 +21,9 @@ RUN cd /live && ./venv scheme-live gauche install /usr/local
 RUN cd /live && ./venv scheme-live gerbil install /usr/local
 RUN cd /live && ./venv scheme-live guile install /usr/local
 RUN cd /live && ./venv scheme-live loko install /usr/local
+RUN cd /live && ./venv scheme-live mit install /usr/local
 RUN cd /live && ./venv scheme-live racket install /usr/local
 # RUN cd /live && ./venv scheme-live sagittarius install /usr/local
-
-
-
 
 run rm -rf /live
 
