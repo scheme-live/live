@@ -5,7 +5,7 @@ set -e
 HELP_MAIN="usage: scheme-live gauche <sub-commands> [options]"
 
 scheme-live-gauche-install () {
-    apt install gauche gauche-c-wrapper
+    apt install gauche
 }
 
 scheme-live-gauche-run () {
