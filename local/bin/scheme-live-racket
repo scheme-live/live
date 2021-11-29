@@ -33,7 +33,7 @@ scheme-live-racket-run () {
 }
 
 scheme-live-racket-repl () {
-    racket
+    PLTCOLLECTS=$SCHEME_LIVE_PREFIX/lib/: racket
 }
 
 scheme-live-racket-version () {

@@ -28,7 +28,7 @@ jobs:
         - name: host setup
           run: sudo make prepare-debian
         - name: install
-          run: sudo ./venv scheme-live ${{ matrix.IMPLEMENTATION }} install /usr/local
+          run: sudo ./venv scheme-live ${{ matrix.IMPLEMENTATION }} install /usr/local/
         - name: check
           run: ./venv scheme-live ${{ matrix.IMPLEMENTATION }} check
 
