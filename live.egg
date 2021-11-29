@@ -23,7 +23,6 @@
    "live/number/unstable.sld"
    "live/string/unstable.sld"
    "live/string/live.scm"
-   "live/string/srfi-13.scm"
    "live/time/iso/unstable.sld")
  (components
    (extension
@@ -65,7 +64,7 @@
    (extension
      live.string.unstable
      (source "live/string/unstable.sld")
-     (source-dependencies "live/string/live.scm" "live/string/srfi-13.scm")
+     (source-dependencies "live/string/live.scm")
      (component-dependencies)
      (csc-options "-R" "r7rs" "-X" "r7rs"))
    (extension
