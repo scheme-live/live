@@ -20,7 +20,7 @@ jobs:
             - IMPLEMENTATION: guile
             - IMPLEMENTATION: loko
             # - IMPLEMENTATION: mit
-            - IMPLEMENTATION: racket
+            # - IMPLEMENTATION: racket
             # TODO!
             # - IMPLEMENTATION: sagittarius
       steps:
