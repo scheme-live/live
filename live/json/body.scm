@@ -1,4 +1,4 @@
-(define json-nesting-depth-limit (make-parameter 999999))
+(define json-nesting-depth-limit (make-parameter 99))
 
 (define (json-null? obj)
   (eq? obj 'null))
@@ -219,36 +219,47 @@
 
     (define nesting-depth-remaining (json-nesting-depth-limit))
 
-    (define (read token generator)
+    (define (nesting-depth-remaining-increment!)
+      (set! nesting-depth-remaining (fx+ nesting-depth-remaining 1)))
+
+    (define (nesting-depth-remaining-decrement!)
       (if (fxzero? nesting-depth-remaining)
           (raise (make-json-error "Maximum nesting reached."))
-          (set! nesting-depth-remaining (fx- nesting-depth-remaining 1)))
+          (set! nesting-depth-remaining (fx- nesting-depth-remaining 1))))
 
+    (define (read token generator)
       (cond
        ((or (number? token) (string? token) (boolean? token) (json-null? token))
         token)
        ((eq? token 'array-start)
         (let ((next (generator)))
           (if (eq? next 'array-end)
-              (make-vector 0)
+              (begin
+                (nesting-depth-remaining-increment!)
+                (make-vector 0))
               (let loop ((out (list (read next generator)))
                          (length 1))
                 (case (generator)
                   (comma (loop (cons (read (generator) generator) out)
                                (fx+ length 1)))
-                  (array-end (list->reverse-vector out length))
+                  (array-end
+                   (nesting-depth-remaining-increment!)
+                   (list->reverse-vector out length))
                   (else (raise (make-json-error "Invalid array."))))))))
        ((eq? token 'object-start)
+        (nesting-depth-remaining-decrement!)
         (let loop ((out '()))
           (let ((next (generator)))
             (if (eq? next 'object-end)
-                out
+                (begin (nesting-depth-remaining-increment!) out)
                 (let* ((key (string->symbol next))
                        (colon (generator))
                        (value (read (generator) generator)))
                   (case (generator)
                     (comma (loop (cons (cons key value) out)))
-                    (object-end (cons (cons key value) out))
+                    (object-end
+                     (nesting-depth-remaining-increment!)
+                     (cons (cons key value) out))
                     (else (raise (make-json-error "Invalid object.")))))))))))
 
     (let* ((generator (json-tokens port-or-generator))
