@@ -3,14 +3,14 @@
   (import (scheme base))
   (begin
 
-    ;; Like dynamic-wind, but makes sure the cleanup is run only once.
-    ;; From Common Lisp.
-    (define (unwind-protect proc cleanup)
+    ;; Like dynamic-wind, but ensures the `after` procedure is run
+    ;; only once. From Common Lisp.
+    (define (unwind-protect thunk after)
       (dynamic-wind
         (lambda () #f)
-        proc
-        (let ((called? #f))
+        thunk
+        (let ((after? #t))
           (lambda ()
-            (unless called?
-              (set! called? #t)
-              (cleanup))))))))
+            (when after?
+              (set! after? #f)
+              (after))))))))
