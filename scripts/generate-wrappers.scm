@@ -130,12 +130,11 @@
     (list-delete-neighbor-dups string=? (list-sort string<? includes))))
 
 (define (import-set-library-name set)
-  (if (not (list? set)) '()
-      (case (car set)
-        ((except only prefix rename)
-         (import-set-library-name (list-ref set 1)))
-        (else
-         set))))
+  (case (car set)
+    ((except only prefix rename)
+     (import-set-library-name (list-ref set 1)))
+    (else
+     set)))
 
 (define (grovel-imports)
   (let ((imports
