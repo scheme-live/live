@@ -41,19 +41,19 @@
    (extension
      live.list.unstable
      (source "live/list/unstable.sld")
-     (source-dependencies)
+     (source-dependencies "live/list/live.scm")
      (component-dependencies)
      (csc-options "-R" "r7rs" "-X" "r7rs"))
    (extension
      live.net.gemini.unstable
      (source "live/net/gemini/unstable.sld")
-     (source-dependencies)
+     (source-dependencies "live/net/gemini/live.scm")
      (component-dependencies)
      (csc-options "-R" "r7rs" "-X" "r7rs"))
    (extension
      live.net.gemini.client.unstable
      (source "live/net/gemini/client/unstable.sld")
-     (source-dependencies)
+     (source-dependencies "live/net/gemini/client/live.scm")
      (component-dependencies)
      (csc-options "-R" "r7rs" "-X" "r7rs"))
    (extension
@@ -65,7 +65,7 @@
    (extension
      live.string.unstable
      (source "live/string/unstable.sld")
-     (source-dependencies)
+     (source-dependencies "live/string/live.scm" "live/string/srfi-13.scm")
      (component-dependencies)
      (csc-options "-R" "r7rs" "-X" "r7rs"))
    (extension
