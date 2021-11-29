@@ -59,7 +59,7 @@
           (every predicate? (cdr objects))
           #f)))
 
-(exit (not (every values (map dodo checks))))
+(exit (if (every values (map dodo checks)) 0 1))
 
 ;; (define (check-one? symbol)
 ;;   (format #t "* Running: ~a\n" symbol)
