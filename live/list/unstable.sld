@@ -15,11 +15,13 @@
    dotted-list?
    last-index
    length-tail
+   list<?
    map/odd
    proper-list?)
   (import (scheme base)
 
-          ;; TODO
+          ;; TODO: Should we prefer the SRFI 1 copies of these
+          ;; procedures?
           (except (srfi 1)
                   circular-list?
                   dotted-list?
