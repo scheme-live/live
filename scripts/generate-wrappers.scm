@@ -80,16 +80,11 @@
 
 (define (list<? elem<? list1 list2)
   (let loop ((list1 list1) (list2 list2))
-    (cond ((null? list1)
-           (not (null? list2)))
-          ((null? list2)
-           #f)
-          (else
-           (let ((a (elem<? (car list1) (car list2)))
-                 (b (elem<? (car list2) (car list1))))
-             (cond (a #t)
-                   (b #f)
-                   (else (loop (cdr list1) (cdr list2)))))))))
+    (cond ((null? list1) (not (null? list2)))
+          ((null? list2) #f)
+          ((elem<? (car list1) (car list2)) #t)
+          ((elem<? (car list2) (car list1)) #f)
+          (else (loop (cdr list1) (cdr list2))))))
 
 (define (tree-fold merge state tree)
   (let ((state (merge tree state)))
