@@ -120,6 +120,13 @@
 
 (define (disp . xs) (for-each display xs) (newline))
 
+(define (library-includes lib-name)
+  (let ((lib-dir (library-name->directory lib-name))
+        (sld-file (library-name->sld lib-name)))
+    (map (lambda (file) (string-append lib-dir file))
+         (with-input-from-file (string-append live-root sld-file)
+           grovel-includes))))
+
 (define (write-chicken-5-egg-file)
   (disp "Writing live.egg")
   (with-output-to-file (string-append live-root "live.egg")
@@ -142,14 +149,8 @@
           "live.release-info"
           ,@(append-map
              (lambda (lib-name)
-               (let ((lib-dir (library-name->directory lib-name))
-                     (sld-file (library-name->sld lib-name)))
-                 (cons sld-file
-                       (map (lambda (included-file)
-                              (string-append lib-dir included-file))
-                            (with-input-from-file
-                                (string-append live-root sld-file)
-                              grovel-includes)))))
+               (cons (library-name->sld lib-name)
+                     (library-includes lib-name)))
              (append-map library-names/r7rs libraries)))
          (components
           ,@(append-map
@@ -158,8 +159,7 @@
                       `(extension
                         ,(library-name->chicken lib-name)
                         (source ,(library-name->sld lib-name))
-                        (source-dependencies
-                         ,@(map library-name->sld (mine 'include lib)))
+                        (source-dependencies ,@(library-includes lib-name))
                         (component-dependencies
                          ,@(map library-name->chicken (mine 'import lib)))
                         (csc-options "-R" "r7rs" "-X" "r7rs")))
