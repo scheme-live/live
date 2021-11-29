@@ -4,54 +4,37 @@ on:
     push:
 
 jobs:
-    check-with-docker:
+    checks:
       runs-on: ubuntu-20.04
       strategy:
         matrix:
           include:
-            - IMAGE: schemers/chibi
-              IMPLEMENTATION: chibi
-            - IMAGE: schemers/gambit:head
-              IMPLEMENTATION: gambit
-            # - IMAGE: schemers/gerbil
-            #   IMPLEMENTATION: gerbil
-            - IMAGE: schemers/gauche
-              IMPLEMENTATION: gauche
-            - IMAGE: schemers/cyclone
-              IMPLEMENTATION: cyclone
-            # - IMAGE: schemers/guile
-            #   IMPLEMENTATION: guile
-            # - image: schemers/chicken
-            #   IMPLEMENTATION: chicken
-            - IMAGE: schemers/loko
-              IMPLEMENTATION: loko
-            # - IMAGE: schemers/mit-scheme
-            #   IMPLEMENTATION: mit
-            - IMAGE: schemers/sagittarius
-              IMPLEMENTATION: sagittarius
-      steps:
-        - uses: actions/checkout@v2
-        - name: Install dependencies on host
-          run: sudo make prepare-debian
-        - name: ${{ matrix.IMAGE }} check
-          env:
-            IMPLEMENTATION: ${{ matrix.IMPLEMENTATION }}
-            IMAGE: ${{ matrix.IMAGE }}
-          run: make check-with-docker
-    check-from-source:
-      runs-on: ubuntu-20.04
-      strategy:
-        matrix:
-          include:
+            - IMPLEMENTATION: chez
             - IMPLEMENTATION: chibi
             - IMPLEMENTATION: chicken
-            # - IMPLEMENTATION: racket
+            - IMPLEMENTATION: cyclone
+            - IMPLEMENTATION: gambit
+            - IMPLEMENTATION: gauche
+            # requires gambit.
+            # - IMPLEMENTATION: gerbil
+            - IMPLEMENTATION: guile
+            - IMPLEMENTATION: loko
+            - IMPLEMENTATION: mit
+            - IMPLEMENTATION: racket
+            # TODO!
+            # - IMPLEMENTATION: sagittarius
       steps:
         - uses: actions/checkout@v2
-        - name: Install dependencies on host
+        - name: host setup
           run: sudo make prepare-debian
-        - name: ${{ matrix.IMPLEMENTATION }} install
-          # TODO: chibi can only be installed inside PREFIX=/usr/local
-          run: sudo ./venv scheme-live ${{ matrix.IMPLEMENTATION }} install "/usr/local"
-        - name: ${{ matrix.IMPLEMENTATION }} from source check
-          run: ./venv scheme-live ${{ matrix.IMPLEMENTATION }} check $(pwd)
+        - name: install
+          run: sudo ./venv scheme-live ${{ matrix.IMPLEMENTATION }} install /usr/local
+        - name: check
+          run: ./venv scheme-live ${{ matrix.IMPLEMENTATION }} check
+
+    docker:
+      runs-on: ubuntu-20.04
+      steps:
+        - uses: actions/checkout@v2
+        - name: build
+          run: docker build .

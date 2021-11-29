@@ -4,31 +4,9 @@ set -e
 
 HELP_MAIN="usage: scheme-live guile <sub-commands> [options]"
 
-scheme-live-guile-uninstall () {
-    PREFIX=$1
-
-    if [ "x$PREFIX" == "x" ]; then
-        PREFIX=$SCHEME_LIVE_PREFIX
-    fi
-
-    echo "Not implemented"
-    exit 1
-}
 
 scheme-live-guile-install () {
-    PREFIX=$1
-
-    if [ "x$PREFIX" == "x" ]; then
-        PREFIX=$SCHEME_LIVE_PREFIX
-    fi
-
-    # if test -f "$PREFIX/bin/chibi-scheme"; then
-    #     echo "chibi is already installed at $PREFIX"
-    #     exit 1
-    # fi
-
-    echo "Not implemented"
-    exit 1
+    apt install guile-3.0
 }
 
 scheme-live-guile-run () {

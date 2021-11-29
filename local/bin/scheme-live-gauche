@@ -4,33 +4,8 @@ set -e
 
 HELP_MAIN="usage: scheme-live gauche <sub-commands> [options]"
 
-scheme-live-gauche-uninstall () {
-    PREFIX=$1
-
-    if [ "x$PREFIX" == "x" ]; then
-        PREFIX=$SCHEME_LIVE_PREFIX
-    fi
-
-    echo "Not implemented"
-    exit 1
-}
-
 scheme-live-gauche-install () {
-    PREFIX=$1
-
-    if [ "x$PREFIX" == "x" ]; then
-        PREFIX=$SCHEME_LIVE_PREFIX
-    fi
-
-    # if test -f "$PREFIX/bin/chibi-scheme"; then
-    #     echo "chibi is already installed at $PREFIX"
-    #     exit 1
-    # fi
-
-    # TODO: XXX: Installed via deb package
-
-    echo "Not implemented"
-    exit 1
+    apt install gauche gauche-c-wrapper
 }
 
 scheme-live-gauche-run () {

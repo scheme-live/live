@@ -4,16 +4,6 @@ set -e
 
 HELP_MAIN="usage: scheme-live sagittarius <sub-commands> [options]"
 
-scheme-live-sagittarius-uninstall () {
-    PREFIX=$1
-
-    if [ "x$PREFIX" == "x" ]; then
-        PREFIX=$SCHEME_LIVE_PREFIX
-    fi
-
-    echo "Not implemented"
-    exit 1
-}
 
 scheme-live-sagittarius-install () {
     PREFIX=$1
@@ -36,13 +26,12 @@ scheme-live-sagittarius-run () {
 }
 
 scheme-live-sagittarius-repl () {
-    rlwrap sagittarius --standard=7 --loadpath=$SCHEME_LIVE_PREFIX/share/
+    rlwrap sagittarius --standard=7 --loadpath=$SCHEME_LIVE_PREFIX/lib/
 }
 
 scheme-live-sagittarius-version () {
     # TODO: Use Version flag @ https://srfi.schemers.org/srfi-176/
-    docker run --volume $SCHEME_LIVE_PREFIX/../:/live --interactive --rm schemers/sagittarius sagittarius --version
-
+    sagittarius --version
 }
 
 scheme-live-sagittarius-check () {

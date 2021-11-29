@@ -6,26 +6,7 @@ HELP_MAIN="usage: scheme-live chez <sub-commands> [options]"
 
 
 scheme-live-chez-install () {
-    echo Installed via debian
-    # PREFIX=$1
-
-    # if [ "x$PREFIX" == "x" ]; then
-    #     PREFIX=$SCHEME_LIVE_PREFIX
-    # fi
-
-    # if test -f "$PREFIX/bin/scheme"; then
-    #     echo "chez is already installed at $PREFIX"
-    #     exit 1
-    # fi
-
-    # WORK=$PREFIX/tmp/chez-scheme-$(date --iso=seconds)
-    # echo "Work directory is: $WORK"
-    # mkdir -p $WORK
-    # wget "https://github.com/cisco/ChezScheme/archive/refs/tags/v9.5.6.tar.gz" --output-document="$WORK/scheme.tar.gz"
-    # tar -xvf "$WORK/scheme.tar.gz" --directory="$WORK"
-    # cd $WORK/ChezScheme*/
-    # ./configure --threads --disable-x11 --disable-curses --installprefix=$PREFIX
-    # make install
+    apt install chezscheme
 }
 
 scheme-live-chez-run () {
