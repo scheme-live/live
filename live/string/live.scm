@@ -13,6 +13,30 @@
 (define (string-blank? str)
   (string-every char-whitespace? str))
 
+(define (string->one-char-strings string)
+  (let loop ((strings '()) (n (string-length string)))
+    (if (zero? n) strings
+        (loop (cons (string-copy string (- n 1) n) strings) (- n 1)))))
+
+;; SRFI 140 (Immutable Strings) has the following:
+;;
+;; (string-split string delimiter [grammar limit start end]) -> list
+
+(define (string-split string delimiter)
+  (if (string-null? delimiter)
+      (string->one-char-strings string)
+      (reverse
+       (let loop ((parts '()) (a 0))
+         (if (> a (string-length string))
+             parts
+             (let* ((b (string-contains string delimiter a))
+                    (part (string-copy
+                           string a (or b (string-length string))))
+                    (parts (cons part parts)))
+               (if b
+                   (loop parts (+ b (string-length delimiter)))
+                   parts)))))))
+
 (define (with-input-from-string str proc)
   (call-with-port (open-input-string str)
                   (lambda (in)

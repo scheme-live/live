@@ -1,6 +1,18 @@
-(import (live string) (live test))
+(import (scheme base) (live string unstable) (live test))
 
-(test-begin "live/string")
+(test-begin "live/string/unstable")
+
+(test-group "string-split"
+  (test-equal '("f" "o" "o" "b" "a" "r")
+    (string-split "foobar" ""))
+  (test-equal '("")
+    (string-split "" ","))
+  (test-equal '(",")
+    (string-split "," ""))
+  (test-equal '("foo" "bar")
+    (string-split "foo,bar" ","))
+  (test-equal '("foo" "bar" "")
+    (string-split "foo,bar," ",")))
 
 (test-group "string-last-index"
   (test-eqv #f (string-last-index ""))
