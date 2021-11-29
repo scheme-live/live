@@ -4,7 +4,7 @@
 ;;! SPDX-License-Identifier: MIT
 
 (import (scheme base) (scheme write)
-        (srfi 1) (srfi 132) (srfi 193))
+        (srfi 1) (srfi 13) (srfi 132) (srfi 193))
 
 (cond-expand
   (chicken
@@ -78,11 +78,6 @@
    (make-library '(time iso)
                  '(unstable))))
 
-(define (string-join lst delimiter)
-  (if (null? lst) ""
-      (fold (lambda (item result) (string-append result delimiter item))
-            (car lst) (cdr lst))))
-
 (define (tree-fold merge state tree)
   (let ((state (merge tree state)))
     (if (not (list? tree)) state
@@ -127,6 +122,10 @@
          (with-input-from-file (string-append live-root sld-file)
            grovel-includes))))
 
+(define (library-includes-except-srfi lib-name)
+  (remove (lambda (file) (string-contains file "srfi-"))
+          (library-includes lib-name)))
+
 (define (write-chicken-5-egg-file)
   (disp "Writing live.egg")
   (with-output-to-file (string-append live-root "live.egg")
@@ -150,7 +149,7 @@
           ,@(append-map
              (lambda (lib-name)
                (cons (library-name->sld lib-name)
-                     (library-includes lib-name)))
+                     (library-includes-except-srfi lib-name)))
              (append-map library-names/r7rs libraries)))
          (components
           ,@(append-map
@@ -159,7 +158,8 @@
                       `(extension
                         ,(library-name->chicken lib-name)
                         (source ,(library-name->sld lib-name))
-                        (source-dependencies ,@(library-includes lib-name))
+                        (source-dependencies
+                         ,@(library-includes-except-srfi lib-name))
                         (component-dependencies
                          ,@(map library-name->chicken (mine 'import lib)))
                         (csc-options "-R" "r7rs" "-X" "r7rs")))
