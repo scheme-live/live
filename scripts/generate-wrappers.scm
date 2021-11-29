@@ -154,10 +154,10 @@
          (components
           ,@(append-map
              (lambda (lib)
-               (map (lambda (libname)
+               (map (lambda (lib-name)
                       `(extension
-                        ,(library-name->chicken libname)
-                        (source ,(library-name->sld libname))
+                        ,(library-name->chicken lib-name)
+                        (source ,(library-name->sld lib-name))
                         (source-dependencies
                          ,@(map library-name->sld (mine 'include lib)))
                         (component-dependencies
