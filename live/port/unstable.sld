@@ -1,4 +1,4 @@
-(define-library (live port)
+(define-library (live port unstable)
   (export accumulate-bytevectors-from-port)
   (import (scheme base))
-  (include "port/live.scm"))
+  (include "live.scm"))
