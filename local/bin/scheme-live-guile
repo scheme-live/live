@@ -1,24 +1,36 @@
 #!/bin/bash
 
-set -e
-
 HELP_MAIN="usage: scheme-live guile <sub-commands> [options]"
 
 
 scheme-live-guile-install () {
-    apt install guile-3.0
+    PREFIX=$1
+
+    if [ "x$PREFIX" == "x" ]; then
+        PREFIX=$SCHEME_LIVE_PREFIX
+    fi
+
+    rm -rf $PREFIX/opt/live/guile
+    mkdir -p $PREFIX/opt/live/guile
+    cd $PREFIX/opt/live/guile
+    git clone https://git.sv.gnu.org/git/guile.git git
+    cd git
+    ./autogen.sh
+    ./configure --prefix=$PREFIX/opt/live/guile/
+    make -j $SCHEME_LIVE_CORE_COUNT
+    make install
 }
 
 scheme-live-guile-run () {
     # Drop first line because the #! is not closed with !#
-    SOURCE=$(mktemp --tmpdir=$SCHEME_LIVE_PREFIX/tmp/ $(basename $1).XXXXXX.scm)
+    SOURCE=$(mktemp --tmpdir=/tmp/ $(basename $1).XXXXXX.scm)
     tail -n +2 $1 > $SOURCE
     shift
-    guile --r7rs -x .guile.sld -L $SCHEME_LIVE_PREFIX/lib/ $SOURCE $@
+    PATH=$SCHEME_LIVE_PREFIX/opt/live/guile/bin/:$PATH guile --r7rs -L $SCHEME_LIVE_PREFIX/lib/ $SOURCE $@
 }
 
 scheme-live-guile-repl () {
-    rlwrap guile --r7rs -L $SCHEME_LIVE_PREFIX/share
+    rlwrap guile -x .gsld -L $SCHEME_LIVE_PREFIX/lib/
 }
 
 scheme-live-guile-version () {

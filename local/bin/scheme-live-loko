@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 HELP_MAIN="usage: scheme-live loko <sub-commands> [options]"
 
 scheme-live-loko-install () {
@@ -11,27 +9,29 @@ scheme-live-loko-install () {
         PREFIX=$SCHEME_LIVE_PREFIX
     fi
 
-    rm -rf $PREFIX/tmp/loko
-    mkdir -p $PREFIX/tmp/loko
-    cd $PREFIX/tmp/loko
+    scheme-live chez install $PREFIX
+
+    rm -rf $PREFIX/opt/live/loko
+    mkdir -p $PREFIX/opt/live/loko
+    cd $PREFIX/opt/live/loko
     # TODO: support custom prefix installation and checksum
     wget https://gitlab.com/akkuscm/akku/uploads/094ce726ce3c6cf8c14560f1e31aaea0/akku-1.1.0.amd64-linux.tar.xz
     tar xvf akku-1.1.0.amd64-linux.tar.xz
     cd akku-1.1.0.amd64-linux
-    sh install.sh
+    PATH=$PREFIX/opt/live/chez/bin:$PATH sh install.sh
     cd ../
-    git clone https://scheme.fail/git/loko.git/
-    cd loko
-    make PREFIX=$PREFIX
-    make PREFIX=$PREFIX install
+    git clone https://scheme.fail/git/loko.git git
+    cd git
+    PATH=$PREFIX/opt/live/chez/bin:$PATH make PREFIX=$PREFIX/opt/live/loko -j $SCHEME_LIVE_CORE_COUNT
+    PATH=$PREFIX/opt/live/chez/bin:$PATH make PREFIX=$PREFIX/opt/live/loko install
 }
 
 scheme-live-loko-run () {
-    LOKO_LIBRARY_PATH=/usr/local/lib/:$SCHEME_LIVE_PREFIX/lib/ loko -std=r7rs --program $@
+    PATH=$SCHEME_LIVE_PREFIX/opt/live/loko/bin:$PATH LOKO_LIBRARY_PATH=$SCHEME_LIVE_PREFIX/lib/:$SCHEME_LIVE_PREFIX/opt/live/loko/lib/ loko -std=r7rs --program $@
 }
 
 scheme-live-loko-repl () {
-    LOKO_LIBRARY_PATH=/usr/local/lib/:$SCHEME_LIVE_PREFIX/lib/ rlwrap loko -std=r7rs
+    LOKO_LIBRARY_PATH=/usr/local/lib/:$SCHEME_LIVE_PREFIX/opt/live/loko/lib/ rlwrap loko -std=r7rs
 }
 
 scheme-live-loko-version () {

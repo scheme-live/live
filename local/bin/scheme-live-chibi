@@ -1,21 +1,7 @@
 #!/bin/bash
 
-set -e
 
 HELP_MAIN="usage: scheme-live chibi <sub-commands> [options]"
-
-scheme-live-chibi-uninstall () {
-    PREFIX=$1
-
-    if [ "x$PREFIX" == "x" ]; then
-        PREFIX=$SCHEME_LIVE_PREFIX
-    fi
-
-    rm $PREFIX/bin/chibi-*
-    rm $PREFIX/bin/snow-*
-    rm $PREFIX/share/man/man1/chibi-*
-    rm -r $PREFIX/share/chibi
-}
 
 scheme-live-chibi-install () {
     PREFIX=$1
@@ -24,23 +10,17 @@ scheme-live-chibi-install () {
         PREFIX=$SCHEME_LIVE_PREFIX
     fi
 
-    if test -f "$PREFIX/bin/chibi-scheme"; then
-        echo "chibi is already installed at $PREFIX"
-        exit 1
-    fi
-
-    WORK=$PREFIX/tmp/chibi-scheme-$(date --iso=seconds)
-    echo "Work directory is: $WORK"
-    mkdir -p $WORK
-    wget "https://github.com/ashinn/chibi-scheme/archive/refs/tags/0.10.tar.gz" --output-document="$WORK/scheme.tar.gz"
-    tar -xvf "$WORK/scheme.tar.gz" --directory="$WORK"
-    cd $WORK/chibi-scheme*/
-    make
-    make PREFIX=$PREFIX install
+    rm -rf $PREFIX/opt/live/chibi
+    mkdir -p $PREFIX/opt/live/chibi
+    cd $PREFIX/opt/live/chibi
+    git clone https://github.com/ashinn/chibi-scheme/ git
+    cd git
+    git checkout 0.10
+    make PREFIX=$PREFIX/opt/live/chibi -j $SCHEME_LIVE_CORE_COUNT install
 }
 
 scheme-live-chibi-run () {
-    chibi-scheme -I $SCHEME_LIVE_PREFIX/lib/ $1
+    LD_LIBRARY_PATH=$SCHEME_LIVE_PREFIX/opt/live/chibi/lib PATH=$SCHEME_LIVE_PREFIX/opt/live/chibi/bin:$PATH chibi-scheme -I $SCHEME_LIVE_PREFIX/lib/ $1
 }
 
 scheme-live-chibi-repl () {

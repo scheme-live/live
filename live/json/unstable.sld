@@ -1,4 +1,4 @@
-(library (live json unstable)
+(define-library (live json unstable)
 
   (export json-nesting-depth-limit
           json-null?

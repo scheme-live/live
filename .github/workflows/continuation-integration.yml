@@ -7,37 +7,26 @@ jobs:
     checks:
       runs-on: ubuntu-20.04
       strategy:
+        fail-fast: false
         matrix:
           include:
             - IMPLEMENTATION: chez
             - IMPLEMENTATION: chibi
             - IMPLEMENTATION: chicken
             - IMPLEMENTATION: cyclone
-            # TODO: cache compiled gambit
-            # - IMPLEMENTATION: gambit
+            - IMPLEMENTATION: gambit
             - IMPLEMENTATION: gauche
-            # TODO: requires gambit.
-            # - IMPLEMENTATION: gerbil
+            - IMPLEMENTATION: gerbil
             - IMPLEMENTATION: guile
             - IMPLEMENTATION: loko
-            # - IMPLEMENTATION: mit
-            # - IMPLEMENTATION: racket
-            # TODO!
-            # - IMPLEMENTATION: sagittarius
+            - IMPLEMENTATION: mit
+            - IMPLEMENTATION: racket
+            - IMPLEMENTATION: sagittarius
       steps:
         - uses: actions/checkout@v2
         - name: host setup
           run: sudo make prepare-debian
         - name: install
-          run: sudo ./venv scheme-live ${{ matrix.IMPLEMENTATION }} install /usr/local/
+          run: sudo ./venv scheme-live ${{ matrix.IMPLEMENTATION }} install
         - name: check
           run: ./venv scheme-live ${{ matrix.IMPLEMENTATION }} check
-
-    # Take too much time.
-    #
-    # docker:
-    #   runs-on: ubuntu-20.04
-    #   steps:
-    #     - uses: actions/checkout@v2
-    #     - name: build
-    #       run: docker build .

@@ -7,6 +7,7 @@ if test -d "$(pwd)/.git"; then
     if [[ -z "$SCHEME_LIVE_VENV" ]]; then
         export SCHEME_LIVE_VENV=yes
         export SCHEME_LIVE_PREFIX=$(pwd)/local
+        export SCHEME_LIVE_CORE_COUNT=$(nproc --ignore=1)
         export PATH="$SCHEME_LIVE_PREFIX/bin:$HOME/.local/bin:$PATH"
 
         if [[ -z "$@" ]]; then

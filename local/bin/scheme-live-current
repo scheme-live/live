@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 scheme-live-current-run () {
 
     if [ "x$SCHEME_LIVE_CURRENT" == "x" ]; then

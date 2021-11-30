@@ -1,59 +1,36 @@
 #!/bin/bash
 
-set -e
-
 HELP_MAIN="usage: scheme-live gambit <sub-commands> [options]"
 
-scheme-live-gambit-uninstall () {
-    PREFIX=$1
-
-    if [ "x$PREFIX" == "x" ]; then
-        PREFIX=$SCHEME_LIVE_PREFIX
-    fi
-
-    echo "Not implemented"
-    exit 1
-}
 
 scheme-live-gambit-install () {
-    set -xe
-
     PREFIX=$1
 
     if [ "x$PREFIX" == "x" ]; then
         PREFIX=$SCHEME_LIVE_PREFIX
     fi
 
-    if test -f "$PREFIX/bin/gsc"; then
+    if test -f "$PREFIX/opt/live/gambit/bin/gsc"; then
         echo "Already installed!..."
         exit 0
     fi
 
-    mkdir -p $PREFIX/tmp
-
-    cd $PREFIX/tmp
-    rm -rf $PREFIX/tmp/gambit
-
-    git clone https://github.com/gambit/gambit.git
-    cd gambit
+    rm -rf $PREFIX/opt/live/gambit
+    mkdir -p $PREFIX/opt/live/gambit
+    cd $PREFIX/opt/live/gambit
+    git clone https://github.com/gambit/gambit.git git
+    cd git
     git checkout 28fe9c82cddcb43f9ac7f1fdc456f3e2ce101e0d
-    ./configure --prefix=$PREFIX
-    make
-    make modules
+    ./configure --prefix=$PREFIX/opt/live/gambit/
+    make -j $SCHEME_LIVE_CORE_COUNT
+    make -j $SCHEME_LIVE_CORE_COUNT modules
     make doc
     make install
-
-    # oops! Isn't the purpose of tmp to be temporary?! This is done
-    # like that because the install function may be run as root, hence
-    # $PREFIX/tmp may be owned by root, but we do not want to chmod it
-    # to everybody, so we just delete it.
-    rm -rf $PREFIX/tmp
-
+    $PREFIX/opt/live/gambit/bin/gsi -install -dir $PREFIX/opt/live/gambit github.com/udem-dlteam/libs
 }
 
 scheme-live-gambit-run () {
-    set -xe
-    gsi -:r7rs $SCHEME_LIVE_PREFIX/lib/ $1
+    PATH=$SCHEME_LIVE_PREFIX/opt/live/gambit/bin:$PATH gsi -:r7rs $SCHEME_LIVE_PREFIX/lib/ $SCHEME_LIVE_PREFIX//opt/live/gambit/github.com/udem-dlteam/libs/@/ $1
 }
 
 scheme-live-gambit-repl () {

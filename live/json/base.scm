@@ -1,4 +1,4 @@
-(library (live json base)
+(define-library (live json base)
   (export
    read
    quote
@@ -20,7 +20,6 @@
    ash
    bitwise-ior
    boolean?
-   bound-identifier=?
    call-with-input-file
    call-with-port
    call-with-values
@@ -32,7 +31,6 @@
    close-port
    cond
    cons
-   current-directory
    current-input-port
    define
    define-record-type
@@ -46,7 +44,6 @@
    equal?
    error
    exact?
-   exclusive-cond
    file-regular?
    for-all
    for-each
@@ -55,7 +52,6 @@
    fxzero?
    get-output-string
    guard
-   identifier?
    if
    inexact?
    infinite?
@@ -69,7 +65,6 @@
    make-parameter
    make-vector
    map
-   memp
    nan?
    newline
    not
@@ -87,7 +82,6 @@
    raise
    read-char
    real?
-   remp
    reverse
    set!
    string->number
@@ -95,7 +89,6 @@
    string-for-each
    string?
    symbol->string
-   syntax-case
    textual-port?
    unless
    values
@@ -104,14 +97,47 @@
    vector?
    void
    when
-   with-syntax
    write
    exit)
-  (import (rename (chezscheme) (define-record-type define-record-type*)))
+  (import (scheme base)
+          (scheme list)
+          (scheme read)
+          (scheme case-lambda)
+          (scheme bitwise)
+          (scheme file)
+          (scheme write)
+          (scheme process-context)
+          (live json shim))
 
-  (define (pk . args)
-    (write args (current-error-port))
-    (newline (current-error-port))
-    (car (reverse args)))
+  (begin
 
-  (include "srfi-9.scm"))
+    (define fx+ +)
+    (define fx- -)
+    (define fxzero? zero?)
+
+    (define nan? (lambda (x) #f))
+
+    (define (format x message . args)
+      (cons message args))
+
+    (define for-all every)
+
+    (define (void)
+      (when #f #f))
+
+    (define pk
+      (lambda args
+        (display ";; ")
+        (write args (current-error-port))
+        (car (reverse args))))
+
+    (define ash arithmetic-shift)
+
+    (define put-char (lambda (p c) (write-char c p)))
+
+    (define put-string (lambda (p s) (write-string s p)))
+
+    (define (infinite? x)
+      (and (number? x)
+           (or (equal? x +inf.0)
+               (equal? x -inf.0))))))

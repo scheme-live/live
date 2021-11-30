@@ -1,19 +1,6 @@
 #!/bin/bash
 
-set -e
-
 HELP_MAIN="usage: scheme-live gerbil <sub-commands> [options]"
-
-scheme-live-gerbil-uninstall () {
-    PREFIX=$1
-
-    if [ "x$PREFIX" == "x" ]; then
-        PREFIX=$SCHEME_LIVE_PREFIX
-    fi
-
-    echo "Not implemented"
-    exit 1
-}
 
 scheme-live-gerbil-install () {
     PREFIX=$1
@@ -22,26 +9,27 @@ scheme-live-gerbil-install () {
         PREFIX=$SCHEME_LIVE_PREFIX
     fi
 
-    WORK=$PREFIX/opt/
-    rm -rf $WORK/gerbil
-    mkdir -p $WORK/gerbil
-    cd $WORK/
-    git clone https://github.com/vyzo/gerbil.git
-    cd gerbil/src
+    scheme-live gambit install $PREFIX
+
+    rm -rf $PREFIX/opt/live/gerbil
+    mkdir -p $PREFIX/opt/live/gerbil
+    cd $PREFIX/opt/live/gerbil
+    git clone https://github.com/vyzo/gerbil.git git
+    cd git/src
+    export GERBIL_HOME=$PREFIX/opt/live/gerbil/git/
+    export PATH=$PREFIX/opt/live/gambit/bin:$PATH
+    export GERBIL_BUILD_CORES=$SCHEME_LIVE_CORE_COUNT
+    ./configure --prefix=$PREFIX/opt/live/gerbil --with-gambit=$PREFIX/opt/live/gambit
     ./build.sh
-    cd ../bin/
-    GERBIL_BIN=$(pwd)
-    cd $PREFIX/bin
-    ln -sfv $GERBIL_BIN/* .
-    echo $WORK/opt/gerbil > $SCHEME_LIVE_PREFIX/GERBIL_HOME
+    ./install
 }
 
 scheme-live-gerbil-run () {
-    GERBIL_LOADPATH="$SCHEME_LIVE_PREFIX/lib/" GERBIL_HOME="$(cat $SCHEME_LIVE_PREFIX/GERBIL_HOME || \"\")" gxi --lang r7rs $1
+    PATH=$SCHEME_LIVE_PREFIX/opt/live/gerbil/bin:$SCHEME_LIVE_PREFIX/opt/live/gambit/bin:$PATH GERBIL_HOME="$SCHEME_LIVE_PREFIX/opt/live/gerbil/" GERBIL_LOADPATH="." gxi --lang r7rs $1
 }
 
 scheme-live-gerbil-repl () {
-    GERBIL_LOADPATH="$SCHEME_LIVE_PREFIX/lib/" GERBIL_HOME="$(cat $SCHEME_LIVE_PREFIX/GERBIL_HOME || \"\")" rlwrap gxi --lang r7rs $SCHEME_LIVE_PREFIX/lib/
+    PATH=$SCHEME_LIVE_PREFIX/opt/live/gambit/bin:$PATH GERBIL_LOADPATH="$SCHEME_LIVE_PREFIX/lib/" GERBIL_HOME="$(cat $SCHEME_LIVE_PREFIX/GERBIL_HOME || \"\")" rlwrap gxi --lang r7rs $SCHEME_LIVE_PREFIX/lib/
 }
 
 scheme-live-gerbil-version () {

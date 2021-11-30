@@ -1,4 +1,4 @@
-(library (live json base)
+(define-library (live json base)
   (export
    read
    quote
@@ -46,7 +46,6 @@
    equal?
    error
    exact?
-   exclusive-cond
    file-regular?
    for-all
    for-each
@@ -55,7 +54,6 @@
    fxzero?
    get-output-string
    guard
-   identifier?
    if
    inexact?
    infinite?
@@ -107,11 +105,35 @@
    with-syntax
    write
    exit)
-  (import (rename (chezscheme) (define-record-type define-record-type*)))
+  (import (except (guile) else case)
+          (rename
+           (only (rnrs) case else => textual-port? vector-for-each infinite?)
+           (case r6:case))
+          (only (rnrs exceptions) guard)
+          (only (rnrs arithmetic fixnums) fxzero? fx- fx+)
+          (only (rnrs arithmetic bitwise) bitwise-ior)
+          (only (rnrs io ports) put-char put-string)
+          (only (scheme base) define-record-type call-with-port)
+          (live json guile))
 
-  (define (pk . args)
-    (write args (current-error-port))
-    (newline (current-error-port))
-    (car (reverse args)))
+  (begin
 
-  (include "srfi-9.scm"))
+    (define (void)
+      (when #f #f))
+
+    (define-syntax %r7case-clause
+      (syntax-rules (else =>)
+        ((_ obj (translated ...) ())
+         (r6:case obj translated ...))
+        ((_ obj (translated ...) (((e0 e1 ...) => f) rest ...))
+         (%r7case-clause obj (translated ... ((e0 e1 ...) (f obj))) (rest ...)))
+        ((_ obj (translated ...) ((else => f) rest ...))
+         (%r7case-clause obj (translated ... (else (f obj))) (rest ...)))
+        ((_ obj (translated ...) (otherwise rest ...))
+         (%r7case-clause obj (translated ... otherwise) (rest ...)))))
+
+    (define-syntax case
+      (syntax-rules (else =>)
+        ((_ key clause ...)
+         (let ((obj key))
+           (%r7case-clause obj () (clause ...))))))))
