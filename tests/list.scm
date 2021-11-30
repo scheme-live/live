@@ -21,6 +21,8 @@
 
   (test-eqv #t (list<? string<? '("a" "a") '("a" "b")))
   (test-eqv #f (list<? string<? '("a" "b") '("a" "a")))
-  (test-eqv #f (list<? string<? '("a" "b") '("a" "a"))))
+  (test-eqv #f (list<? string<? '("a" "b") '("a" "a")))
+
+  (test-error (list<? < '(1 2 3 . 4))))
 
 (test-end)
