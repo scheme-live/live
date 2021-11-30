@@ -41,13 +41,20 @@
   (define (on-error exc)
     ;; sloppy: check that there is any error, if it is the case pass
     ;; the test
-    (file-regular? error))
+    (if (file-regular? error)
+        #t
+        (begin
+          (newline)
+          (write exc)
+          (newline)
+          #f)))
+
 
   (display "* ")(display name) (display " => ")
 
   (let ((out (guard (error (else (on-error error)))
-                    (let ((obj (json->obj->json->obj input)))
-                      (equal? obj (call-with-input-file output read))))))
+               (let ((obj (json->obj->json->obj input)))
+                 (equal? obj (call-with-input-file output read))))))
     (display out)
     (newline)
     out))
@@ -60,21 +67,3 @@
           #f)))
 
 (exit (if (every values (map dodo checks)) 0 1))
-
-;; (define (check-one? symbol)
-;;   (format #t "* Running: ~a\n" symbol)
-;;   (let* ((proc (eval `,symbol (environment '(ruse json checks))))
-;;          (out (proc)))
-;;     (if (failure? out)
-;;         (begin (format #t "** Error: ~a\n" out) #f)
-;;         #t)))
-
-;; (if (null? (command-line-arguments))
-;;     (let loop ((symbols (library-exports '(ruse json checks)))
-;;                (errors? #f))
-;;       (if (null? symbols)
-;;           (exit (if errors? 1 0))
-;;           (if (check-one? (car symbols))
-;;               (begin (loop (cdr symbols) #f))
-;;               (loop (cdr symbols) #t))))
-;;     (check-one? (string->symbol (car (command-line-arguments)))))

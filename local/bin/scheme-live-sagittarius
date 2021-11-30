@@ -1,6 +1,5 @@
 #!/bin/bash
 
-set -e
 
 HELP_MAIN="usage: scheme-live sagittarius <sub-commands> [options]"
 
@@ -12,17 +11,21 @@ scheme-live-sagittarius-install () {
         PREFIX=$SCHEME_LIVE_PREFIX
     fi
 
-    # if test -f "$PREFIX/bin/chibi-scheme"; then
-    #     echo "chibi is already installed at $PREFIX"
-    #     exit 1
-    # fi
-
-    echo "Not implemented"
-    exit 1
+    rm -rf $PREFIX/opt/live/sagittarius
+    mkdir -p $PREFIX/opt/live/sagittarius
+    cd $PREFIX/opt/live/sagittarius
+    wget https://bitbucket.org/ktakashi/sagittarius-scheme/downloads/sagittarius-0.9.8.tar.gz
+    tar xvf sagittarius-0.9.8.tar.gz
+    cd sagittarius-0.9.8
+    mkdir build
+    cd build
+    cmake ../ -DCMAKE_INSTALL_PREFIX=$PREFIX/opt/live/sagittarius/
+    make -j$SCHEME_LIVE_CORE_COUNT
+    make install
 }
 
 scheme-live-sagittarius-run () {
-    exit 2
+    PATH=$SCHEME_LIVE_PREFIX/opt/live/sagittarius/bin:$PATH sagittarius --standard=7 --loadpath=$SCHEME_LIVE_PREFIX/lib/ $@
 }
 
 scheme-live-sagittarius-repl () {

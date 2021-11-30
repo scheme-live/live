@@ -1,23 +1,9 @@
 #!/bin/bash
 
-set -e
-
 HELP_MAIN="usage: scheme-live cyclone <sub-commands> [options]"
 
-scheme-live-cyclone-uninstall () {
-    PREFIX=$1
-
-    if [ "x$PREFIX" == "x" ]; then
-        PREFIX=$SCHEME_LIVE_PREFIX
-    fi
-
-    echo "Not implemented"
-    exit 1
-}
 
 scheme-live-cyclone-install () {
-    set -xe
-
     PREFIX=$1
 
     if [ "x$PREFIX" == "x" ]; then
@@ -29,35 +15,35 @@ scheme-live-cyclone-install () {
         exit 0
     fi
 
-    mkdir -p $PREFIX/tmp
-
-    cd $PREFIX/tmp
+    rm -rf $PREFIX/opt/live/cyclone
+    mkdir -p $PREFIX/opt/live/cyclone
+    cd $PREFIX/opt/live/cyclone
 
     wget https://github.com/justinethier/cyclone-bootstrap/archive/refs/tags/v0.33.0.tar.gz -O cyclone.tar.gz
     tar xvf cyclone.tar.gz
     cd cyclone-bootstrap-*/
 
-    make PREFIX=$PREFIX -j $(echo $(nproc) - 1 | bc)
-    make PREFIX=$PREFIX install
+    make PREFIX=$PREFIX/opt/live/cyclone/ -j $SCHEME_LIVE_CORE_COUNT
+    make PREFIX=$PREFIX/opt/live/cyclone/ install
 
-    # oops! Isn't the purpose of tmp to be temporary?! This is done
-    # like that because the install function may be run as root, hence
-    # $PREFIX/tmp may be owned by root, but we do not want to chmod it
-    # to everybody, so we just delete it.
-    rm -rf $PREFIX/tmp
+    cd ../
+    git clone https://github.com/justinethier/cyclone git
+    cd git
 
+    PATH=../bin:$PATH make PREFIX=$PREFIX/opt/live/cyclone/ -j $SCHEME_LIVE_CORE_COUNT
+    PATH=../bin:$PATH make PREFIX=$PREFIX/opt/live/cyclone/ install
 }
 
 scheme-live-cyclone-run () {
-    SOURCE=$(mktemp --tmpdir=$SCHEME_LIVE_PREFIX/tmp/ $(basename $1).XXXXXX.scm)
+    SOURCE=$(mktemp --tmpdir=/tmp/ $(basename $1).XXXXXX.scm)
     tail -n +2 $1 > $SOURCE
-    cyclone -I$SCHEME_LIVE_PREFIX/share/ $SOURCE
+    $SCHEME_LIVE_PREFIX/opt/live/cyclone/bin/cyclone -A $SCHEME_LIVE_PREFIX/lib/ $SOURCE
     shift
-    exec $SCHEME_LIVE_PREFIX/tmp/$(basename $SOURCE .scm) $@
+    exec /tmp/$(basename $SOURCE .scm) $@
 }
 
 scheme-live-cyclone-repl () {
-    rlwrap cyclone -I$SCHEME_LIVE_PREFIX/share
+    rlwrap icyc -A $SCHEME_LIVE_PREFIX/lib
 }
 
 scheme-live-cyclone-version () {

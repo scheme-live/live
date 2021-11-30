@@ -84,7 +84,7 @@
       ;;   (raise (make-json-error "Unescaped control char.")))
 
       ;; XXX: Here be dragons.
-      (exclusive-cond
+      (cond
        ((char=? char #\\)
         (begin
           (let loop-unescape ((char (generator))
@@ -93,24 +93,26 @@
               ((#\" #\\ #\/) (loop (generator)
                                     (cons char (append chars-unescaped
                                                       out))))
-              (#\b (loop (generator) (cons #\backspace
+              ((#\b) (loop (generator) (cons #\backspace
                                            (append chars-unescaped
                                                    out))))
-              (#\f (loop (generator) (cons #\x0C
+              ;; racket does not support chars as hex
+              ;; ((#\f) (loop (generator) (cons #\x0c
+              ;;                              (append chars-unescaped
+              ;;                                      out))))
+              ((#\n) (loop (generator) (cons #\newline
                                            (append chars-unescaped
                                                    out))))
-              (#\n (loop (generator) (cons #\newline
-                                           (append chars-unescaped
-                                                   out))))
-              (#\r (loop (generator) (cons #\x0D
-                                           (append chars-unescaped
-                                                   out))))
-              (#\t (loop (generator) (cons #\tab
+              ;; racket does not support chars as hex
+              ;; ((#\r) (loop (generator) (cons #\x0D
+              ;;                              (append chars-unescaped
+              ;;                                      out))))
+              ((#\t) (loop (generator) (cons #\tab
                                            (append chars-unescaped
                                                    out))))
               ;; TODO: remove this code that try to parse escaped
               ;; unicodes.
-              (#\u (let loop-unicode ((code1 (read-unicode-escape generator))
+              ((#\u) (let loop-unicode ((code1 (read-unicode-escape generator))
                                       (chars chars-unescaped))
                      (let ((next-char (generator)))
                        (if (and (<= #xd800 code1 #xdbff)
@@ -171,18 +173,18 @@
     (if (eof-object? char)
         char ;; return that eof-object
         (case char
-          (#\n (expect-null generator) (set! char (maybe-ignore-whitespace generator)) 'null)
-          (#\t (expect-true generator) (set! char (maybe-ignore-whitespace generator)) #t)
-          (#\f (expect-false generator) (set! char (maybe-ignore-whitespace generator)) #f)
-          (#\: (set! char (maybe-ignore-whitespace generator)) 'colon)
-          (#\, (set! char (maybe-ignore-whitespace generator)) 'comma)
-          (#\[ (set! char (maybe-ignore-whitespace generator)) 'array-start)
-          (#\] (set! char (maybe-ignore-whitespace generator)) 'array-end)
-          (#\{ (set! char (maybe-ignore-whitespace generator)) 'object-start)
-          (#\} (set! char (maybe-ignore-whitespace generator)) 'object-end)
-          (#\" (let ((out (read-json-string generator)))
-                 (set! char (maybe-ignore-whitespace generator))
-                 out))
+          ((#\n) (expect-null generator) (set! char (maybe-ignore-whitespace generator)) 'null)
+          ((#\t) (expect-true generator) (set! char (maybe-ignore-whitespace generator)) #t)
+          ((#\f) (expect-false generator) (set! char (maybe-ignore-whitespace generator)) #f)
+          ((#\:) (set! char (maybe-ignore-whitespace generator)) 'colon)
+          ((#\,) (set! char (maybe-ignore-whitespace generator)) 'comma)
+          ((#\[) (set! char (maybe-ignore-whitespace generator)) 'array-start)
+          ((#\]) (set! char (maybe-ignore-whitespace generator)) 'array-end)
+          ((#\{) (set! char (maybe-ignore-whitespace generator)) 'object-start)
+          ((#\}) (set! char (maybe-ignore-whitespace generator)) 'object-end)
+          ((#\") (let ((out (read-json-string generator)))
+                   (set! char (maybe-ignore-whitespace generator))
+                   out))
           (else
            (call-with-values (lambda () (maybe-read-number char generator))
              (lambda (number next)
@@ -198,7 +200,7 @@
     (cond
      ((procedure? port-or-generator)
       (%json-tokens port-or-generator))
-     ((and (textual-port? port-or-generator) (input-port? port-or-generator))
+     (#t
       (%json-tokens (port->generator port-or-generator)))
      (else (error 'json "json-tokens error, argument is not valid" port-or-generator))))))
 
@@ -241,9 +243,9 @@
               (let loop ((out (list (read next generator)))
                          (length 1))
                 (case (generator)
-                  (comma (loop (cons (read (generator) generator) out)
+                  ((comma) (loop (cons (read (generator) generator) out)
                                (fx+ length 1)))
-                  (array-end
+                  ((array-end)
                    (nesting-depth-remaining-increment!)
                    (list->reverse-vector out length))
                   (else (raise (make-json-error "Invalid array."))))))))
@@ -257,15 +259,16 @@
                        (colon (generator))
                        (value (read (generator) generator)))
                   (case (generator)
-                    (comma (loop (cons (cons key value) out)))
-                    (object-end
+                    ((comma) (loop (cons (cons key value) out)))
+                    ((object-end)
                      (nesting-depth-remaining-increment!)
                      (cons (cons key value) out))
                     (else (raise (make-json-error "Invalid object.")))))))))))
 
     (let* ((generator (json-tokens port-or-generator))
            (token (generator)))
-      (read token generator)))))
+      (guard (ex (else (raise (make-json-error "Invalid JSON"))))
+        (read token generator))))))
 
 ;; write procedures
 
@@ -282,7 +285,6 @@
       ((#\tab) (accumulator "\\t"))
       ((#\backspace) (accumulator "\\b"))
       ((#\x0c) (accumulator "\\f"))
-      ((#\x0d) (accumulator "\\r"))
       (else (accumulator char))))
 
   (define (write-json-string string accumulator)
@@ -414,6 +416,7 @@
 (define (%json-write obj accumulator)
 
   (define (raise-unless-valid? obj)
+
     (cond
      ((null? obj) (void))
      ((eq? obj 'null) (void))

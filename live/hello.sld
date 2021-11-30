@@ -2,8 +2,11 @@
   (import (scheme base)
           (scheme write))
   (export hello)
-  (cond-expand
-   ((or chibi gambit gerbil loko)
-    (include "hello/body.scm"))
-   ;; That is the rule picked up by chicken
-   (else (include "live/hello/body.scm"))))
+
+  (begin
+    (cond-expand
+     ((or sagittarius guile mit gambit gerbil loko gauche)
+      (include "hello/body.scm"))
+     (chibi
+      (include "live/hello/body.scm"))
+     (else))))

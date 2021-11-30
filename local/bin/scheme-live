@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# set -x # echo debug line by line
-set -e # Exit on error
-
 # SHORT_DESCRIPTION="My command with various sub commands!"
 # HELP_MAIN="usage: $(basename "$0") <sub-commands> [options]
 #
@@ -36,8 +33,12 @@ scheme-live-available () {
     find $SCHEME_LIVE_PREFIX/bin/ -name "scheme-live-*" -exec sh -c 'basename {} | cut -d"-" -f3' \; | grep -v current | sort
 }
 
+scheme-live-install () {
+    scheme-live available | xargs -i scheme-live {} install
+}
+
 scheme-live-check () {
-    find $SCHEME_LIVE_PREFIX/bin/ -name "scheme-live-*" -exec sh -c '{} check $@' \;
+    scheme-live available | xargs -i scheme-live {} check $@
 }
 
 scheme-live-benchmark () {

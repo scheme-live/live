@@ -1,51 +1,23 @@
 #!/bin/bash
 
-set -e
-
 HELP_MAIN="usage: scheme-live chicken <sub-commands> [options]"
 
-scheme-live-chicken-uninstall () {
-    PREFIX=$1
-
-    if [ "x$PREFIX" == "x" ]; then
-        PREFIX=$SCHEME_LIVE_PREFIX
-    fi
-
-    rm -f "$PREFIX/bin/csc"
-
-    chicken-uninstall -force live
-}
-
 scheme-live-chicken-install () {
-    set -xe
-
     PREFIX=$1
 
     if [ "x$PREFIX" == "x" ]; then
         PREFIX=$SCHEME_LIVE_PREFIX
     fi
 
-    if test -f "$PREFIX/bin/csc"; then
-        echo "Chicken is already installed at $PREFIX"
-        exit 1
-    fi
-
-    WORK=$PREFIX/tmp/chicken-scheme-$(date --iso=seconds)
-    echo "Work directory is: $WORK"
-    mkdir -p $WORK
-    wget "https://code.call-cc.org/releases/5.3.0/chicken-5.3.0.tar.gz" --output-document="$WORK/scheme.tar.gz"
-    tar -xvf "$WORK/scheme.tar.gz" --directory="$WORK"
-    cd $WORK/chicken-*/
-    make PREFIX=$PREFIX
-    make PREFIX=$PREFIX install
-    cd -
-    # https://wiki.call-cc.org/eggref/5/csm
-    chicken-install csm
-    chicken-install r7rs
+    rm -rf $PREFIX/opt/live/chicken
+    mkdir -p $PREFIX/opt/live/chicken
+    cd $PREFIX/opt/live/chicken
+    git clone git://code.call-cc.org/chicken-core git
+    cd git
+    # TODO: FIXME
 }
 
 scheme-live-chicken-run () {
-    set -ex
     csm -r7rs -ignore local &> /dev/null
     csi -quiet -batch -no-warnings -R r7rs -include-path $SCHEME_LIVE_PREFIX $1
 }

@@ -1,12 +1,29 @@
 #!/bin/bash
 
-set -e
 
 HELP_MAIN="usage: scheme-live chez <sub-commands> [options]"
 
 
 scheme-live-chez-install () {
-    apt install chezscheme
+    PREFIX=$1
+
+    if [ "x$PREFIX" == "x" ]; then
+        PREFIX=$SCHEME_LIVE_PREFIX
+    fi
+
+    if test -f "$PREFIX/opt/live/chez/bin/scheme"; then
+        echo "Already installed!..."
+        exit 0
+    fi
+
+    rm -rf $PREFIX/opt/live/chez
+    mkdir -p $PREFIX/opt/live/chez
+    cd $PREFIX/opt/live/chez
+    git clone https://github.com/cisco/ChezScheme git
+    cd git
+    ./configure --disable-x11 --threads --installprefix=$PREFIX/opt/live/chez/
+    make -j $SCHEME_LIVE_CORE_COUNT
+    make install
 }
 
 scheme-live-chez-run () {
@@ -14,7 +31,7 @@ scheme-live-chez-run () {
     echo "(import (only (chezscheme) import))" >> $SOURCE
     tail -n +2 $1 >> $SOURCE
     shift
-    scheme --libexts .chez.sls:.sls --libdirs $SCHEME_LIVE_PREFIX/lib/ --program $SOURCE $@
+    PATH=$SCHEME_LIVE_PREFIX/opt/live/chez/bin:$PATH scheme --libexts .chez.sls:.sls --libdirs $SCHEME_LIVE_PREFIX/lib/ --program $SOURCE $@
 }
 
 scheme-live-chez-repl () {

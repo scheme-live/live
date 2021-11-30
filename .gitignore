@@ -2,6 +2,8 @@
 # You need to git add --force local/... on a case by case basis.
 
 local/
+*.c
+*.meta
 
 # Texinfo:
 
