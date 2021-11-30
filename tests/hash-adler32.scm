@@ -1,4 +1,6 @@
-(import (scheme base) (live hash adler32) (live test))
+(import (scheme base)
+        (live test)
+        (live hash adler32 unstable))
 
 (test-begin "live/hash/adler32")
 

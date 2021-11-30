@@ -1,4 +1,6 @@
-(import (scheme base) (live hash sha) (live test))
+(import (scheme base)
+        (live test)
+        (live hash sha unstable))
 
 (test-begin "live/hash/sha")
 
