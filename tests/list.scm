@@ -17,6 +17,7 @@
 
   (test-eqv #t (list<? < '(1 2) '(2)))
   (test-eqv #t (list<? < '(1) '(1 2)))
+  (test-eqv #f (list<? < '(2 1) '(2)))
 
   (test-eqv #t (list<? string<? '("a" "a") '("a" "b")))
   (test-eqv #f (list<? string<? '("a" "b") '("a" "a")))
