@@ -14,9 +14,14 @@
   (string-every char-whitespace? str))
 
 (define (string->one-char-strings string)
-  (let loop ((strings '()) (n (string-length string)))
-    (if (zero? n) strings
-        (loop (cons (string-copy string (- n 1) n) strings) (- n 1)))))
+  (let loop ((n (string-length string))
+             (strings '()))
+    (if (zero? n)
+        strings
+        (let ((m (- n 1)))
+          (loop m
+                (cons (string-copy string m n)
+                      strings))))))
 
 ;; SRFI 140 (Immutable Strings) has the following:
 ;;
