@@ -6,7 +6,7 @@ HELP_MAIN="usage: scheme-live chez <sub-commands> [options]"
 
 
 scheme-live-chez-install () {
-    apt install chezscheme
+    dpkg -s chezscheme >/dev/null || apt-get install chezscheme
 }
 
 scheme-live-chez-run () {

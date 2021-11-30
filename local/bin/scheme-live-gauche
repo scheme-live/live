@@ -5,7 +5,7 @@ set -e
 HELP_MAIN="usage: scheme-live gauche <sub-commands> [options]"
 
 scheme-live-gauche-install () {
-    apt install gauche
+    dpkg -s gauche >/dev/null || apt-get install gauche
 }
 
 scheme-live-gauche-run () {

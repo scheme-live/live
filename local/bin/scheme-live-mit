@@ -9,7 +9,7 @@ scheme-live-mit-install () {
 
     # TODO https://www.gnu.org/software/mit-scheme/documentation/stable/mit-scheme-user/Unix-Installation.html
 
-    apt install mit-scheme
+    dpkg -s mit-scheme >/dev/null || apt-get install mit-scheme
 }
 
 scheme-live-mit-run () {
