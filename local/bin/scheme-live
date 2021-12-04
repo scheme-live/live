@@ -47,7 +47,7 @@ scheme-live-benchmark () {
 }
 
 scheme-live-venv () {
-    PATH=$SCHEME_LIVE_PREFIX/opt/live/$1/bin:$PATH $SHELL
+    SCHEME_LIVE_CURRENT=$1 PATH=$SCHEME_LIVE_PREFIX/opt/live/$1/bin:$PATH $SHELL
 }
 
 source $SCHEME_LIVE_PREFIX/shell-subcommand.sh

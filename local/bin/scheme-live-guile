@@ -26,7 +26,7 @@ scheme-live-guile-run () {
     SOURCE=$(mktemp --tmpdir=/tmp/ $(basename $1).XXXXXX.scm)
     tail -n +2 $1 > $SOURCE
     shift
-    PATH=$SCHEME_LIVE_PREFIX/opt/live/guile/bin/:$PATH guile --r7rs -L $SCHEME_LIVE_PREFIX/lib/ $SOURCE $@
+    PATH=$SCHEME_LIVE_PREFIX/opt/live/guile/bin/:$PATH guile --fresh-auto-compile -L $SCHEME_LIVE_PREFIX/lib/ $SOURCE $@
 }
 
 scheme-live-guile-repl () {

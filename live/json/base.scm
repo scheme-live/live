@@ -89,7 +89,7 @@
    string-for-each
    string?
    symbol->string
-   textual-port?
+   port?
    unless
    values
    vector-for-each
@@ -100,10 +100,10 @@
    write
    exit)
   (import (scheme base)
-          (scheme list)
           (scheme read)
+          (srfi srfi-1)
           (scheme case-lambda)
-          (scheme bitwise)
+          (only (srfi srfi-60) bitwise-ior)
           (scheme file)
           (scheme write)
           (scheme process-context)
