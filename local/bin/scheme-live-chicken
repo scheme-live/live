@@ -30,13 +30,13 @@ scheme-live-chicken-install () {
 }
 
 scheme-live-chicken-run () {
-    PATH=$SCHEME_LIVE_PREFIX/opt/live/chicken/bin:$PATH chicken-install -n
-    PATH=$SCHEME_LIVE_PREFIX/opt/live/chicken/bin:$PATH csi -quiet -batch -no-warnings -R r7rs -include-path $SCHEME_LIVE_PREFIX/lib/ $1
+    PATH=$SCHEME_LIVE_PREFIX/opt/live/chicken/bin:$PATH chicken-install > /dev/null
+    PATH=$SCHEME_LIVE_PREFIX/opt/live/chicken/bin:$PATH csi -quiet -batch -no-warnings -R r7rs $1
 }
 
 scheme-live-chicken-repl () {
-    PATH=$SCHEME_LIVE_PREFIX/opt/live/chicken/bin:$PATH chicken-install -n
-    PATH=$SCHEME_LIVE_PREFIX/opt/live/chicken/bin:$PATH rlwrap csi -R r7rs -include-path $SCHEME_LIVE_PREFIX/lib/ $1
+    PATH=$SCHEME_LIVE_PREFIX/opt/live/chicken/bin:$PATH chicken-install > /dev/null
+    PATH=$SCHEME_LIVE_PREFIX/opt/live/chicken/bin:$PATH rlwrap csi -R r7rs $1
 
 }
 

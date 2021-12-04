@@ -38,7 +38,6 @@
    denominator
    directory-list
    display
-   else
    eof-object?
    eq?
    equal?
@@ -99,7 +98,7 @@
    write
    exit)
   (cond-expand
-   ((or gambit loko gauche)
+   ((or chicken gambit loko gauche)
     (import (scheme base)
             ;; (srfi 1)
             (scheme read)
@@ -121,6 +120,9 @@
             (live json shim))))
 
   (cond-expand
+   (chicken
+    (import (only (chicken bitwise) bitwise-ior)
+            (only (srfi 1) every)))
    (loko
     (import (only (rnrs) bitwise-ior)))
    (else))

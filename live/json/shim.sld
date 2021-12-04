@@ -4,6 +4,9 @@
           (scheme file))
 
   (cond-expand
+   (chicken
+    (import (chicken bitwise)
+            (only (srfi 1) every remove)))
    (gambit
     (import (gambit)))
    (gauche
