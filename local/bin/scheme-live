@@ -46,4 +46,8 @@ scheme-live-benchmark () {
     /usr/bin/time -f $FORMAT $@
 }
 
+scheme-live-venv () {
+    PATH=$SCHEME_LIVE_PREFIX/opt/live/$1/bin:$PATH $SHELL
+}
+
 source $SCHEME_LIVE_PREFIX/shell-subcommand.sh
