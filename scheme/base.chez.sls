@@ -1,3 +1,3 @@
 (library (scheme base)
-  (export display newline)
+  (export display newline port?)
   (import (chezscheme)))

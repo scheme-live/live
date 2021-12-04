@@ -30,19 +30,20 @@ scheme-live-chicken-install () {
 }
 
 scheme-live-chicken-run () {
+    set -x
     PATH=$SCHEME_LIVE_PREFIX/opt/live/chicken/bin:$PATH chicken-install > /dev/null
     PATH=$SCHEME_LIVE_PREFIX/opt/live/chicken/bin:$PATH csi -quiet -batch -no-warnings -R r7rs $1
 }
 
 scheme-live-chicken-repl () {
-    PATH=$SCHEME_LIVE_PREFIX/opt/live/chicken/bin:$PATH chicken-install > /dev/null
+    PATH=$SCHEME_LIVE_PREFIX/opt/live/chicken/bin:$PATH chicken-install > /dev/null > /dev/null
     PATH=$SCHEME_LIVE_PREFIX/opt/live/chicken/bin:$PATH rlwrap csi -R r7rs $1
 
 }
 
 scheme-live-chicken-version () {
     # TODO: Use Version flag @ https://srfi.schemers.org/srfi-176/
-    csi -version
+    PATH=$SCHEME_LIVE_PREFIX/opt/live/chicken/bin:$PATH csi -version
 }
 
 scheme-live-chicken-check () {

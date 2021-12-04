@@ -100,6 +100,11 @@
    exit)
 
   (cond-expand
+   (chicken)
+   (else
+    (export else)))
+
+  (cond-expand
    ((or chicken gambit loko gauche mit)
     (import (scheme base)
             ;; (srfi 1)
@@ -160,7 +165,8 @@
 
     (cond-expand
      (mit
-      (define ignorable values)))
+      (define ignorable values))
+     (else))
 
     (define fx+ +)
     (define fx- -)

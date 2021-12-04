@@ -30,7 +30,7 @@
      live.hello
      (source "live/hello.sld")
      (source-dependencies "live/hello/body.scm")
-     (component-dependencies live.hello)
+     (component-dependencies)
      (csc-options "-R" "r7rs" "-X" "r7rs"))
   (extension
      live.bitwise.unstable

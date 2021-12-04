@@ -20,18 +20,21 @@
   (cond-expand
     (chicken
      (import (chicken condition)
-             (uri-generic))))
-  (cond-expand
-    (chicken
+             (uri-generic)))
+    (else))
 
-     (define gemini-error?
-       (condition-predicate 'gemini-error))
+  (begin
+    (cond-expand
+     (chicken
 
-     (define gemini-error-response
-       (condition-property-accessor 'gemini-error 'response #f))
+      (define gemini-error?
+        (condition-predicate 'gemini-error))
 
-     (define (make-gemini-error response)
-       (make-property-condition 'gemini-error
-                                'message "Gemini request failed"
-                                'response response))))
-  (include "live.scm"))
+      (define gemini-error-response
+        (condition-property-accessor 'gemini-error 'response #f))
+
+      (define (make-gemini-error response)
+        (make-property-condition 'gemini-error
+                                 'message "Gemini request failed"
+                                 'response response))))
+    (include "live.scm")))
