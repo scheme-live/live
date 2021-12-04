@@ -230,7 +230,6 @@
              "y-object-duplicated-key"
              "y-object-duplicated-key-and-value"
              "y-object-empty"
-             "y-object-empty-key"
              "y-object-simple"
              "y-string-backslash-and-u-escaped-zero"
              "y-string-backslash-doublequotes"
