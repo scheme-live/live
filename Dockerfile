@@ -3,6 +3,8 @@ FROM ubuntu:20.04
 
 ADD . /live
 
+ENV USER=star
+
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt update && apt upgrade && apt install make && cd /live && make prepare-debian
