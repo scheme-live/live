@@ -1,5 +1,6 @@
 (define-library (live json base)
   (export
+   port?
    read
    quote
    let*
@@ -125,12 +126,14 @@
             (only (srfi 1) every)))
    (loko
     (import (only (rnrs) bitwise-ior)))
+   (mit
+    (import (rename (srfi 143) (fxior bitwise-ior))))
    (else))
 
   (begin
 
     (cond-expand
-     ((or gambit loko gauche)
+     ((or gambit loko mit gauche)
       (define every
         (lambda (p? x)
           (if (null? x)
@@ -154,6 +157,9 @@
                     (recur tail)))))))
      (else))
 
+    (cond-expand
+     (mit
+      (define ignorable values)))
 
     (define fx+ +)
     (define fx- -)

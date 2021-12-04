@@ -89,7 +89,7 @@
    string-for-each
    string?
    symbol->string
-   textual-port?
+   port?
    unless
    values
    vector-for-each

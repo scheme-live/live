@@ -159,7 +159,6 @@
              "n-string-unescaped-tab"
              "n-string-unicode-CapitalU"
              "n-string-with-trailing-garbage"
-             "n-structure-100000-opening-arrays"
              "n-structure-angle-bracket-."
              "n-structure-angle-bracket-null"
              "n-structure-array-trailing-garbage"

@@ -23,19 +23,20 @@ scheme-live-mit-install () {
     make -j$SCHEME_LIVE_CORE_COUNT
     make install
 
-    # TODO: FIXME: Does not work inside docker?
-    #
-    # cd ../../
-    # git clone https://git.savannah.gnu.org/git/mit-scheme.git git
-    # cd git/src/
-    # PATH=../../bin/:$PATH ./Setup.sh
-    # PATH=../../bin/:$PATH ./configure --prefix=$PREFIX/opt/live/mit/
-    # PATH=../../bin/:$PATH make -j$SCHEME_LIVE_CORE_COUNT
-    # PATH=../../bin/:$PATH make install
+    cd ../../
+
+    git clone https://git.savannah.gnu.org/git/mit-scheme.git git
+    cd git/src/
+    PATH=$(pwd)/../../bin/:$PATH ./Setup.sh
+    PATH=$(pwd)/../../bin/:$PATH ./configure --prefix=$PREFIX/opt/live/mit/
+    PATH=$(pwd)/../../bin/:$PATH make -j$SCHEME_LIVE_CORE_COUNT
+    PATH=$(pwd)/../../bin/:$PATH make install
 }
 
 scheme-live-mit-run () {
+    set -xe
     SOURCE=$(mktemp --tmpdir=/tmp/ $(basename $1).XXXXXX.scm)
+    echo '(import (scheme base))' >> $SOURCE
     tail -n +2 $1 >> $SOURCE
     shift
 
@@ -43,12 +44,12 @@ scheme-live-mit-run () {
 }
 
 scheme-live-mit-repl () {
-    rlwrap mit-scheme --eval "(find-scheme-libraries! \"$SCHEME_LIVE_PREFIX/lib/\")"
+    PATH=$SCHEME_LIVE_PREFIX/opt/live/mit/bin:$PATH rlwrap mit-scheme --eval "(find-scheme-libraries! \"$SCHEME_LIVE_PREFIX/lib/\")"
 }
 
 scheme-live-mit-version () {
     # TODO: Use Version flag @ https://srfi.schemers.org/srfi-176/
-    mit-scheme --version
+    PATH=$SCHEME_LIVE_PREFIX/opt/live/mit/bin:$PATH mit-scheme --version
 }
 
 scheme-live-mit-check () {

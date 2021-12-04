@@ -194,81 +194,84 @@
                number)))))))
 
 (define json-tokens
-  (case-lambda
-   (() (json-tokens (current-input-port)))
-   ((port-or-generator)
-    (cond
-     ((procedure? port-or-generator)
-      (%json-tokens port-or-generator))
-     (#t
-      (%json-tokens (port->generator port-or-generator)))
-     (else (error 'json "json-tokens error, argument is not valid" port-or-generator))))))
+  (lambda args
+    (if (null? args)
+        (json-tokens (current-input-port))
+        (let ((port-or-generator (car args)))
+          (cond
+           ((procedure? port-or-generator)
+            (%json-tokens port-or-generator))
+           ;; racket does not like the original test
+           (#;(and (textual-port? port-or-generator) (input-port? port-or-generator))
+            (port? port-or-generator)
+            (%json-tokens (port->generator port-or-generator)))
+           (else (error 'json "json-tokens error, argument is not valid" port-or-generator)))))))
+
+(define (list->reverse-vector objs length)
+  (define vector (make-vector length))
+  (let loop ((objs objs)
+             (index (fx- length 1)))
+    (if (null? objs)
+        vector
+        (begin
+          (vector-set! vector index (car objs))
+          (loop (cdr objs) (fx- index 1))))))
 
 (define json-read
-  (case-lambda
-   (() (json-read (current-input-port)))
-   ((port-or-generator)
+  (lambda args
+    (if (null? args)
+        (json-read (current-input-port))
+        (let ((nesting-depth-remaining (json-nesting-depth-limit)))
 
-    ;;
-    (define (list->reverse-vector objs length)
-      (define vector (make-vector length))
-      (let loop ((objs objs)
-                 (index (fx- length 1)))
-        (if (null? objs)
-            vector
-            (begin
-              (vector-set! vector index (car objs))
-              (loop (cdr objs) (fx- index 1))))))
+          (define nesting-depth-remaining-increment!
+            (lambda ()
+              (set! nesting-depth-remaining (fx+ nesting-depth-remaining 1))))
 
-    (define nesting-depth-remaining (json-nesting-depth-limit))
+          (define nesting-depth-remaining-decrement!
+            (lambda ()
+              (if (fxzero? nesting-depth-remaining)
+                  (raise (make-json-error "Maximum recursion depth exceeded."))
+                  (set! nesting-depth-remaining (fx- nesting-depth-remaining 1)))))
 
-    (define (nesting-depth-remaining-increment!)
-      (set! nesting-depth-remaining (fx+ nesting-depth-remaining 1)))
+          (define (read token generator)
+            (cond
+             ((or (number? token) (string? token) (boolean? token) (json-null? token))
+              token)
+             ((eq? token 'array-start)
+              (let ((next (generator)))
+                (if (eq? next 'array-end)
+                    (begin
+                      (nesting-depth-remaining-increment!)
+                      (make-vector 0))
+                    (let loop ((out (list (read next generator)))
+                               (length 1))
+                      (case (generator)
+                        ((comma) (loop (cons (read (generator) generator) out)
+                                       (fx+ length 1)))
+                        ((array-end)
+                         (nesting-depth-remaining-increment!)
+                         (list->reverse-vector out length))
+                        (else (raise (make-json-error "Invalid array."))))))))
+             ((eq? token 'object-start)
+              (nesting-depth-remaining-decrement!)
+              (let loop ((out '()))
+                (let ((next (generator)))
+                  (if (eq? next 'object-end)
+                      (begin (nesting-depth-remaining-increment!) out)
+                      (let* ((key (string->symbol next))
+                             (colon (generator))
+                             (value (read (generator) generator)))
+                        (case (generator)
+                          ((comma) (loop (cons (cons key value) out)))
+                          ((object-end)
+                           (nesting-depth-remaining-increment!)
+                           (cons (cons key value) out))
+                          (else (raise (make-json-error "Invalid object.")))))))))))
 
-    (define (nesting-depth-remaining-decrement!)
-      (if (fxzero? nesting-depth-remaining)
-          (raise (make-json-error "Maximum nesting reached."))
-          (set! nesting-depth-remaining (fx- nesting-depth-remaining 1))))
-
-    (define (read token generator)
-      (cond
-       ((or (number? token) (string? token) (boolean? token) (json-null? token))
-        token)
-       ((eq? token 'array-start)
-        (let ((next (generator)))
-          (if (eq? next 'array-end)
-              (begin
-                (nesting-depth-remaining-increment!)
-                (make-vector 0))
-              (let loop ((out (list (read next generator)))
-                         (length 1))
-                (case (generator)
-                  ((comma) (loop (cons (read (generator) generator) out)
-                               (fx+ length 1)))
-                  ((array-end)
-                   (nesting-depth-remaining-increment!)
-                   (list->reverse-vector out length))
-                  (else (raise (make-json-error "Invalid array."))))))))
-       ((eq? token 'object-start)
-        (nesting-depth-remaining-decrement!)
-        (let loop ((out '()))
-          (let ((next (generator)))
-            (if (eq? next 'object-end)
-                (begin (nesting-depth-remaining-increment!) out)
-                (let* ((key (string->symbol next))
-                       (colon (generator))
-                       (value (read (generator) generator)))
-                  (case (generator)
-                    ((comma) (loop (cons (cons key value) out)))
-                    ((object-end)
-                     (nesting-depth-remaining-increment!)
-                     (cons (cons key value) out))
-                    (else (raise (make-json-error "Invalid object.")))))))))))
-
-    (let* ((generator (json-tokens port-or-generator))
-           (token (generator)))
-      (guard (ex (else (raise (make-json-error "Invalid JSON"))))
-        (read token generator))))))
+          (let* ((generator (json-tokens (car args)))
+                 (token (generator)))
+            (guard (ex (else (raise (make-json-error "Invalid JSON"))))
+                   (read token generator)))))))
 
 ;; write procedures
 
@@ -477,9 +480,9 @@
      (else (raise (make-json-error "Not a char or string"))))))
 
 (define json-write
-  (case-lambda
-   ((obj) (json-write obj (current-output-port)))
-   ((obj port-or-accumulator)
-    (if (procedure? port-or-accumulator)
-        (%json-write obj port-or-accumulator)
-        (%json-write obj (port->accumulator port-or-accumulator))))))
+  (lambda (obj . args)
+    (if (null? args)
+        (json-write obj (current-input-port))
+        (if (procedure? (car args))
+            (%json-write obj (car args))
+            (%json-write obj (port->accumulator (car args)))))))

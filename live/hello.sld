@@ -5,8 +5,8 @@
 
   (begin
     (cond-expand
-     ((or chicken sagittarius guile mit gambit gerbil loko gauche)
+     ((or chicken sagittarius guile gambit gerbil loko gauche)
       (include "hello/body.scm"))
-     (chibi
+     ((or chibi mit)
       (include "live/hello/body.scm"))
      (else))))
