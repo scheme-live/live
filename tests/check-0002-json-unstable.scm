@@ -1,4 +1,5 @@
 #!/usr/bin/env -S scheme-live current run
+(import (scheme write))
 (import (live json base))
 (import (live json unstable))
 
@@ -32,32 +33,34 @@
 (define data "./live/json/data")
 (define checks (directory-list data))
 
-(define (dodo name)
 
-  (define input (string-append data "/" name "/input.json"))
-  (define output (string-append data "/" name "/output.scm"))
-  (define error (string-append data "/" name "/error.txt"))
-
-  (define (on-error exc)
-    ;; sloppy: check that there is any error, if it is the case pass
-    ;; the test
+(define on-error
+  (lambda (exc error)
+    ;; sloppy: check that there is any error, if it
+    ;; is the case pass the test
     (if (file-regular? error)
         #t
         (begin
-          (newline)
-          (write exc)
-          (newline)
-          #f)))
+          ;; (newline)
+          ;; (write exc)
+          ;; (newline)
+          #f))))
 
+;; (define outxy raise)
 
-  (display "* ")(display name) (display " => ")
-
-  (let ((out (guard (error (else (on-error error)))
-               (let ((obj (json->obj->json->obj input)))
-                 (equal? obj (call-with-input-file output read))))))
-    (display out)
+(define (dodo name)
+  (let* ((input (string-append data "/" name "/input.json"))
+         (output (string-append data "/" name "/output.scm"))
+         (error (string-append data "/" name "/error.txt"))
+         (outxy (guard (exc (else (on-error exc error)))
+                       (display "* ")
+                       (display name)
+                       (display " => ")
+                       (let ((obj (json->obj->json->obj input)))
+                         (equal? obj (call-with-input-file output read))))))
+    (display outxy)
     (newline)
-    out))
+    outxy))
 
 (define (every predicate? objects)
   (if (null? objects)
@@ -65,5 +68,7 @@
       (if (predicate? (car objects))
           (every predicate? (cdr objects))
           #f)))
+
+;; (dodo (car checks))
 
 (exit (if (every values (map dodo checks)) 0 1))

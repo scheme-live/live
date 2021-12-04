@@ -9,11 +9,14 @@
             (only (srfi 1) every remove)))
    (gambit
     (import (gambit)))
+   (mit
+    (import (rename (srfi 143) (fxarithmetic-shift arithmetic-shift))))
    (gauche
     (import (gauche base)))
    (gerbil
     (import (scheme bitwise)))
    (chibi
+    (import (scheme bitwise))
     (import (chibi filesystem))
     (import (only (srfi 1) remove)))
    (sagittarius
@@ -27,7 +30,8 @@
   (begin
 
     (cond-expand
-     ((or loko sagittarius gerbil)
+     ((or loko sagittarius gerbil mit)
+      ;; TODO: FIXME
       (define remove (lambda (p x) x)))
      (else (begin)))
 
@@ -45,6 +49,15 @@
      (cyclone
       (define file-regular? file-exists?))
      (chibi (begin))
+     (mit
+      (define file-regular?
+        (lambda (x)
+          (guard (ex (else #f))
+                 (call-with-input-file x
+                   (lambda _ #t)))))
+      (define directory-files
+        (lambda _
+          (include "./live/json/data-index.scm"))))
      (else
       (define file-regular?
         (lambda (x)

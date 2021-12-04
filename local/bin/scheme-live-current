@@ -36,10 +36,10 @@ scheme-live-current-check () {
 
     scheme-live $SCHEME_LIVE_CURRENT version | tee --append $REPORT
 
-    find ./live/ -type f -executable -name "check*" -exec bash -c "echo \* {} && {} || echo \*\* failed" \; | tee --append $REPORT
+    find ./tests/ -type f -executable -name "check*" -exec bash -c "echo \* {} && {} || echo \*\* failed" \; | tee --append $REPORT
 
     if grep "^** failed" $REPORT > /dev/null; then
-        echo "* Report: $(grep "^\*\* failed" $REPORT | wc -l) failed tests"
+        echo "* Report for $SCHEME_LIVE_CURRENT: $(grep "^\*\* failed" $REPORT | wc -l) failed tests @ $REPORT"
         exit 1
     else
         echo "* Win :)"
