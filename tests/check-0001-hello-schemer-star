@@ -2,7 +2,8 @@
 
 set -x
 
-STDOUT=$(hello-schemer-star)
+# XXX: Hack for mit-scheme
+STDOUT=$(hello-schemer-star | tail --lines=1)
 
 if  [ "$STDOUT" != "Hello schemer $USER!" ]; then
     exit 1

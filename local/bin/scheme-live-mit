@@ -53,7 +53,7 @@ scheme-live-mit-version () {
 }
 
 scheme-live-mit-check () {
-    SCHEME_LIVE_CURRENT=mit echo scheme-live current check
+    SCHEME_LIVE_CURRENT=mit scheme-live current check
 }
 
 source $SCHEME_LIVE_PREFIX/shell-subcommand.sh
