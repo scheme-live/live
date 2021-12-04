@@ -98,8 +98,9 @@
    when
    write
    exit)
+
   (cond-expand
-   ((or chicken gambit loko gauche)
+   ((or chicken gambit loko gauche mit)
     (import (scheme base)
             ;; (srfi 1)
             (scheme read)
