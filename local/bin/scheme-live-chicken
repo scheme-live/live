@@ -12,18 +12,32 @@ scheme-live-chicken-install () {
     rm -rf $PREFIX/opt/live/chicken
     mkdir -p $PREFIX/opt/live/chicken
     cd $PREFIX/opt/live/chicken
+
+    # bootstrap
+    wget https://code.call-cc.org/releases/5.3.0/chicken-5.3.0.tar.gz
+    tar xf chicken-5.3.0.tar.gz
+    cd chicken-5.3.0
+    PATH=$(pwd)/../bin/:$PATH make PREFIX=$(pwd)/../ -j $SCHEME_LIVE_CORE_COUNT
+    PATH=$(pwd)/../bin/:$PATH make PREFIX=$(pwd)/../ install
+
+    cd ..
+
+    # Compile from git
     git clone git://code.call-cc.org/chicken-core git
     cd git
-    # TODO: FIXME
+    PATH=$(pwd)/../bin/:$PATH make PREFIX=$(pwd)/../ -j $SCHEME_LIVE_CORE_COUNT
+    PATH=$(pwd)/../bin/:$PATH make PREFIX=$(pwd)/../ install
 }
 
 scheme-live-chicken-run () {
-    csm -r7rs -ignore local &> /dev/null
-    csi -quiet -batch -no-warnings -R r7rs -include-path $SCHEME_LIVE_PREFIX $1
+    PATH=$SCHEME_LIVE_PREFIX/opt/live/chicken/bin:$PATH chicken-install -n
+    PATH=$SCHEME_LIVE_PREFIX/opt/live/chicken/bin:$PATH csi -quiet -batch -no-warnings -R r7rs -include-path $SCHEME_LIVE_PREFIX/lib/ $1
 }
 
 scheme-live-chicken-repl () {
-    rlwrap csi -R r7rs -include-path $SCHEME_LIVE_PREFIX
+    PATH=$SCHEME_LIVE_PREFIX/opt/live/chicken/bin:$PATH chicken-install -n
+    PATH=$SCHEME_LIVE_PREFIX/opt/live/chicken/bin:$PATH rlwrap csi -R r7rs -include-path $SCHEME_LIVE_PREFIX/lib/ $1
+
 }
 
 scheme-live-chicken-version () {
