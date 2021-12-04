@@ -4,7 +4,8 @@
 
 (cond-expand
  (chicken
-  (load "live/hello.sld")
-  (import (live hello))))
+  (load "live/hello.sld")))
+
+(import (live hello))
 
 (hello (or (get-environment-variable "USER") ""))
