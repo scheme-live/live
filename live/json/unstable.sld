@@ -7,6 +7,9 @@
           json-read
           json-write)
 
+  (cond-expand
+   (mit
+    (import (scheme base))))
   (import (live json base))
 
   (include "body.scm"))

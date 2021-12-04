@@ -2,6 +2,7 @@
 ((scheme-mode
   (indent-tabs-mode . nil)
   (lisp-local-indent
+   guard 1
    c-lambda 2
    let*-pointers 1
    test-group 1
