@@ -12,4 +12,8 @@
     (import (scheme base))))
   (import (live json base))
 
+  (cond-expand
+   (mit
+    (import (scheme base))))
+
   (include "body.scm"))
