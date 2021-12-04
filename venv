@@ -3,6 +3,8 @@
 set -e
 # set -x
 
+# TODO: Avoid bashism, make POSIX
+
 if test -d "$(pwd)/.git"; then
     if [[ -z "$SCHEME_LIVE_VENV" ]]; then
         export SCHEME_LIVE_VENV=yes
@@ -12,7 +14,7 @@ if test -d "$(pwd)/.git"; then
 
         if [[ -z "$@" ]]; then
             echo "Entering scheme-live environment..."
-            bash
+            $SHELL
         else
             exec $@
         fi
