@@ -10,7 +10,7 @@ RUN cd /live && git clean -fxd
 
 ENV USER=star
 
-RUN apt install make && cd /live && make prepare-debian
+RUN apt install --yes make && cd /live && make prepare-debian
 
 RUN cd /live && rm -rf local/opt && ./venv scheme-live install
 
