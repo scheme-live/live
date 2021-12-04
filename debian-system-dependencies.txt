@@ -3,6 +3,7 @@ automake
 autopoint
 build-essential
 ca-certificates
+chrpath
 cmake
 curl
 debhelper
@@ -17,14 +18,15 @@ gperf
 intltool-debian
 libarchive-zip-perl
 libck-dev
+libcroco3
 libdebhelper-perl
 libffi-dev
 libfile-stripnondeterminism-perl
 libgc-dev
 libgmp-dev
 libgmpxx4ldbl
-libncurses-dev
 libncurses5-dev
+libncurses-dev
 libreadline-dev
 libsqlite3-dev
 libssl-dev
@@ -44,7 +46,6 @@ rlwrap
 shtool
 tex-common
 texi2html
-texinfo
 texinfo
 uuid-dev
 wget
