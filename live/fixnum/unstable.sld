@@ -43,7 +43,6 @@
    fxxor
    fxzero?)
   ;; Defined in this library:
-  (export)
   (import (scheme base))
   (cond-expand
 
@@ -55,6 +54,6 @@
     ;; fxremainder for negative numbers?
     (fxmod fxremainder))))
 
-    ((or chicken
-         (library (srfi 143)))
-     (import  (srfi 143)))))
+    (chicken
+     (import  (srfi 143)))
+    (else)))

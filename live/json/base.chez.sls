@@ -1,5 +1,6 @@
 (library (live json base)
   (export
+   port?
    read
    quote
    let*

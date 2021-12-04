@@ -7,4 +7,6 @@
           vector<?)
   (import (scheme base)
           (live fixnum unstable))
-  (include "live.scm"))
+  (cond-expand
+   (mit)
+   (else (include "live.scm"))))

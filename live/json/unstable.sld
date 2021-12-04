@@ -9,11 +9,8 @@
 
   (cond-expand
    (mit
-    (import (scheme base))))
+    (import (scheme base)))
+   (else))
   (import (live json base))
-
-  (cond-expand
-   (mit
-    (import (scheme base))))
 
   (include "body.scm"))
