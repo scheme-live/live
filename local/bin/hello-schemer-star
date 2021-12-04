@@ -4,4 +4,4 @@
 (import (live hello))
 
 
-(hello (or (get-environment-variable "USER") ""))
+(hello (get-environment-variable "USER"))
