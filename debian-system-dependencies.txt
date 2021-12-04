@@ -21,7 +21,6 @@ libdebhelper-perl
 libffi-dev
 libfile-stripnondeterminism-perl
 libgc-dev
-libgc1
 libgmp-dev
 libgmpxx4ldbl
 libncurses-dev
