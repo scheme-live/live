@@ -12,6 +12,7 @@
  (distribution-files
    "live.egg"
    "live.release-info"
+   "live/hello.sld"
    "live/bitwise/unstable.sld"
    "live/fixnum/unstable.sld"
    "live/list/unstable.sld"
@@ -26,6 +27,12 @@
    "live/time/iso/unstable.sld")
  (components
    (extension
+     live.hello
+     (source "live/hello.sld")
+     (source-dependencies "live/hello/body.scm")
+     (component-dependencies live.hello)
+     (csc-options "-R" "r7rs" "-X" "r7rs"))
+  (extension
      live.bitwise.unstable
      (source "live/bitwise/unstable.sld")
      (source-dependencies)

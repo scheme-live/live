@@ -1,11 +1,7 @@
 #!/usr/bin/env -S scheme-live current run
 (import (scheme base))
 (import (scheme process-context))
-
-(cond-expand
- (chicken
-  (load "live/hello.sld")))
-
 (import (live hello))
+
 
 (hello (or (get-environment-variable "USER") ""))
