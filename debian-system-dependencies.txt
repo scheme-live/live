@@ -17,13 +17,11 @@ gperf
 intltool-debian
 libarchive-zip-perl
 libck-dev
-libcroco3
 libdebhelper-perl
 libffi-dev
 libfile-stripnondeterminism-perl
 libgc-dev
-libgc-dev
-libgc1c2
+libgc1
 libgmp-dev
 libgmpxx4ldbl
 libncurses-dev
