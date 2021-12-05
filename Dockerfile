@@ -1,20 +1,13 @@
 # -*- mode: dockerfile; coding: utf-8 -*-
-FROM ubuntu:20.04
-
-ADD . /live
+FROM debian:bullseye
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt update && apt upgrade && apt install --yes git
-RUN cd /live && git clean -fxd
+RUN apt update && apt upgrade --yes && apt install --yes git make
+RUN git clone https://github.com/scheme-live/live.git
 
-ENV USER=star
+RUN cd /live && make prepare-debian
 
-RUN apt install --yes make && cd /live && make prepare-debian
+RUN cd /live && ./venv scheme-live install /
 
-RUN cd /live && rm -rf local/opt && ./venv scheme-live install
-
-run rm -rf /var/cache/apt/* /tmp
-RUN mkdir /tmp
-
-CMD ["bash"]
+RUN rm -rf /var/cache/apt/* /tmp && make /tmp

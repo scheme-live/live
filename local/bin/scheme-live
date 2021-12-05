@@ -34,7 +34,7 @@ scheme-live-available () {
 }
 
 scheme-live-install () {
-    scheme-live available | xargs -i scheme-live {} install
+    scheme-live available | xargs -i scheme-live {} install $1
 }
 
 scheme-live-check () {
