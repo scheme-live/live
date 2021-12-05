@@ -30,7 +30,7 @@ scheme-live-gambit-install () {
 }
 
 scheme-live-gambit-run () {
-    PATH=$SCHEME_LIVE_PREFIX/opt/live/gambit/bin:$PATH gsi -:r7rs $SCHEME_LIVE_PREFIX/lib/ $(pwd) $SCHEME_LIVE_PREFIX/opt/live/gambit/github.com/udem-dlteam/libs/@/ $1
+    PATH=$SCHEME_LIVE_PREFIX/opt/live/gambit/bin:$PATH gsi -:r7rs $SCHEME_LIVE_PREFIX/lib/ $(pwd)/ $SCHEME_LIVE_PREFIX/opt/live/gambit/github.com/udem-dlteam/libs/@/ $1
 }
 
 scheme-live-gambit-repl () {

@@ -22,7 +22,7 @@ scheme-live-racket-run () {
     echo "#lang r7rs" >> $SOURCE
     tail -n +2 $1 >> $SOURCE
     shift
-    PATH=$SCHEME_LIVE_PREFIX/opt/live/racket/bin/:$PATH PLTCOLLECTS=$SCHEME_LIVE_PREFIX/lib/:$(pwd) racket $SOURCE $@
+    PATH=$SCHEME_LIVE_PREFIX/opt/live/racket/bin/:$PATH PLTCOLLECTS=$SCHEME_LIVE_PREFIX/lib/:$(pwd):$PLTCOLLECTS racket $SOURCE $@
 }
 
 scheme-live-racket-repl () {

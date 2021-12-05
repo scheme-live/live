@@ -25,7 +25,7 @@ scheme-live-sagittarius-install () {
 }
 
 scheme-live-sagittarius-run () {
-    PATH=$SCHEME_LIVE_PREFIX/opt/live/sagittarius/bin:$PATH sagittarius --standard=7 --loadpath=$SCHEME_LIVE_PREFIX/lib/:$(pwd) $@
+    PATH=$SCHEME_LIVE_PREFIX/opt/live/sagittarius/bin:$PATH sagittarius --standard=7 --loadpath=$SCHEME_LIVE_PREFIX/lib/ --loadpath=$(pwd) $@
 }
 
 scheme-live-sagittarius-repl () {
