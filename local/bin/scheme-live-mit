@@ -40,7 +40,7 @@ scheme-live-mit-run () {
     tail -n +2 $1 >> $SOURCE
     shift
 
-    PATH=$SCHEME_LIVE_PREFIX/opt/live/mit/bin:$PATH mit-scheme --batch-mode --eval "(find-scheme-libraries!  \"$SCHEME_LIVE_PREFIX/lib/live/\")" --load $SOURCE --eval "(exit 0)" -- $@
+    PATH=$SCHEME_LIVE_PREFIX/opt/live/mit/bin:$PATH mit-scheme --batch-mode --eval "(find-scheme-libraries!  \"$(pwd)/live/\")" --load $SOURCE --eval "(exit 0)" -- $@
 }
 
 scheme-live-mit-repl () {

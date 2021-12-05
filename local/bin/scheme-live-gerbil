@@ -29,7 +29,7 @@ scheme-live-gerbil-run () {
 }
 
 scheme-live-gerbil-repl () {
-    PATH=$SCHEME_LIVE_PREFIX/opt/live/gambit/bin:$PATH GERBIL_LOADPATH="$SCHEME_LIVE_PREFIX/lib/" GERBIL_HOME="$(cat $SCHEME_LIVE_PREFIX/GERBIL_HOME || \"\")" rlwrap gxi --lang r7rs $SCHEME_LIVE_PREFIX/lib/
+    PATH=$SCHEME_LIVE_PREFIX/opt/live/gambit/bin:$PATH GERBIL_LOADPATH="$SCHEME_LIVE_PREFIX/lib/:$(pwd)" GERBIL_HOME="$(cat $SCHEME_LIVE_PREFIX/GERBIL_HOME || \"\")" rlwrap gxi --lang r7rs $SCHEME_LIVE_PREFIX/lib/
 }
 
 scheme-live-gerbil-version () {
