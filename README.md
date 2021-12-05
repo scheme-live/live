@@ -15,7 +15,7 @@
 - All libraries are collectively owned. In the unstable version, all
   libraries are subject to change.
 
-- Release a stable version of our API periodically.
+- Release a stable version of our collection periodically.
 
 - Work with RnRS, SRFI, and other library authors to share interfaces
-  and implementations whenever goals are aligned.
+  and implementations whenever possible.
