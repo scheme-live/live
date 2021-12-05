@@ -2,7 +2,6 @@
   (export
    port?
    read
-   quote
    let*
    begin
    fx+
@@ -33,9 +32,7 @@
    cond
    cons
    current-input-port
-   define
    define-record-type
-   define-syntax
    denominator
    directory-list
    display
@@ -52,12 +49,10 @@
    fxzero?
    get-output-string
    guard
-   if
    inexact?
    infinite?
    input-port?
    integer->char
-   lambda
    length
    let
    list
@@ -82,7 +77,6 @@
    read-char
    real?
    reverse
-   set!
    string->number
    string-append
    string-for-each
@@ -100,12 +94,25 @@
    exit)
 
   (cond-expand
-   (chicken)
+   (chicken
+    (export set!)
+    (export lambda)
+    (export if)
+    (export define-syntax)
+    (export quote))
+   (cyclone
+    (export vector make-record-marker))
    (else
+    (export set!)
+    (export lambda)
+    (export if)
+    (export define-syntax)
+    (export define)
+    (export quote)
     (export else)))
 
   (cond-expand
-   ((or chicken gambit loko gauche mit)
+   ((or chicken gambit loko gauche mit cyclone)
     (import (scheme base)
             ;; (srfi 1)
             (scheme read)
@@ -134,6 +141,9 @@
     (import (only (rnrs) bitwise-ior)))
    (mit
     (import (rename (srfi 143) (fxior bitwise-ior))))
+   (cyclone
+    (import (only (srfi 1) every))
+    (import (only (srfi 60) bitwise-ior)))
    (else))
 
   (begin
@@ -147,6 +157,83 @@
               (if (p? (car x))
                   (every (cdr x))
                   #f)))))
+
+     (cyclone
+      (define * *)
+      (define + +)
+      (define - -)
+      (define / /)
+      (define < <)
+      (define <= <=)
+      (define = =)
+      (define > >)
+      (define >= >=)
+      (define apply apply)
+      (define boolean? boolean?)
+      (define bytevector bytevector)
+      (define bytevector-append bytevector-append)
+      (define bytevector-length bytevector-length)
+      (define bytevector-u8-ref bytevector-u8-ref)
+      (define bytevector-u8-set! bytevector-u8-set!)
+      (define bytevector? bytevector?)
+      (define caar caar)
+      (define cadr cadr)
+      (define car car)
+      (define cdar cdar)
+      (define cddr cddr)
+      (define cdr cdr)
+      (define char->integer char->integer)
+      (define char? char?)
+      (define close-input-port close-input-port)
+      (define close-output-port close-output-port)
+      (define close-port close-port)
+      (define command-line-arguments command-line-arguments)
+      (define cons cons)
+      (define delete-file delete-file)
+      (define eof-object? eof-object?)
+      (define eq? eq?)
+      (define equal? equal?)
+      (define eqv? eqv?)
+      (define error error)
+      (define exit exit)
+      (define file-exists? file-exists?)
+      (define integer->char integer->char)
+      (define integer? integer?)
+      (define length length)
+      (define list->string list->string)
+      (define list->vector list->vector)
+      (define make-bytevector make-bytevector)
+      (define make-vector make-vector)
+      (define null? null?)
+      (define number->string number->string)
+      (define number? number?)
+      (define open-input-file open-input-file)
+      (define open-output-file open-output-file)
+      (define pair? pair?)
+      (define peek-char peek-char)
+      (define port? port?)
+      (define procedure? procedure?)
+      (define read-char read-char)
+      (define real? real?)
+      (define set-car! set-car!)
+      (define set-cdr! set-cdr!)
+      (define string->number string->number)
+      (define string->symbol string->symbol)
+      (define string-append string-append)
+      (define string-cmp string-cmp)
+      (define string-length string-length)
+      (define string-ref string-ref)
+      (define string-set! string-set!)
+      (define string? string?)
+      (define substring substring)
+      (define symbol->string symbol->string)
+      (define symbol? symbol?)
+      (define system system)
+      (define vector-length vector-length)
+      (define vector-ref vector-ref)
+      (define vector-set! vector-set!)
+      (define vector? vector?))
+
      (else))
 
     (cond-expand
