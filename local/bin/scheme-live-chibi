@@ -20,7 +20,7 @@ scheme-live-chibi-install () {
 }
 
 scheme-live-chibi-run () {
-    LD_LIBRARY_PATH=$SCHEME_LIVE_PREFIX/opt/live/chibi/lib PATH=$SCHEME_LIVE_PREFIX/opt/live/chibi/bin:$PATH chibi-scheme -I $SCHEME_LIVE_PREFIX/lib/ $1
+    LD_LIBRARY_PATH=$SCHEME_LIVE_PREFIX/opt/live/chibi/lib PATH=$SCHEME_LIVE_PREFIX/opt/live/chibi/bin:$PATH chibi-scheme -I $SCHEME_LIVE_PREFIX/lib/ -I $(pwd) $1
 }
 
 scheme-live-chibi-repl () {
