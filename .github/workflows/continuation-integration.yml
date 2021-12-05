@@ -24,9 +24,5 @@ jobs:
             - IMPLEMENTATION: sagittarius
       steps:
         - uses: actions/checkout@v2
-        - name: host setup
-          run: sudo make prepare-debian
-        - name: install
-          run: sudo ./venv scheme-live ${{ matrix.IMPLEMENTATION }} install
         - name: check
-          run: sudo ./venv scheme-live ${{ matrix.IMPLEMENTATION }} check
+          run: docker run --volume $(pwd):/live --interactive --rm letloopxyz/schemers:latest bash -c 'ln -s ./scheme /lib/scheme && ln -s ./live ./lib/live && cp /live/local/shell-subcommand.sh . && cd /live && PATH=/live/local/bin:/usr/bin/:/bin USER=github scheme-live ${{ matrix.implementation }} check'
