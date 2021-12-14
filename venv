@@ -9,7 +9,7 @@ if test -d "$(pwd)/.git"; then
     if [[ -z "$SCHEME_LIVE_VENV" ]]; then
         export SCHEME_LIVE_VENV=yes
         export SCHEME_LIVE_CORE_COUNT=$(nproc --ignore=1)
-        if test -d $1; then
+        if [ "x$1" != "x" ]; then
             export SCHEME_LIVE_PREFIX=$1
             shift
         else
