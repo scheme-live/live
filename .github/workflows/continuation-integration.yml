@@ -13,7 +13,7 @@ jobs:
             - IMPLEMENTATION: chez
             - IMPLEMENTATION: chibi
             - IMPLEMENTATION: chicken
-            # - IMPLEMENTATION: cyclone
+            - IMPLEMENTATION: cyclone
             - IMPLEMENTATION: gambit
             - IMPLEMENTATION: gauche
             - IMPLEMENTATION: gerbil
