@@ -1,0 +1,45 @@
+#;/usr/bin/env -S scheme-live run
+
+;; Local Variables:
+;; mode: scheme
+;; End:
+
+(import (scheme base))
+(import (scheme file))
+(import (scheme process-context))
+(import (live net http11 helpers))
+(import (live net http11 unstable))
+
+
+(define (pk . args)
+  (write args)
+  (car (reverse args)))
+
+(define (read-bytevector-from-file filename)
+  (define port (open-binary-input-file filename))
+  (let loop ((out '()))
+    (let ((byte (read-u8 port)))
+      (if (eof-object? byte)
+          (begin
+            (close-port port)
+            (apply bytevector (reverse out)))
+          (loop (cons byte out))))))
+
+(define (read-from-file filename)
+  (call-with-input-file filename read))
+
+(define (http-response-read/chunks input)
+  (call-with-values (lambda () (http-response-read input))
+    (lambda (version code reason headers body)
+      (list version code reason headers (generator->list body)))))
+
+(define input (read-bytevector-from-file "input.bin"))
+(define expected (read-from-file "expected.scm"))
+(define expected-star (read-from-file "expected-star.scm"))
+
+(define actual (http-response-read input))
+
+
+(if (equal? expected actual)
+    (exit 0)
+    (exit 1))
