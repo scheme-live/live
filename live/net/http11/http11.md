@@ -29,37 +29,37 @@ servers.
 
 Returns `#t` if `OBJ` is an HTTP error. Otherwise, it returns `#f`.
 
-### `(http-error-message OBJ)`
+### `(http-error-message obj)`
 
 Return a human readable string describing the error.
 
-### `(http-error-irritants OBJ)`
+### `(http-error-irritants obj)`
 
 Return an object that can help understand the error, and possibly
 workaround it.
 
-### `(http-request-read generator) procedure? → string? string? pair? pair? procedure?`
+### `(http-request-read generator)`
 
 Read an HTTP request from `GENERATOR` that produces bytevectors, and
-returns five values: method, uri, version, headers and body.
+returns five values: `method`, `uri`, `version`, `headers` and `body`.
 
-The only argument `GENERATOR` must yield bytevectors. It may raise
+The sole argument `GENERATOR` must yield bytevectors. It may raise
 errors, but those are unspecified, and must not be silenced by
 `http-request-read`.
 
 The five returned values are the following:
 
-- method: a string describing the HTTP method, it should not be
-  checked, in other words according to this library any method
-  is valid;
+- `method`: a string describing the HTTP method, it should not be
+  checked, in other words according to this library any method is
+  valid;
 
-- uri: a string describing the uri from the request line;
+- `uri`: a string describing the uri from the request line;
 
-- version: a pair of numbers describing the HTTP version;
+- `version`: a pair of numbers describing the HTTP version;
 
-- headers: an association list of string key and string value pairs;
+- `headers`: an association list of string key and string value pairs;
 
-- body: a generator that yields pairs, the `car` is a string that is
+- `body`: a generator that yields pairs, the `car` is a string that is
   the chunk extension that may be the empty string, and the `cdr` is a
   bytevector as a scheme representation of the chunk. The last
   returned pair before end-of-file may be trailer, in that case the
@@ -84,8 +84,8 @@ appended.
 
 ### `(http-request-write accumulator method uri version headers body)`
 
-Write a HTTP request to `ACCUMULATOR` based on `METHOD`, `URI`,
-`VERSION`, `HEADERS`, and `BODY`.
+Write a valid HTTP/1.1 request to `ACCUMULATOR` based on `METHOD`,
+`URI`, `VERSION`, `HEADERS`, and `BODY`.
 
 The argument `ACCUMULATOR` must accept a bytevector as argument. The
 other arguments are specified as follows:
@@ -110,21 +110,21 @@ present it is an error.
 
 ### `(http-response-read generator) procedure? → pair? positive-integer? string? pair? procedure?`
 
-Read an HTTP request from `GENERATOR`, it returns version, code,
-reason, headers, and the body.
+Read an HTTP request from `GENERATOR`, it returns `version`, `code`,
+`reason`, `headers`, and `body`.
 
 The only argument `GENERATOR` must produce bytevectors. The
 returned values are specified as follows:
 
-- version: a pair of positive integers;
+- `version`: a pair of positive integers;
 
-- code: a positive integer;
+- `code`: a positive integer;
 
-- reason: a string;
+- `reason`: a string;
 
-- headers: an association list of string key and value pairs;
+- `headers`: an association list of string key and value pairs;
 
-- body: same as `http-request-read`
+- `body`: same as `http-request-read`
 
 ### `(http-response-read* generator)`
 
