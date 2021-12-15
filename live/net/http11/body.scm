@@ -14,7 +14,7 @@
 (define (space? byte)
   (= byte (char->integer #\space)))
 
-(define (two-dots? byte)
+(define (colon? byte)
   (= byte (char->integer #\:)))
 
 (define (expected-read expected continuation)
@@ -93,13 +93,13 @@
 
 (define (http-request-line-write accumulator method uri version)
   (put-string* accumulator
-              (string-append method
-                             " "
-                             uri
-                             " HTTP/"
-                             (number->string (car version))
-                             "."
-                             (number->string (cdr version))))
+               (string-append method
+                              " "
+                              uri
+                              " HTTP/"
+                              (number->string (car version))
+                              "."
+                              (number->string (cdr version))))
   ;; eol
   (put-string* accumulator "\r\n"))
 
@@ -185,9 +185,9 @@
   ;; version
   (put-string* accumulator "HTTP/")
   (put-string* accumulator
-              (string-append (number->string (car version))
-                             "."
-                             (number->string (cdr version))))
+               (string-append (number->string (car version))
+                              "."
+                              (number->string (cdr version))))
   ;; code
   (put-string* accumulator (string-append " " (number->string code)))
   ;; reason
