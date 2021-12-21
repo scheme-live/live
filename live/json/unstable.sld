@@ -8,9 +8,10 @@
           json-write)
 
   (cond-expand
-   (mit
+   ((or cyclone mit)
     (import (scheme base)))
    (else))
+
   (import (live json base))
 
   (include "body.scm"))
