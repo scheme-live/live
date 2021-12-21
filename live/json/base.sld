@@ -105,7 +105,7 @@
     (export else)))
 
   (cond-expand
-   ((or chicken gambit loko gauche mit)
+   ((or chicken gambit loko gauche mit cyclone)
     (import (scheme base)
             ;; (srfi 1)
             (scheme read)
@@ -134,6 +134,9 @@
     (import (only (rnrs) bitwise-ior)))
    (mit
     (import (rename (srfi 143) (fxior bitwise-ior))))
+   (cyclone
+    (import (only (srfi 1) every))
+    (import (only (srfi 60) bitwise-ior)))
    (else))
 
   (begin

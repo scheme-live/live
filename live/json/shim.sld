@@ -25,6 +25,9 @@
    (loko
     (import (rename (only (rnrs) bitwise-arithmetic-shift)
                     (bitwise-arithmetic-shift arithmetic-shift))))
+   (cyclone
+    (import (only (srfi 60) arithmetic-shift))
+    (import (only (srfi 1) remove)))
    (else))
 
   (begin
@@ -47,7 +50,10 @@
                (substring y (+ (string-length x) 1) (- (string-length y) 1)))
              (glob (string-append x "/*/")))))
      (cyclone
-      (define file-regular? file-exists?))
+      (define file-regular? file-exists?)
+      (define directory-files
+        (lambda _
+          (include "./live/json/data-index.scm"))))
      (chibi (begin))
      (mit
       (define file-regular?
