@@ -8,6 +8,7 @@ RUN git clone https://github.com/scheme-live/live.git
 
 RUN cd /live && make prepare-debian
 
-RUN cd /live && ./venv scheme-live install /
+
+RUN cd /live && ./venv $(pwd)/local/ scheme-live install /
 
 RUN rm -rf /var/cache/apt/* /tmp
