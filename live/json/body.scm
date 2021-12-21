@@ -20,8 +20,8 @@
     (else #f)))
 
 (define (expect value other)
-  ;; (when (eof-object? value)
-  ;;   (raise (make-json-error "Unexpected end-of-file.")))
+  (when (eof-object? value)
+    (raise (make-json-error "Unexpected end-of-file.")))
   ;; (unless (char=? value other)
   ;;   (raise (make-json-error "Unexpected character."))))
   (void))
@@ -75,8 +75,8 @@
   (define (read-json-string generator)
     (let loop ((char (generator))
                (out '()))
-      ;; (when (eof-object? char)
-      ;;   (raise (make-json-error "Unexpected end of file.")))
+      (when (eof-object? char)
+        (raise (make-json-error "Unexpected end of file.")))
 
       ;; (when (or (char=? char #\x00)
       ;;           (char=? char #\newline)
