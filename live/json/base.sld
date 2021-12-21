@@ -99,6 +99,7 @@
     (export lambda)
     (export if)
     (export define-syntax)
+    (export define)
     (export quote))
    (cyclone
     (export vector make-record-marker))

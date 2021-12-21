@@ -36,7 +36,8 @@ scheme-live-cyclone-install () {
 
 scheme-live-cyclone-run () {
     SOURCE=$(mktemp --tmpdir=/tmp/ $(basename $1).XXXXXX.scm)
-    tail -n +2 $1 > $SOURCE
+    echo "(import (scheme base))" >> $SOURCE
+    tail -n +2 $1 >> $SOURCE
     $SCHEME_LIVE_PREFIX/opt/live/cyclone/bin/cyclone -A $SCHEME_LIVE_PREFIX/lib/ -A $(pwd) $SOURCE
     shift
     exec /tmp/$(basename $SOURCE .scm) $@
