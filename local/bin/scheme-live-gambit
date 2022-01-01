@@ -20,7 +20,6 @@ scheme-live-gambit-install () {
     cd $PREFIX/opt/live/gambit
     git clone https://github.com/gambit/gambit.git git
     cd git
-    git checkout 28fe9c82cddcb43f9ac7f1fdc456f3e2ce101e0d
     ./configure --prefix=$PREFIX/opt/live/gambit/
     make -j $SCHEME_LIVE_CORE_COUNT
     make -j $SCHEME_LIVE_CORE_COUNT modules
