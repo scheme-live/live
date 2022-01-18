@@ -41,7 +41,7 @@ jobs:
   #         context: .
   #         push: true
   #         tags: ghcr.io/scheme-live/schemers:latest
-
+  
   stable:
     runs-on: ubuntu-latest
     permissions:
