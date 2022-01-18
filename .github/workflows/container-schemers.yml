@@ -1,9 +1,9 @@
-name: schemers:latest
+name: container
 
 on:
   schedule:
     - cron: '0 3 * * *'
-
+  push:
 
 env:
   REGISTRY: ghcr.io
