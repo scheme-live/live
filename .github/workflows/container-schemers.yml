@@ -10,7 +10,7 @@ env:
   IMAGE_NAME: schemers
 
 jobs:
-  schemers-latest:
+  container:
     runs-on: ubuntu-latest
     permissions:
       contents: read
