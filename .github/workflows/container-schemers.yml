@@ -17,33 +17,33 @@ jobs:
       packages: write
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-        with:
-          ref: hello-schemer
+      # - name: Checkout repository
+      #   uses: actions/checkout@v2
+      #   with:
+      #     ref: hello-schemer
 
-      - name: Log in to the Container registry
-        uses: docker/login-action@v1
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Log in to the Container registry
+      #   uses: docker/login-action@v1
+      #   with:
+      #     registry: ${{ env.REGISTRY }}
+      #     username: ${{ github.actor }}
+      #     password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v3
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+      # - name: Extract metadata (tags, labels) for Docker
+      #   id: meta
+      #   uses: docker/metadata-action@v3
+      #   with:
+      #     images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          push: true
-          tags: ghcr.io/scheme-live/schemers:latest
+      # - name: Build and push Docker image
+      #   uses: docker/build-push-action@v2
+      #   with:
+      #     context: .
+      #     push: true
+      #     tags: ghcr.io/scheme-live/schemers:latest
       
       - name: check
-        run: docker run --volume $(pwd):/live --interactive --rm schemers bash -c 'cp /live/local/shell-subcommand.sh . && cd /live && SCHEME_LIVE_PREFIX=/ PATH=/opt/live/${{ matrix.implementation }}/bin:/live/local/bin:/usr/bin/:/bin USER=github scheme-live ${{ matrix.implementation }} check'
+        run: docker run --volume $(pwd):/live --interactive --rm ghcr.io/scheme-live/schemers:latest bash -c 'cp /live/local/shell-subcommand.sh . && cd /live && SCHEME_LIVE_PREFIX=/ PATH=/opt/live/${{ matrix.implementation }}/bin:/live/local/bin:/usr/bin/:/bin USER=github scheme-live ${{ matrix.implementation }} check'
 
       - name: stable
-        run: docker push schemers ghcr.io/scheme-live/schemers:stable
+        run: docker push ghcr.io/scheme-live/schemers:latest ghcr.io/scheme-live/schemers:stable
