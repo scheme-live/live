@@ -1,4 +1,4 @@
-name: Continuation Integration
+name: continuation
 
 on:
     push:
