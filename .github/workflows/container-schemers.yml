@@ -42,13 +42,6 @@ jobs:
           push: true
           tags: ghcr.io/scheme-live/schemers:latest
   
-  stable:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      - uses: actions/checkout@v2
       - name: chez
         run: docker run --volume $(pwd):/live --interactive --rm ghcr.io/scheme-live/schemers:latest bash -c 'cp /live/local/shell-subcommand.sh . && cd /live && SCHEME_LIVE_PREFIX=/ PATH=/opt/live/${{ matrix.implementation }}/bin:/live/local/bin:/usr/bin/:/bin USER=github scheme-live chez check'
       - name: chibi
