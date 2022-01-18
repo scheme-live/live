@@ -22,12 +22,12 @@ jobs:
   #       with:
   #         ref: hello-schemer
 
-  #     - name: Log in to the Container registry
-  #       uses: docker/login-action@v1
-  #       with:
-  #         registry: ${{ env.REGISTRY }}
-  #         username: ${{ github.actor }}
-  #         password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Log in to the Container registry
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
   #     - name: Extract metadata (tags, labels) for Docker
   #       id: meta
@@ -48,9 +48,9 @@ jobs:
       contents: read
       packages: write
     steps:
-      - uses: actions/checkout@v2
-      - name: chez
-        run: docker run --volume $(pwd):/live --interactive --rm ghcr.io/scheme-live/schemers:latest bash -c 'cp /live/local/shell-subcommand.sh . && cd /live && SCHEME_LIVE_PREFIX=/ PATH=/opt/live/${{ matrix.implementation }}/bin:/live/local/bin:/usr/bin/:/bin USER=github scheme-live chez check'
+      # - uses: actions/checkout@v2
+      # - name: chez
+      #   run: docker run --volume $(pwd):/live --interactive --rm ghcr.io/scheme-live/schemers:latest bash -c 'cp /live/local/shell-subcommand.sh . && cd /live && SCHEME_LIVE_PREFIX=/ PATH=/opt/live/${{ matrix.implementation }}/bin:/live/local/bin:/usr/bin/:/bin USER=github scheme-live chez check'
       # - name: chibi
       #   run: docker run --volume $(pwd):/live --interactive --rm ghcr.io/scheme-live/schemers:latest bash -c 'cp /live/local/shell-subcommand.sh . && cd /live && SCHEME_LIVE_PREFIX=/ PATH=/opt/live/${{ matrix.implementation }}/bin:/live/local/bin:/usr/bin/:/bin USER=github scheme-live chibi check'
       # - name: chicken
@@ -74,5 +74,18 @@ jobs:
       # - name: sagittarius
       #   run: docker run --volume $(pwd):/live --interactive --rm ghcr.io/scheme-live/schemers:latest bash -c 'cp /live/local/shell-subcommand.sh . && cd /live && SCHEME_LIVE_PREFIX=/ PATH=/opt/live/${{ matrix.implementation }}/bin:/live/local/bin:/usr/bin/:/bin USER=github scheme-live sagittarius check'
 
+      - name: Log in to the Container registry
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: pull
+        run: docker pull ghcr.io/scheme-live/schemers:latest
+          
+      - name: rename
+        run: docker tag ghcr.io/scheme-live/schemers:latest ghcr.io/scheme-live/schemers:stable
+      
       - name: push
         run: docker push ghcr.io/scheme-live/schemers:stable
