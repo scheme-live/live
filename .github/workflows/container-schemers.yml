@@ -10,11 +10,11 @@ env:
   IMAGE_NAME: schemers
 
 jobs:
-  latest:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
+  # latest:
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: read
+  #     packages: write
 
     # steps:
       # - name: Checkout repository
@@ -43,6 +43,10 @@ jobs:
       #     tags: ghcr.io/scheme-live/schemers:latest
 
   stable:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
       - uses: actions/checkout@v2
       - name: chez
