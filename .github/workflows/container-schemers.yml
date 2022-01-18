@@ -10,37 +10,37 @@ env:
   IMAGE_NAME: schemers
 
 jobs:
-  # latest:
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     contents: read
-  #     packages: write
+  latest:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
-    # steps:
-      # - name: Checkout repository
-      #   uses: actions/checkout@v2
-      #   with:
-      #     ref: hello-schemer
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          ref: hello-schemer
 
-      # - name: Log in to the Container registry
-      #   uses: docker/login-action@v1
-      #   with:
-      #     registry: ${{ env.REGISTRY }}
-      #     username: ${{ github.actor }}
-      #     password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Log in to the Container registry
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      # - name: Extract metadata (tags, labels) for Docker
-      #   id: meta
-      #   uses: docker/metadata-action@v3
-      #   with:
-      #     images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      # - name: Build and push Docker image
-      #   uses: docker/build-push-action@v2
-      #   with:
-      #     context: .
-      #     push: true
-      #     tags: ghcr.io/scheme-live/schemers:latest
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/scheme-live/schemers:latest
 
   stable:
     runs-on: ubuntu-latest
