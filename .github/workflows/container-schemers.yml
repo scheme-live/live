@@ -42,3 +42,8 @@ jobs:
           push: true
           tags: ghcr.io/scheme-live/schemers:latest
       
+      - name: check
+        run: docker run --volume $(pwd):/live --interactive --rm schemers bash -c 'cp /live/local/shell-subcommand.sh . && cd /live && SCHEME_LIVE_PREFIX=/ PATH=/opt/live/${{ matrix.implementation }}/bin:/live/local/bin:/usr/bin/:/bin USER=github scheme-live ${{ matrix.implementation }} check'
+
+      - name: stable
+        run: docker push schemers ghcr.io/scheme-live/schemers:stable
