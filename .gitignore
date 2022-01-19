@@ -7,7 +7,6 @@ local/
 
 # Texinfo:
 
-*.html
 *.log
 *.tsv
 

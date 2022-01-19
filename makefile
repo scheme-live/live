@@ -16,3 +16,6 @@ check: ## Run tests
 	./local/bin/scheme-live $(IMPLEMENTATION) check $(PWD)
 
 test: check  ## Run checks
+
+dodoc:
+	pandoc --metadata title="Scheme Live!" README.md --standalone -o index.html

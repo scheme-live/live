@@ -1,6 +1,6 @@
 **Fast-moving Scheme library collection with yearly stable releases**
 
-![A bunny in front of a computer coding LISP](https://raw.githubusercontent.com/scheme-live/live/hello-schemer/lisp-bunny.png)
+![A bunny in front of a computer coding with Scheme Live](https://raw.githubusercontent.com/scheme-live/live/hello-schemer/lisp-bunny.png)
 
 - Be a complement to [SRFI](https://srfi.schemers.org/),
   [R7RS](https://r7rs.org), and work together following the [goals set
