@@ -3,14 +3,13 @@ name: container
 on:
   schedule:
     - cron: '0 3 * * *'
-  push:
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: schemers
 
 jobs:
-  latest:
+  container:
     runs-on: ubuntu-latest
     permissions:
       contents: read
