@@ -1,21 +1,17 @@
 # Scheme Live
 
-- Move fast. (Be a complement to SRFI and RnRS which move slower.)
+![A bunny in front of a computer coding LISP](list-bunny.png)
 
-- Make one collection of libraries that work cohesively together.
+- Be a complement to SRFI, RnRS, and work together;
 
-- Make one complete library for each job instead of several incomplete
-  libraries. When we can't agree, resolve the the debate by talking
-  instead of forking code.
+- Make one collection of libraries that work cohesively together;
+
+- Resolve the the debate by talking instead of forking code.
 
 - Prefer interfaces that are portable to different Scheme standards,
-  Scheme implementations, and operating systems. Porting is done by
-  whoever has time to do it.
+  Scheme implementations, and operating systems;
 
-- All libraries are collectively owned. In the unstable version, all
-  libraries are subject to change.
+- All libraries are collectively owned. Inside the namespaces
+  `unstable`, everything is subject to change;
 
-- Release a stable version of our collection periodically.
-
-- Work with RnRS, SRFI, and other library authors to share interfaces
-  and implementations whenever possible.
+- Release stable versiones yearly;
