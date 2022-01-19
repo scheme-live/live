@@ -1,6 +1,6 @@
 # Scheme Live
 
-![A bunny in front of a computer coding LISP](list-bunny.png)
+![A bunny in front of a computer coding LISP](https://raw.githubusercontent.com/scheme-live/live/hello-schemer/lisp-bunny.png)
 
 - Be a complement to SRFI, RnRS, and work together;
 
