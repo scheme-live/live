@@ -19,6 +19,7 @@ test: check  ## Run checks
 
 html: ## Generate html from markdown documentation
 	pandoc --metadata title="Scheme Live!" README.md --css styles.css --mathml --standalone --to=html5 --output index.html
+	pandoc --metadata title="Scheme Live!" live/unstable/index.md --css ../../styles.css --mathml --standalone --to=html5 --output live/unstable/index.html
 
 check-with-podman:
 	env | grep "^IMPLEMENTATION=" # requires an env variable called IMPLEMENTATION
