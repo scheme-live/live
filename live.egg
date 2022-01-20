@@ -45,8 +45,8 @@
      (component-dependencies)
      (csc-options "-R" "r7rs" "-X" "r7rs"))
    (extension
-     live.json.base
-     (source "live/json/base.sld")
+     live.unstable
+     (source "live/unstable.sld")
      (component-dependencies live.json.shim)
      (csc-options "-R" "r7rs" "-X" "r7rs"))
    (extension
@@ -59,7 +59,7 @@
      live.json.unstable
      (source "live/json/unstable.sld")
      (source-dependencies "live/json/body.scm")
-     (component-dependencies live.json.base live.json.shim)
+     (component-dependencies live.unstable live.json.shim)
      (csc-options "-R" "r7rs" "-X" "r7rs"))
    (extension
      live.list.unstable

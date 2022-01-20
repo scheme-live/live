@@ -1,4 +1,4 @@
-(library (live json base)
+(library (live unstable)
   (export
    port?
    read
@@ -109,6 +109,14 @@
    write
    exit)
   (import (rename (chezscheme) (define-record-type define-record-type*)))
+
+  (define-syntax assume
+    (syntax-rules ()
+      ((assume expression message)
+       (or expression
+           (error 'assume message (quote expression))))
+      ((assume . _)
+       (syntax-error "invalid assume syntax"))))
 
   (define (pk . args)
     (write args (current-error-port))

@@ -1,5 +1,4 @@
-#!r7rs
-(define-library (live json base)
+(define-library (live unstable)
   (export
    read
    quote
@@ -71,6 +70,7 @@
    not
    null?
    number?
+   number?
    open-input-string
    open-output-string
    or
@@ -99,24 +99,17 @@
    when
    write
    exit)
-  (import
-   (only (racket) call-with-input-file)
-   (rename (scheme base) (error error*))
-   #;(scheme list)
-   (scheme read)
-   (scheme case-lambda)
-   #;(scheme bitwise)
-   (scheme file)
-   (scheme write)
-   (scheme process-context)
-   (live json shim)
-   (only (racket) bitwise-ior)
-   (only (srfi/1) every))
-  (begin
+  (import (scheme base)
+          (scheme read)
+          (srfi srfi-1)
+          (scheme case-lambda)
+          (only (srfi srfi-60) bitwise-ior)
+          (scheme file)
+          (scheme write)
+          (scheme process-context)
+          (live json shim))
 
-    (define error
-      (lambda (who . args)
-        (apply error* (symbol->string who) args)))
+  (begin
 
     (define fx+ +)
     (define fx- -)
@@ -134,7 +127,7 @@
 
     (define pk
       (lambda args
-        (display ";; ")
+        (display ";; " (current-error-port))
         (write args (current-error-port))
         (car (reverse args))))
 
@@ -146,5 +139,5 @@
 
     (define (infinite? x)
       (and (number? x)
-           (or (equal? x +inf.0)
-               (equal? x -inf.0))))))
+           (or (= x +inf.0)
+               (= x -inf.0))))))

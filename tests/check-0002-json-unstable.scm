@@ -1,6 +1,6 @@
 #!/usr/bin/env -S scheme-live current run
 (import (scheme write))
-(import (live json base))
+(import (live unstable))
 (import (live json unstable))
 
 
