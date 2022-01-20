@@ -17,7 +17,7 @@ upon which one can build abstractions to solve (real world) problems.
   by the steering commitee, and R7RS-large working group
   charter](http://scheme-reports.org/2010/working-group-2-charter.html)
 
-- Release yearly stable versions:next, and first stable release
+- Release yearly stable versions: next, and **first stable release**
   planned in 2023;
 
 - Aim for portability across Scheme standards, Scheme implementations,
