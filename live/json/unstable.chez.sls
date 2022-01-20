@@ -7,6 +7,6 @@
           json-read
           json-write)
 
-  (import (live json base))
+  (import (live unstable))
 
   (include "body.scm"))
