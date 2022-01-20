@@ -12,6 +12,6 @@
     (import (scheme base)))
    (else))
 
-  (import (live json base))
+  (import (live unstable))
 
   (include "body.scm"))
