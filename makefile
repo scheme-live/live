@@ -17,5 +17,5 @@ check: ## Run tests
 
 test: check  ## Run checks
 
-dodoc:
-	pandoc --metadata title="Scheme Live!" README.md --standalone -o index.html
+html: ## Generate html from markdown documentation
+	pandoc --metadata title="Scheme Live!" README.md --css styles.css --mathml --standalone --to=html5 --output index.html
