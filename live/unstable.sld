@@ -1,5 +1,6 @@
 (define-library (live unstable)
   (export
+   syntax-rules
    assume
    test
    port?

@@ -6,10 +6,10 @@ EXIT=0
 cd $CHECKS_DIRECTORY
 
 for CHECK in $(ls check-*.scm); do
-    echo "* scheme-live $SCHEME_LIVE_CURRENT run $CHECKS_DIRECTORY/$CHECK"
+    echo "** scheme-live $SCHEME_LIVE_CURRENT run $CHECKS_DIRECTORY/$CHECK"
     scheme-live current run "$CHECKS_DIRECTORY/$CHECK"
     if [ $? = 255 ]; then
-        echo "** failure"
+        echo "*** failed"
         EXIT=255
     fi
 done

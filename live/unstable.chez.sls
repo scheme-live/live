@@ -1,5 +1,6 @@
 (library (live unstable)
   (export
+   syntax-rules
    port?
    read
    quote
