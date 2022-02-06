@@ -1,5 +1,7 @@
 #!/bin/bash
 
+PROGRAMDIR=$(dirname $0)
+
 HELP_MAIN="usage: scheme-live gerbil <sub-commands> [options]"
 
 scheme-live-gerbil-install () {
@@ -25,7 +27,7 @@ scheme-live-gerbil-install () {
 }
 
 scheme-live-gerbil-run () {
-    PATH=$SCHEME_LIVE_PREFIX/opt/live/gerbil/bin:$SCHEME_LIVE_PREFIX/opt/live/gambit/bin:$PATH GERBIL_HOME="$SCHEME_LIVE_PREFIX/opt/live/gerbil/" GERBIL_LOADPATH="." gxi --lang r7rs $1
+    PATH=$SCHEME_LIVE_PREFIX/opt/live/gerbil/bin:$SCHEME_LIVE_PREFIX/opt/live/gambit/bin:$PATH GERBIL_HOME="$SCHEME_LIVE_PREFIX/opt/live/gerbil/" GERBIL_LOADPATH=".:$PROGRAMDIR/../../" gxi --lang r7rs $1
 }
 
 scheme-live-gerbil-repl () {

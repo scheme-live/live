@@ -1,5 +1,6 @@
 #!/bin/bash
 
+PROGRAMDIR=$(dirname $0)
 
 HELP_MAIN="usage: scheme-live chibi <sub-commands> [options]"
 
@@ -20,7 +21,7 @@ scheme-live-chibi-install () {
 }
 
 scheme-live-chibi-run () {
-    LD_LIBRARY_PATH=$SCHEME_LIVE_PREFIX/opt/live/chibi/lib PATH=$SCHEME_LIVE_PREFIX/opt/live/chibi/bin:$PATH chibi-scheme -I $SCHEME_LIVE_PREFIX/lib/ -I $(pwd) $1
+    LD_LIBRARY_PATH=$SCHEME_LIVE_PREFIX/opt/live/chibi/lib PATH=$SCHEME_LIVE_PREFIX/opt/live/chibi/bin:$PATH chibi-scheme -I $PROGRAMDIR/../../ -I $(pwd) $1
 }
 
 scheme-live-chibi-repl () {
