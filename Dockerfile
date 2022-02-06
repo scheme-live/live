@@ -10,4 +10,4 @@ RUN cd /live && make prepare-debian
 
 RUN cd /live && ./venv $(pwd)/local/ scheme-live install /
 
-RUN rm -rf /var/cache/apt/* /tmp
+RUN rm -rf /var/cache/apt/* /tmp/*
