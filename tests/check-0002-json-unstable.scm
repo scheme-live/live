@@ -53,7 +53,7 @@
          (output (string-append data "/" name "/output.scm"))
          (error (string-append data "/" name "/error.txt"))
          (outxy (guard (exc (else (on-error exc error)))
-                       (display "* ")
+                       (display "** ")
                        (display name)
                        (display " => ")
                        (let ((obj (json->obj->json->obj input)))
