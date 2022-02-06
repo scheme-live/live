@@ -1,11 +1,19 @@
 (define-library (live unstable)
   (export
+   ...
+   _
+   list?
    syntax-rules
+   let-syntax
    assume
    test
    port?
    read
    let*
+   letrec
+   letrec*
+   odd?
+   even?
    begin
    fx+
    string->symbol

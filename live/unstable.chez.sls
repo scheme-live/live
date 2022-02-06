@@ -1,5 +1,12 @@
 (library (live unstable)
   (export
+   ...
+   _
+   list?
+   test
+   let-syntax
+   vector-ref
+   vector-length
    syntax-rules
    port?
    read
@@ -66,6 +73,10 @@
    lambda
    length
    let
+   letrec
+   letrec*
+   odd?
+   even?
    list
    list->string
    make-parameter
@@ -110,6 +121,14 @@
    write
    exit)
   (import (rename (chezscheme) (define-record-type define-record-type*)))
+
+  (define-syntax test
+    (syntax-rules ()
+      ((test expected expression)
+       (guard (_ (else (exit 255)))
+         (if (equal? expected expression)
+             (exit 0)
+             (exit 255))))))
 
   (define-syntax assume
     (syntax-rules ()

@@ -27,4 +27,6 @@
    match match-lambda match-lambda* match-let match-letrec match-let*)
   (import (live unstable))
 
+  #!chezscheme
+
   (include  "unstable/body.scm"))

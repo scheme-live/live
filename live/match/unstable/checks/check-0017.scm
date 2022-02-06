@@ -1,9 +1,11 @@
+#!/usr/bin/env -S scheme-live current run
 (import (live unstable))
 (import (live match unstable))
 
 
 (define first-column
-  (match-lambda (((a _ ...) ...) a)))
+  (lambda (e)
+    (match e (((a b ...) ...) a))))
 
 (test '(a a a)
-	    (first-column '((a b c) (a b c) (a b c)))))
+	    (first-column '((a b c) (a b c) (a b c))))
