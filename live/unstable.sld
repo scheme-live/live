@@ -13,7 +13,6 @@
    letrec
    letrec*
    odd?
-   even?
    begin
    fx+
    string->symbol
@@ -103,7 +102,6 @@
    when
    write
    exit
-   odd?
    even?)
 
   (cond-expand
