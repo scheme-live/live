@@ -1,5 +1,7 @@
 #!/bin/bash
 
+PROGRAMDIR=$(dirname $0)
+
 HELP_MAIN="usage: scheme-live guile <sub-commands> [options]"
 
 
@@ -26,7 +28,7 @@ scheme-live-guile-run () {
     SOURCE=$(mktemp --tmpdir=/tmp/ $(basename $1).XXXXXX.scm)
     tail -n +2 $1 > $SOURCE
     shift
-    PATH=$SCHEME_LIVE_PREFIX/opt/live/guile/bin/:$PATH guile --fresh-auto-compile -L $SCHEME_LIVE_PREFIX/lib/ -L $(pwd) $SOURCE $@
+    PATH=$SCHEME_LIVE_PREFIX/opt/live/guile/bin/:$PATH guile --fresh-auto-compile -L $PROGRAMDIR/../../ -L $(pwd) $SOURCE $@
 }
 
 scheme-live-guile-repl () {

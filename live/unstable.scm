@@ -1,7 +1,10 @@
 (define-library (live unstable)
   (export
+   syntax-rules
+   assume
+   test
+   port?
    read
-   quote
    let*
    begin
    fx+
@@ -32,13 +35,10 @@
    cond
    cons
    current-input-port
-   define
    define-record-type
-   define-syntax
    denominator
    directory-list
    display
-   else
    eof-object?
    eq?
    equal?
@@ -52,12 +52,10 @@
    fxzero?
    get-output-string
    guard
-   if
    inexact?
    infinite?
    input-port?
    integer->char
-   lambda
    length
    let
    list
@@ -69,7 +67,6 @@
    newline
    not
    null?
-   number?
    number?
    open-input-string
    open-output-string
@@ -83,13 +80,12 @@
    read-char
    real?
    reverse
-   set!
    string->number
    string-append
    string-for-each
    string?
    symbol->string
-   port?
+   textual-port?
    unless
    values
    vector-for-each
@@ -98,18 +94,112 @@
    void
    when
    write
-   exit)
-  (import (scheme base)
-          (scheme read)
-          (srfi srfi-1)
-          (scheme case-lambda)
-          (only (srfi srfi-60) bitwise-ior)
-          (scheme file)
-          (scheme write)
-          (scheme process-context)
-          (live json shim))
+   exit
+   odd?
+   even?)
+
+  (cond-expand
+   (chicken
+    (export set!)
+    (export lambda)
+    (export if)
+    (export define-syntax)
+    (export define)
+    (export quote))
+   (cyclone
+    (export vector make-record-marker))
+   (else
+    (export set!)
+    (export lambda)
+    (export if)
+    (export define-syntax)
+    (export define)
+    (export quote)
+    (export else)))
+
+  (cond-expand
+   ((or chicken gambit loko gauche mit cyclone)
+    (import (scheme base)
+            ;; (srfi 1)
+            (scheme read)
+            (scheme case-lambda)
+            ;; (scheme bitwise)
+            (scheme file)
+            (scheme write)
+            (scheme process-context)
+            (live json shim)))
+   (else
+    (import (scheme base)
+            (scheme list)
+            (scheme read)
+            (scheme case-lambda)
+            (scheme bitwise)
+            (scheme file)
+            (scheme write)
+            (scheme process-context)
+            (live json shim))))
+
+  (cond-expand
+   (chicken
+    (import (only (chicken bitwise) bitwise-ior)
+            (only (srfi 1) every)))
+   (loko
+    (import (only (rnrs) bitwise-ior)))
+   (mit
+    (import (rename (srfi 143) (fxior bitwise-ior))))
+   (cyclone
+    (import (only (srfi 1) every))
+    (import (only (srfi 60) bitwise-ior)))
+   (else))
 
   (begin
+
+    (define-syntax assume
+      (syntax-rules ()
+        ((assume expression message)
+         (or expression
+             (error 'assume message (quote expression))))
+        ((assume . _)
+         (syntax-error "invalid assume syntax"))))
+
+    (define-syntax test
+      (syntax-rules ()
+        ((test expected expression)
+         (guard (_ (else (exit 255)))
+                (if (equal? expected expression)
+                    (exit 0)
+                    (exit 255))))))
+    
+    (cond-expand
+     ((or gambit loko mit gauche)
+      (define every
+        (lambda (p? x)
+          (if (null? x)
+              #t
+              (if (p? (car x))
+                  (every (cdr x))
+                  #f)))))
+     (chicken)
+     (else))
+
+    (cond-expand
+     (loko
+      (define (remove pred lis)
+        (let recur ((lis lis))
+          (if (null? lis) lis
+              (let ((head (car lis))
+                    (tail (cdr lis)))
+                (if (not (pred head))
+                    (let ((new-tail (recur tail)))
+                      (if (eq? tail new-tail) lis
+                          (cons head new-tail)))
+                    (recur tail)))))))
+     (else))
+
+    (cond-expand
+     (mit
+      (define ignorable values))
+     (else))
 
     (define fx+ +)
     (define fx- -)
@@ -125,11 +215,20 @@
     (define (void)
       (when #f #f))
 
-    (define pk
-      (lambda args
-        (display ";; " (current-error-port))
-        (write args (current-error-port))
-        (car (reverse args))))
+    (cond-expand
+     (loko
+      (define pk
+        (lambda args
+          (display ";; ")
+          (write args)
+          (car (reverse args)))))
+     (else
+      (define pk
+        (lambda args
+          (display ";; " (current-error-port))
+          (write args (current-error-port))
+          (car (reverse args))))))
+
 
     (define ash arithmetic-shift)
 
@@ -139,5 +238,5 @@
 
     (define (infinite? x)
       (and (number? x)
-           (or (= x +inf.0)
-               (= x -inf.0))))))
+           (or (equal? x +inf.0)
+               (equal? x -inf.0))))))

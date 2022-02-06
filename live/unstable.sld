@@ -1,9 +1,18 @@
 (define-library (live unstable)
   (export
+   ...
+   _
+   list?
+   syntax-rules
+   let-syntax
    assume
+   test
    port?
    read
    let*
+   letrec
+   letrec*
+   odd?
    begin
    fx+
    string->symbol
@@ -92,7 +101,8 @@
    void
    when
    write
-   exit)
+   exit
+   even?)
 
   (cond-expand
    (chicken
@@ -158,6 +168,14 @@
         ((assume . _)
          (syntax-error "invalid assume syntax"))))
 
+    (define-syntax test
+      (syntax-rules ()
+        ((test expected expression)
+         (guard (_ (else (exit 255)))
+                (if (equal? expected expression)
+                    (exit 0)
+                    (exit 255))))))
+    
     (cond-expand
      ((or gambit loko mit gauche)
       (define every

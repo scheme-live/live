@@ -1,5 +1,6 @@
 #!/bin/bash
 
+PROGRAMDIR=$(dirname $0)
 
 HELP_MAIN="usage: scheme-live chez <sub-commands> [options]"
 
@@ -31,7 +32,7 @@ scheme-live-chez-run () {
     echo "(import (only (chezscheme) import))" >> $SOURCE
     tail -n +2 $1 >> $SOURCE
     shift
-    PATH=$SCHEME_LIVE_PREFIX/opt/live/chez/bin:$PATH scheme --libexts .chez.sls:.sls --libdirs $SCHEME_LIVE_PREFIX/lib/:$(pwd) --program $SOURCE $@
+    PATH=$SCHEME_LIVE_PREFIX/opt/live/chez/bin:$PATH scheme --libexts .chez.sls:.sls --libdirs $PROGRAMDIR/../../:$(pwd) --program $SOURCE $@
 }
 
 scheme-live-chez-repl () {

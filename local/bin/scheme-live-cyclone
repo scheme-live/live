@@ -1,5 +1,7 @@
 #!/bin/bash
 
+PROGRAMDIR=$(dirname $0)
+
 HELP_MAIN="usage: scheme-live cyclone <sub-commands> [options]"
 
 
@@ -38,7 +40,7 @@ scheme-live-cyclone-run () {
     SOURCE=$(mktemp --tmpdir=/tmp/ $(basename $1).XXXXXX.scm)
     echo "(import (scheme base))" >> $SOURCE
     tail -n +2 $1 >> $SOURCE
-    $SCHEME_LIVE_PREFIX/opt/live/cyclone/bin/cyclone -A $SCHEME_LIVE_PREFIX/lib/ -A $(pwd) $SOURCE
+    $SCHEME_LIVE_PREFIX/opt/live/cyclone/bin/cyclone -A "$PROGRAMDIR/../../" -A $(pwd) $SOURCE
     shift
     exec /tmp/$(basename $SOURCE .scm) $@
 }

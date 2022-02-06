@@ -6,11 +6,6 @@ prepare-debian: ## Prepare a Debian host (call with sudo)
 	apt update
 	apt install --yes --no-install-recommends $(shell cat debian-system-dependencies.txt | tr '\n' ' ')
 
-check-with-docker:  ## Run checks with docker
-	env | grep "^IMPLEMENTATION=" # requires an implementation
-	env | grep "^IMAGE=" # requires a docker image
-	docker run --volume $(PWD):/live --interactive --rm $(IMAGE) /bin/sh -c "cd /live && apt update && apt install --yes $(shell cat debian-system-dependencies.txt | tr '\n' ' ') && ./venv make IMPLEMENTATION=$(IMPLEMENTATION) check"
-
 check: ## Run tests
 	env | grep "^IMPLEMENTATION=" # requires an env variable called IMPLEMENTATION
 	./local/bin/scheme-live $(IMPLEMENTATION) check $(PWD)
@@ -23,4 +18,4 @@ html: ## Generate html from markdown documentation
 
 check-with-podman:
 	env | grep "^IMPLEMENTATION=" # requires an env variable called IMPLEMENTATION
-	podman run --volume $(PWD):/live --interactive --rm ghcr.io/scheme-live/schemers:stable bash -c 'cp /live/local/shell-subcommand.sh . && cd /live && SCHEME_LIVE_PREFIX=/ PATH=/opt/live/$(IMPLEMENTATION)/bin:/live/local/bin:/usr/bin/:/bin USER=$(USER) scheme-live $(IMPLEMENTATION) check'
+	podman run --volume $(PWD):/live --interactive --rm ghcr.io/scheme-live/schemers:stable bash -c 'cp /live/local/shell-subcommand.sh . && cd /live && SCHEME_LIVE_PREFIX=/ PATH=/opt/live/$(IMPLEMENTATION)/bin:/live/local/bin:/usr/bin/:/bin USER=github scheme-live $(IMPLEMENTATION) check'

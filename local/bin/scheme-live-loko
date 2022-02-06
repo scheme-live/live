@@ -1,5 +1,7 @@
 #!/bin/bash
 
+PROGRAMDIR=$(dirname $0)
+
 HELP_MAIN="usage: scheme-live loko <sub-commands> [options]"
 
 scheme-live-loko-install () {
@@ -27,7 +29,7 @@ scheme-live-loko-install () {
 }
 
 scheme-live-loko-run () {
-    PATH=$SCHEME_LIVE_PREFIX/opt/live/loko/bin:$PATH LOKO_LIBRARY_PATH=$SCHEME_LIVE_PREFIX/lib/:$(pwd):$SCHEME_LIVE_PREFIX/opt/live/loko/lib/ loko -std=r7rs --program $@
+    PATH=$SCHEME_LIVE_PREFIX/opt/live/loko/bin:$PATH LOKO_LIBRARY_PATH=$PROGRAMDIR/../../:$(pwd):$SCHEME_LIVE_PREFIX/opt/live/loko/lib/ loko -std=r7rs --program $@
 }
 
 scheme-live-loko-repl () {
