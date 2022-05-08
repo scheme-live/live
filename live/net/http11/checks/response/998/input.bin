@@ -1,0 +1,404 @@
+HTTP/1.1 200 OK
+Server: nginx/1.18.0 (Ubuntu)
+Date: Tue, 14 Dec 2021 13:48:06 GMT
+Content-Type: text/html
+Content-Length: 11599
+Last-Modified: Thu, 11 Nov 2021 14:21:00 GMT
+Connection: keep-alive
+ETag: "618d26cc-2d4f"
+Accept-Ranges: bytes
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="alternate" type="application/rss+xml" title="hyper.dev" href="https://hyper.dev//feed.xml" />
+    <link rel="stylesheet" href="/static/normalize.css">
+    <link rel="stylesheet" href="/static/main.css">
+    <title>hyper.dev · foward and beyond.</title>
+  </head>
+  <body>
+    <div id="background">
+      <video autoplay loop>
+        <source src="/static/video/space.mp4" type="video/mp4"/>
+        <source src="/static/video/space.webm" type="video/webm"/>
+      </video>
+    </div>
+
+    <div id="overlay">
+    </div>
+
+    <div id="root">
+      <h1>hyper.dev <small>· <a href="feed.xml">feed</a></small></h1>
+
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2021/how-to-choose-a-database/" class="grid-item">
+            How to choose a database?
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2021/ruse-exe/" class="grid-item">
+            Let there be binary executables
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2021/jack-one-thread-per-core/" class="grid-item">
+            Jack: One Thread Per Core
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2021/chaos-the-last-question/" class="grid-item">
+            Chaos: The Last Question
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2021/codex-dubito-ergo-cogito-ergo-sum/" class="grid-item">
+            Codex: Dubito, ergo Cogito, ergo Sum
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2021/ruse-scheme-shall-be/" class="grid-item">
+            Ruse Scheme shall be
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2021/import-okdb/" class="grid-item">
+            (import (okdb))
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2021/nlnet-supports-babelia/" class="grid-item">
+            NLnet supports Babelia
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2021/vnstore2/" class="grid-item">
+            Versioned generic tuple store 2
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2021/dear-mez-breeze/" class="grid-item">
+            An open letter to Mez Breeze
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2021/okvslite/" class="grid-item">
+            okvslite
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2021/why-scheme/" class="grid-item">
+            Why I still Scheme (and you should too!)
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2021/mutation/" class="grid-item">
+            mutation: review & rework of mutmut
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2021/raxes/" class="grid-item">
+            raxes: review & rework of searx
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2021/babelia-search-engine-design-planning/" class="grid-item">
+            Babelia search engine design planning (take three)
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2021/noontide/" class="grid-item">
+            noontide: review & rework of loconotion
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2020/kvcli/" class="grid-item">
+            kvcli
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2020/do-it-yourself-a-search-engine/" class="grid-item">
+            Do It Yourself: A Search Engine
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2020/ccse/" class="grid-item">
+            Common Crawl Search Engine
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2020/fauxtexte/" class="grid-item">
+            fauxtexte
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2020/arew-scheme/" class="grid-item">
+            Arew Scheme
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2020/1001-lols/" class="grid-item">
+            1001 LOLS
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2020/yet-another-scheme/" class="grid-item">
+            Scheme fatigue
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2019/nomunofu/" class="grid-item">
+            nomunofu
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2019/on-the-road-to-babelia/" class="grid-item">
+            On the road to guile-babelia
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2019/fuzzbuzz-hash-algorithm/" class="grid-item">
+            FuzzBuzz Hash Algorithm
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2019/fuzzbuzz/" class="grid-item">
+            DIY approximate string matching (fuzzbuzz)
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2019/foundationdb-afpyro-talk/" class="grid-item">
+            FoundationDB
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2019/state-of-scheme-in-the-browser-in-2019/" class="grid-item">
+            State of Scheme in the Browser
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2019/sparql-to-nstore/" class="grid-item">
+            SPARQL to Scheme Generic Tuple Store (nstore)
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2019/past-present-future/" class="grid-item">
+            Past, Present, and Future
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2019/generic-tuple-store/" class="grid-item">
+            Generic Tuple Store
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2019/functional-database-versioned-generic-tuple-store/" class="grid-item">
+            Functional Database: Versioned Generic Tuple Store
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2019/multi-model-database/" class="grid-item">
+            On the road to a multi-model database
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2019/je-suis-une-bande-ethic-a-moi-tout-seul-2018-2019/" class="grid-item">
+            Je suis une bande éthic à moi tout seul 2018/2019
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2019/moving-to-hyper-dev/" class="grid-item">
+            New domain
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2019/comment-choisir-une-base-de-donnee/" class="grid-item">
+            Comment choisir une base de donnee?
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2018/sql-is-the-orm-killer/" class="grid-item">
+            SQL is the ORM killer
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2018/comment-on-justifie-un-orm/" class="grid-item">
+            Comment on justifie un ORM ?
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2018/je-suis-une-bande-ethic-a-moi-tout-seul/" class="grid-item">
+            Je suis une bande éthic à moi tout seul
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2018/gnu-guile-ffi/" class="grid-item">
+            Getting Started With Guile Dynamic Foreign Function Interface
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2018/a-work-in-progress/" class="grid-item">
+            a work in progress
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2018/a-graph-based-movie-recommender-engine-using-guile-scheme/" class="grid-item">
+            A Graph-Based Movie Recommender Engine Using Guile Scheme
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2017/getting-started-with-modern-frontend-webdev-development/" class="grid-item">
+            Getting Started With State of the Art Frontend Development
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2017/en-avant-le-web-avec-python/" class="grid-item">
+            En avant le web avec Python 3
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2017/diy-ai/" class="grid-item">
+            Do It Yourself: an artificial intelligence
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2017/diy-a-search-engine-in-gnu-guile/" class="grid-item">
+            Do It Yourself: a search engine in Scheme Guile
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2017/c-est-jamais-fini/" class="grid-item">
+            C'est jamais fini!
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2017/api-cognitive-load/" class="grid-item">
+            API cognitive load
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2016/somewhat-relational-database-library-using-wiredtiger/" class="grid-item">
+            Somewhat Relational Database Library Using Wiredtiger
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2016/getting-started-with-guile-uav-database/" class="grid-item">
+            Getting started with guile UAV database
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2016/getting-started-with-guile-parser-combinators/" class="grid-item">
+            Getting started with Guile Parser Combinators
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2016/feedback-client-sur-la-creation-de-la-terre/" class="grid-item">
+            Feedback client sur la création de la Terre
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2016/diy-graph-database-in-python/" class="grid-item">
+            Do It Yourself: a graph database in Python
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2016/ccc/" class="grid-item">
+            Code Crafting Codex
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2015/je-fais-nimp/" class="grid-item">
+            Je fais nimp
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2015/python-subscript-generator/" class="grid-item">
+            Python: subscript rencontre un générateur
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2015/python3-intro/" class="grid-item">
+            Les bases du langage Python 3
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2015/lazy-will-continue/" class="grid-item">
+            Lazy will continue
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2015/bsddb/" class="grid-item">
+            Debuter avec la base de donnée clef-valeur bsddb
+          </a>
+        </h2>
+      
+	<h2>
+          <a href="https://hyper.dev/blog/2012/smart-apps/" class="grid-item">
+            Applications intelligentes: catégorisation et recommandations de textes courts
+          </a>
+        </h2>
+      
+    </div>
+  </body>
+</html>

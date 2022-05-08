@@ -1,0 +1,20 @@
+#;/usr/bin/env -S scheme-live run
+
+;; Local Variables:
+;; mode: scheme
+;; End:
+
+(import (scheme base))
+(import (scheme process-context))
+(import (live http helpers))
+(import (live http unstable))
+
+
+(define input (read-bytevector-from-file "input.bin"))
+(define expected (read-from-file "expected.scm"))
+(define actual (http-request-read* input))
+
+
+(if (equal? expected actual)
+    (exit 0)
+    (exit 1))
