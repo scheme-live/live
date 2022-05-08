@@ -31,7 +31,7 @@ scheme-live-chicken-install () {
 
 scheme-live-chicken-run () {
     set -x
-    PATH=$SCHEME_LIVE_PREFIX/opt/live/chicken/bin:$PATH chicken-install > /dev/null
+    CSC_OPTIONS='-no-warnings' PATH=$SCHEME_LIVE_PREFIX/opt/live/chicken/bin:$PATH chicken-install
     PATH=$SCHEME_LIVE_PREFIX/opt/live/chicken/bin:$PATH csi -quiet -batch -no-warnings -R r7rs $1
 }
 
