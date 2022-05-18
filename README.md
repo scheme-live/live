@@ -33,3 +33,10 @@ upon which one can build abstractions to solve (real world) problems.
 
 - Libraries inside `unstable` are always subject to change;
 
+## Getting started
+
+```shell
+sudo make prepare-debian
+./venv
+IMPLEMENTATION=chez make check
+```
