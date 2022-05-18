@@ -1,4 +1,8 @@
-**Fast-moving Scheme library collection with yearly stable releases**
+# [scheme-live](https://github.com/scheme-live/live)
+
+**Scheme library collection with yearly stable releases**
+
+## Prelude
 
 Let's agree that *serif* fonts do not always carry boring stuff. And have a taste of it:
 
