@@ -1,4 +1,8 @@
+# [scheme-live](https://github.com/scheme-live/live)
+
 **Fast-moving Scheme library collection with yearly stable releases**
+
+## Prelude
 
 Let's agree that *serif* fonts do not always carry boring stuff. And have a taste of it:
 
@@ -29,3 +33,11 @@ upon which one can build abstractions to solve (real world) problems.
 
 - Libraries inside `unstable` are always subject to change;
 
+## Getting started
+
+```shell
+% sudo make prepare-debian
+% ./venv
+% scheme-live install
+% IMPLEMENTATION=chez make check
+```

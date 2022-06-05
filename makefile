@@ -6,11 +6,6 @@ prepare-debian: ## Prepare a Debian host (call with sudo)
 	apt update
 	apt install --yes --no-install-recommends $(shell cat debian-system-dependencies.txt | tr '\n' ' ')
 
-check-with-docker:  ## Run checks with docker
-	env | grep "^IMPLEMENTATION=" # requires an implementation
-	env | grep "^IMAGE=" # requires a docker image
-	docker run --volume $(PWD):/live --interactive --rm $(IMAGE) /bin/sh -c "cd /live && apt update && apt install --yes $(shell cat debian-system-dependencies.txt | tr '\n' ' ') && ./venv make IMPLEMENTATION=$(IMPLEMENTATION) check"
-
 check: ## Run tests
 	env | grep "^IMPLEMENTATION=" # requires an env variable called IMPLEMENTATION
 	./local/bin/scheme-live $(IMPLEMENTATION) check $(PWD)

@@ -49,3 +49,4 @@ texinfo
 uuid-dev
 wget
 zlib1g-dev
+podman
