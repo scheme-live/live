@@ -36,7 +36,8 @@ upon which one can build abstractions to solve (real world) problems.
 ## Getting started
 
 ```shell
-sudo make prepare-debian
-./venv
-IMPLEMENTATION=chez make check
+% sudo make prepare-debian
+% ./venv
+% scheme-live install
+% IMPLEMENTATION=chez make check
 ```
