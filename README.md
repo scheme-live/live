@@ -1,6 +1,6 @@
 # [scheme-live](https://github.com/scheme-live/live)
 
-**Scheme library collection with yearly stable releases**
+**Fast-moving Scheme library collection with yearly stable releases**
 
 ## Prelude
 
